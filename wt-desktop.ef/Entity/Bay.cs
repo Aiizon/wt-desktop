@@ -13,11 +13,15 @@ public class Bay : WtEntity
     [Required]
     public string Location { get; set; }
 
-    [InverseProperty("Bay")]
     public ICollection<Unit> Units { get; set; } = new List<Unit>();
 
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        return;
+        modelBuilder.Entity<Bay>()
+            .HasMany(b => b.Units)
+            .WithOne(u => u.Bay)
+            .HasForeignKey(u => u.BayId)
+            .HasConstraintName("FK_DCBB0C53DF9BA23B")
+        ;
     }
 }

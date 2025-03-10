@@ -19,7 +19,7 @@ public class User : WtEntity
     public string Email { get; set; }
 
     [Column("roles", TypeName = "json")]
-    public Array Roles { get; set; }
+    public string Roles { get; set; }
 
     [Required]
     [Column("type")]
@@ -45,8 +45,13 @@ public class User : WtEntity
     [Column("picture_path")]
     public string PicturePath { get; set; }
 
+    public string GetFullName()
+    {
+        return $"{FirstName} {LastName}";
+    }
+
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        throw new NotImplementedException();
+        return;
     }
 }

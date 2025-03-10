@@ -39,6 +39,6 @@ public class WtContext: DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseMySQL("mysql://root:root@localhost:3308/wt-app?serverVersion=8.0.32&charset=utf8mb4");
+        optionsBuilder.UseMySQL("server=127.0.0.1;port=3308;user=root;database=wt-app;password=root;");
     }
 }

@@ -69,4 +69,13 @@ public class Rental : WtEntity
         ;
         #endregion
     }
+
+    public static IQueryable<Rental> Source(WtContext context)
+    {
+        return context.Rental
+            .Include(r => r.BillingType)
+            .Include(r => r.Offer)
+            .Include(r => r.Customer)
+        ;
+    }
 }

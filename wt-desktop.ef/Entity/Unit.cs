@@ -9,8 +9,8 @@ public class Unit : WtEntity
 {
     public enum EUnitStatus
     {
-        OK = 1,
-        KO = 2,
+        OK          = 1,
+        KO          = 2,
         Maintenance = 3
     }
 
@@ -57,5 +57,17 @@ public class Unit : WtEntity
             .HasConstraintName("FK_DCBB0C53546E0C08")
         ;
         #endregion
+    }
+
+    /// <summary>
+    /// Returns the Unit with Bay and UnitUsage included.
+    /// </summary>
+    /// <param name="context">Context</param>
+    public static IQueryable<Unit> Source(WtContext context)
+    {
+        return context.Unit
+            .Include(u => u.Bay)
+            .Include(u => u.UnitUsage)
+        ;
     }
 }
