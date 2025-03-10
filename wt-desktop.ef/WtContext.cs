@@ -5,8 +5,6 @@ namespace wt_desktop.ef;
 
 public class WtContext: DbContext
 {
-    public WtContext(): base(GetDbContextOptions()) { }
-
     #region sets
     public DbSet<Unit>          Unit        { get; set; }
 
@@ -25,22 +23,22 @@ public class WtContext: DbContext
     public DbSet<UnitUsage>    UnitUsage    { get; set; }
     #endregion
 
+    public WtContext() { }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        new Unit()        .OnModelCreating(modelBuilder);
-        new Bay()         .OnModelCreating(modelBuilder);
         new User()        .OnModelCreating(modelBuilder);
+        new UnitUsage()   .OnModelCreating(modelBuilder);
+        new Bay()         .OnModelCreating(modelBuilder);
+        new Unit()        .OnModelCreating(modelBuilder);
         new Offer()       .OnModelCreating(modelBuilder);
         new BillingType() .OnModelCreating(modelBuilder);
-        new Rental()      .OnModelCreating(modelBuilder);
         new Intervention().OnModelCreating(modelBuilder);
-        new UnitUsage()   .OnModelCreating(modelBuilder);
+        new Rental()      .OnModelCreating(modelBuilder);
     }
 
-    public static DbContextOptions GetDbContextOptions()
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var optionsBuilder = new DbContextOptionsBuilder<WtContext>();
         optionsBuilder.UseMySQL("mysql://root:root@localhost:3308/wt-app?serverVersion=8.0.32&charset=utf8mb4");
-        return optionsBuilder.Options;
     }
 }
