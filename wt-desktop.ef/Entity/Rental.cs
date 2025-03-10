@@ -9,21 +9,15 @@ public class Rental : WtEntity
 {
     [Required]
     [Column("billing_type_id")]
-    public int BillingTypeId { get; set; }
-
-    public BillingType BillingType { get; set; }
+    public BillingType? BillingType { get; set; }
 
     [Required]
     [Column("offer_id")]
-    public int OfferId { get; set; }
-
-    public Offer Offer { get; set; }
+    public Offer? Offer { get; set; }
 
     [Required]
     [Column("customer_id")]
-    public int CustomerId { get; set; }
-
-    public User Customer { get; set; }
+    public User? Customer { get; set; }
 
     [Required]
     [Column("monthly_rent_price")]
@@ -46,8 +40,9 @@ public class Rental : WtEntity
         modelBuilder.Entity<Rental>()
             .HasOne(r => r.BillingType)
             .WithMany()
-            .HasForeignKey(r => r.BillingTypeId)
+            .HasForeignKey("billing_type_id")
             .HasConstraintName("FK_1619C27DAE620744")
+            .IsRequired(true)
         ;
         #endregion
 
@@ -55,8 +50,9 @@ public class Rental : WtEntity
         modelBuilder.Entity<Rental>()
             .HasOne(r => r.Offer)
             .WithMany()
-            .HasForeignKey(r => r.OfferId)
+            .HasForeignKey("offer_id")
             .HasConstraintName("FK_1619C27D53C674EE")
+            .IsRequired(true)
         ;
         #endregion
 
@@ -64,8 +60,9 @@ public class Rental : WtEntity
         modelBuilder.Entity<Rental>()
             .HasOne(r => r.Customer)
             .WithMany()
-            .HasForeignKey(r => r.CustomerId)
+            .HasForeignKey("customer_id")
             .HasConstraintName("FK_1619C27D9395C3F3")
+            .IsRequired(true)
         ;
         #endregion
     }

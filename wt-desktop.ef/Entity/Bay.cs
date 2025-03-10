@@ -8,20 +8,18 @@ namespace wt_desktop.ef.Entity;
 public class Bay : WtEntity
 {
     [Required]
+    [Column("name")]
     public string Name { get; set; }
 
     [Required]
+    [Column("location")]
     public string Location { get; set; }
 
-    public ICollection<Unit> Units { get; set; } = new List<Unit>();
+    public virtual IQueryable<Unit> Units(WtContext context)
+        => context.Unit.Where(u => u.Bay.Id == Id);
 
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Bay>()
-            .HasMany(b => b.Units)
-            .WithOne(u => u.Bay)
-            .HasForeignKey(u => u.BayId)
-            .HasConstraintName("FK_DCBB0C53DF9BA23B")
-        ;
+        return;
     }
 }

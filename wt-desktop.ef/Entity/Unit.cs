@@ -14,17 +14,12 @@ public class Unit : WtEntity
         Maintenance = 3
     }
 
-    [Required]
     [Column("unit_usage_id")]
-    public int UnitUsageId { get; set; }
-
-    public UnitUsage UnitUsage { get; set; }
+    public UnitUsage? UnitUsage { get; set; } = null;
 
     [Required]
     [Column("bay_id")]
-    public int BayId { get; set; }
-
-    public Bay Bay { get; set; }
+    public Bay? Bay { get; set; }
 
     [Required]
     [Column("name")]
@@ -44,8 +39,9 @@ public class Unit : WtEntity
         modelBuilder.Entity<Unit>()
             .HasOne(u => u.Bay)
             .WithMany()
-            .HasForeignKey(u => u.BayId)
+            .HasForeignKey("bay_id")
             .HasConstraintName("FK_DCBB0C53DF9BA23B")
+            .IsRequired(true)
         ;
         #endregion
 
@@ -53,8 +49,9 @@ public class Unit : WtEntity
         modelBuilder.Entity<Unit>()
             .HasOne(u => u.UnitUsage)
             .WithMany()
-            .HasForeignKey(u => u.UnitUsageId)
+            .HasForeignKey("unit_usage_id")
             .HasConstraintName("FK_DCBB0C53546E0C08")
+            .IsRequired(false)
         ;
         #endregion
     }

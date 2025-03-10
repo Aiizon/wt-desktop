@@ -1,4 +1,5 @@
-﻿using wt_desktop.ef;
+﻿using Microsoft.EntityFrameworkCore;
+using wt_desktop.ef;
 using wt_desktop.ef.Entity;
 
 namespace wt_desktop.con;
@@ -9,14 +10,16 @@ class Program
     {
         try
         {
-            string reference = "teehee";
+            string reference  = "teehee";
             WtContext context = new WtContext();
             ConsoleTools.Display("Database connection established.", "debug");
 
             ConsoleTools.Pause(context.Database.CanConnect() ? "Database connection successful." : "Database connection failed.");
 
-            Bay  bay  = GenerateBay(reference);
-            Unit unit = GenerateUnit(reference, bay);
+            Bay  bay  = GenerateBay(reference, context);
+            Unit unit = GenerateUnit(reference, bay, context);
+
+            context.SaveChanges();
 
             SearchBay(reference);
             SearchUnit(reference);
@@ -29,10 +32,8 @@ class Program
     }
 
     #region generate
-    static Bay GenerateBay(string reference)
+    static Bay GenerateBay(string reference, WtContext context)
     {
-        WtContext context = new WtContext();
-
         Bay testBay = new Bay
         {
             Name = reference,
@@ -47,16 +48,15 @@ class Program
         return testBay;
     }
 
-    static Unit GenerateUnit(string reference, Bay bay)
+    static Unit GenerateUnit(string reference, Bay bay, WtContext context)
     {
-        WtContext context = new WtContext();
-
         Unit testUnit = new Unit
         {
             Name = reference,
             IsStarted = true,
             Status = Unit.EUnitStatus.OK,
-            BayId = bay.Id,
+            Bay = bay,
+            UnitUsage = null
         };
 
         context.Unit.Add(testUnit);
@@ -77,7 +77,7 @@ class Program
 
         if (bay != null)
         {
-            ConsoleTools.Display($"Bay found: {bay.Id} ({bay.Units.Count} units)");
+            ConsoleTools.Display($"Bay found: {bay.Id} ({bay.Units(context).ToList().Count} units)");
         }
         else
         {
@@ -90,11 +90,19 @@ class Program
     {
         WtContext context = new WtContext();
 
-        Unit? unit = context.Unit.FirstOrDefault(u => u.Name == reference);
+        Unit? unit = context.Unit.Include(unit => unit.Bay).FirstOrDefault(u => u.Name == reference);
 
         if (unit != null)
         {
-            ConsoleTools.Display($"Unit found: {unit.Id} [{unit.Bay.Name}]");
+            ConsoleTools.Display($"Unit found: {unit.Id}");
+            if (unit.Bay != null)
+            {
+                ConsoleTools.Display($"Unit's bay: {unit.Bay.Id}");
+            }
+            else
+            {
+                ConsoleTools.Display("Unit's bay not found.");
+            }
         }
         else
         {

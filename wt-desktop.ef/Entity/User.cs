@@ -10,8 +10,8 @@ public class User : WtEntity
 {
     public enum EUserType
     {
-        user,
-        customer
+        User,
+        Customer
     }
 
     [Required, EmailAddress]

@@ -6,35 +6,35 @@ namespace wt_desktop.ef;
 public class WtContext: DbContext
 {
     #region sets
-    public DbSet<Unit>          Unit        { get; set; }
+    public DbSet<Unit>          Unit         { get; set; }
 
-    public DbSet<Bay>           Bay         { get; set; }
+    public DbSet<Bay>           Bay          { get; set; }
 
-    public DbSet<User>          User        { get; set; }
+    public DbSet<User>          User         { get; set; }
 
-    public DbSet<Offer>         Offer       { get; set; }
+    public DbSet<Offer>         Offer        { get; set; }
 
-    public DbSet<BillingType>   BillingType { get; set; }
+    public DbSet<BillingType>   BillingType  { get; set; }
 
-    public DbSet<Rental>        Rental      { get; set; }
+    public DbSet<Rental>        Rental       { get; set; }
 
-    public DbSet<Intervention> Intervention { get; set; }
+    public DbSet<Intervention>  Intervention { get; set; }
 
-    public DbSet<UnitUsage>    UnitUsage    { get; set; }
+    public DbSet<UnitUsage>     UnitUsage    { get; set; }
     #endregion
 
     public WtContext() { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        new User()        .OnModelCreating(modelBuilder);
-        new UnitUsage()   .OnModelCreating(modelBuilder);
-        new Bay()         .OnModelCreating(modelBuilder);
-        new Unit()        .OnModelCreating(modelBuilder);
-        new Offer()       .OnModelCreating(modelBuilder);
-        new BillingType() .OnModelCreating(modelBuilder);
-        new Intervention().OnModelCreating(modelBuilder);
-        new Rental()      .OnModelCreating(modelBuilder);
+        IEnumerable<Type>? entityTypes = typeof(WtEntity).Assembly.GetTypes()
+            .Where(t => t.IsSubclassOf(typeof(WtEntity)) && !t.IsAbstract);
+
+        foreach (Type type in entityTypes)
+        {
+            var instance = Activator.CreateInstance(type) as WtEntity;
+            instance?.OnModelCreating(modelBuilder);
+        }
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
