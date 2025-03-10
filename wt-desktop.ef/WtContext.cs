@@ -7,6 +7,7 @@ public class WtContext: DbContext
 {
     public WtContext(): base(GetDbContextOptions()) { }
 
+    #region sets
     public DbSet<Unit>          Unit        { get; set; }
 
     public DbSet<Bay>           Bay         { get; set; }
@@ -21,6 +22,9 @@ public class WtContext: DbContext
 
     public DbSet<Intervention> Intervention { get; set; }
 
+    public DbSet<UnitUsage>    UnitUsage    { get; set; }
+    #endregion
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         new Unit()        .OnModelCreating(modelBuilder);
@@ -30,6 +34,7 @@ public class WtContext: DbContext
         new BillingType() .OnModelCreating(modelBuilder);
         new Rental()      .OnModelCreating(modelBuilder);
         new Intervention().OnModelCreating(modelBuilder);
+        new UnitUsage()   .OnModelCreating(modelBuilder);
     }
 
     public static DbContextOptions GetDbContextOptions()

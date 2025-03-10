@@ -1,20 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace wt_desktop.ef.Entity;
 
-[Table("bay")]
-public class Bay : WtEntity
+[Table("unit_usage")]
+public class UnitUsage: WtEntity
 {
     [Required]
+    [Column("name")]
     public string Name { get; set; }
 
     [Required]
-    public string Location { get; set; }
-
-    [InverseProperty("Bay")]
-    public ICollection<Unit> Units { get; set; } = new List<Unit>();
+    [Column("color")]
+    public string Color { get; set; }
 
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {
