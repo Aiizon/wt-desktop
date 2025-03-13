@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Nodes;
 
 namespace wt_desktop.ef.Entity;
 
@@ -18,8 +19,9 @@ public class User : WtEntity
     [Column("email")]
     public string Email { get; set; }
 
+    [Required]
     [Column("roles", TypeName = "json")]
-    public string Roles { get; set; }
+    public JsonArray Roles { get; set; }
 
     [Required]
     [Column("type")]

@@ -34,6 +34,9 @@ public class Rental : WtEntity
     [Column("rental_end_date")]
     public DateTime? RentalEndDate { get; set; }
 
+    public virtual IQueryable<RentalUnit> RentalUnits(WtContext context)
+        => context.RentalUnit.Where(ru => ru.Rental.Id == Id);
+
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {
         #region BillingType

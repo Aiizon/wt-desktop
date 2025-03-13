@@ -33,6 +33,9 @@ public class Unit : WtEntity
     [Column("status")]
     public EUnitStatus Status { get; set; }
 
+    public virtual IQueryable<RentalUnit> Rentals(WtContext context)
+        => RentalUnit.Source(context).Where(ru => ru.Unit.Id == Id);
+
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {
         #region Bay

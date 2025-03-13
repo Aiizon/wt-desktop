@@ -18,6 +18,8 @@ public class WtContext: DbContext
 
     public DbSet<Rental>        Rental       { get; set; }
 
+    public DbSet<RentalUnit>    RentalUnit   { get; set; }
+
     public DbSet<Intervention>  Intervention { get; set; }
 
     public DbSet<UnitUsage>     UnitUsage    { get; set; }
