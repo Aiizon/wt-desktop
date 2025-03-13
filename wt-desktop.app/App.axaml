@@ -6,5 +6,7 @@
 
     <Application.Styles>
         <FluentTheme />
+
+        <StyleInclude Source="avares://IconPacks.Avalonia/Icons.axaml" />
     </Application.Styles>
 </Application>

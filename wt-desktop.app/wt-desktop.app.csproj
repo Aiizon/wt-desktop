@@ -24,4 +24,15 @@
     <ItemGroup>
       <ProjectReference Include="..\wt-desktop.ef\wt-desktop.ef.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Modules\AdminModule.axaml.cs">
+        <DependentUpon>Admin.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="_Bay\BayForm.axaml.cs">
+        <DependentUpon>BayForm.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
 </Project>

@@ -1,0 +1,9 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:iconPacks="https://github.com/MahApps/IconPacks.Avalonia"
+        x:Class="wt_desktop.app.BayBoard"
+>
+    <Grid Margin="5">
+        <TextBlock Text="efjiieffsheiefiuefhesiefhefifhesfhesie"></TextBlock>
+    </Grid>
+</UserControl>
