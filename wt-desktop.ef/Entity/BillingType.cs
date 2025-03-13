@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace wt_desktop.ef.Entity;
 
 [Table("billing_type")]
-public class BillingType : WtEntity
+public class BillingType : WtIdentityEntity
 {
     [Required]
     [Column("months")]

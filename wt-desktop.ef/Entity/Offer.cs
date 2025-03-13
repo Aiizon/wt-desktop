@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace wt_desktop.ef.Entity;
 
 [Table("offer")]
-public class Offer : WtEntity
+public class Offer : WtIdentityEntity
 {
     [Required]
     [Column("name")]

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace wt_desktop.ef.Entity;
 
 [Table("unit_usage")]
-public class UnitUsage: WtEntity
+public class UnitUsage: WtIdentityEntity
 {
     [Required]
     [Column("name")]

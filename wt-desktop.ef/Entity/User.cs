@@ -7,7 +7,7 @@ namespace wt_desktop.ef.Entity;
 
 [Table("user")]
 [Index(nameof(Email), IsUnique = true)]
-public class User : WtEntity
+public class User : WtIdentityEntity
 {
     public enum EUserType
     {

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace wt_desktop.ef.Entity;
 
 [Table("intervention")]
-public class Intervention : WtEntity
+public class Intervention : WtIdentityEntity
 {
     [Required]
     [Column("comment")]

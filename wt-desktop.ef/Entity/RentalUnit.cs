@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace wt_desktop.ef.Entity;
 
 [Table("rental_unit")]
-public class RentalUnit
+public class RentalUnit: WtEntity
 {
     [Key]
     [Required]
@@ -17,7 +17,7 @@ public class RentalUnit
     [Column("unit_id")]
     public Unit Unit { get; set; }
 
-    public void OnModelCreating(ModelBuilder modelBuilder)
+    public override void OnModelCreating(ModelBuilder modelBuilder)
     {
         #region Rental
         modelBuilder.Entity<RentalUnit>()

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace wt_desktop.ef.Entity;
 
 [Table("unit")]
-public class Unit : WtEntity
+public class Unit : WtIdentityEntity
 {
     public enum EUnitStatus
     {

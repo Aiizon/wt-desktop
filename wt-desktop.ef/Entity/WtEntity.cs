@@ -11,10 +11,6 @@ namespace wt_desktop.ef.Entity;
 
 public abstract class WtEntity
 {
-    [Key]
-    [Required]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
 
     public abstract void OnModelCreating(ModelBuilder modelBuilder);
 }

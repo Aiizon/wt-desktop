@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace wt_desktop.ef.Entity;
 
 [Table("bay")]
-public class Bay : WtEntity
+public class Bay : WtIdentityEntity
 {
     [Required]
     [Column("name")]

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace wt_desktop.ef.Entity;
 
 [Table("rental")]
-public class Rental : WtEntity
+public class Rental : WtIdentityEntity
 {
     [Required]
     [Column("billing_type_id")]
