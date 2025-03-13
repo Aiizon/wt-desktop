@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="wt-desktop.app/App.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
+        <entry key="wt-desktop.app/MainWindow.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
+      </map>
+    </option>
+  </component>
+</project>
