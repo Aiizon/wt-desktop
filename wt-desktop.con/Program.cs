@@ -11,18 +11,17 @@ class Program
         try
         {
             string reference  = "teehee";
-            WtContext context = new WtContext();
             ConsoleTools.Display("Database connection established.", "debug");
 
-            ConsoleTools.Pause(context.Database.CanConnect() ? "Database connection successful." : "Database connection failed.");
+            ConsoleTools.Pause(WtContext.Instance.Database.CanConnect() ? "Database connection successful." : "Database connection failed.");
 
-            Bay  bay  = GenerateBay(reference, context);
-            Unit unit = GenerateUnit(reference, bay, context);
+            Bay bay = GenerateBay(reference);
+            bay = WtContext.Instance.Bay.FirstOrDefault(u => u.Name == reference) ?? bay;
+            SearchBay(bay.Id);
 
-            context.SaveChanges();
-
-            SearchBay(reference);
-            SearchUnit(reference);
+            Unit unit = GenerateUnit(reference, bay);
+            unit = WtContext.Instance.Unit.FirstOrDefault(u => u.Name == reference) ?? unit;
+            SearchUnit(unit.Id);
         }
         catch (Exception e)
         {
@@ -32,7 +31,7 @@ class Program
     }
 
     #region generate
-    static Bay GenerateBay(string reference, WtContext context)
+    static Bay GenerateBay(string reference)
     {
         Bay testBay = new Bay
         {
@@ -40,15 +39,15 @@ class Program
             Location = "Test Location"
         };
 
-        context.Bay.Add(testBay);
-        context.SaveChanges();
+        WtContext.Instance.Bay.Add(testBay);
+        WtContext.Instance.SaveChanges();
 
         ConsoleTools.Pause("Bay added.");
 
         return testBay;
     }
 
-    static Unit GenerateUnit(string reference, Bay bay, WtContext context)
+    static Unit GenerateUnit(string reference, Bay bay)
     {
         Unit testUnit = new Unit
         {
@@ -59,8 +58,8 @@ class Program
             UnitUsage = null
         };
 
-        context.Unit.Add(testUnit);
-        context.SaveChanges();
+        WtContext.Instance.Unit.Add(testUnit);
+        WtContext.Instance.SaveChanges();
 
         ConsoleTools.Pause("Unit added.");
 
@@ -69,15 +68,13 @@ class Program
     #endregion
 
     #region display
-    static void SearchBay(string reference)
+    static void SearchBay(int id)
     {
-        WtContext context = new WtContext();
-
-        Bay? bay = context.Bay.FirstOrDefault(u => u.Name == reference);
+        Bay? bay = WtContext.Instance.Bay.FirstOrDefault(u => u.Id == id);
 
         if (bay != null)
         {
-            ConsoleTools.Display($"Bay found: {bay.Id} ({bay.Units(context).ToList().Count} units)");
+            ConsoleTools.Display($"Bay found: {bay.Id} ({bay.Units(WtContext.Instance).ToList().Count} units)");
         }
         else
         {
@@ -86,11 +83,9 @@ class Program
         ConsoleTools.Pause("Bay shown.");
     }
 
-    static void SearchUnit(string reference)
+    static void SearchUnit(int id)
     {
-        WtContext context = new WtContext();
-
-        Unit? unit = context.Unit.Include(unit => unit.Bay).FirstOrDefault(u => u.Name == reference);
+        Unit? unit = WtContext.Instance.Unit.FirstOrDefault(u => u.Id == id);
 
         if (unit != null)
         {

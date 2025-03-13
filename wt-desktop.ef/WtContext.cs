@@ -5,6 +5,21 @@ namespace wt_desktop.ef;
 
 public class WtContext: DbContext
 {
+    private static WtContext? _instance;
+
+    private static readonly object _lock = new object();
+
+    public static WtContext Instance
+    {
+        get
+        {
+            lock (_lock)
+            {
+                return _instance ??= new WtContext();
+            }
+        }
+    }
+
     #region sets
     public DbSet<Unit>          Unit         { get; set; }
 
@@ -25,7 +40,50 @@ public class WtContext: DbContext
     public DbSet<UnitUsage>     UnitUsage    { get; set; }
     #endregion
 
-    public WtContext() { }
+    protected WtContext() { }
+
+    /// <summary>
+    /// Override de la méthode SaveChanges pour regénérer l'instance de la base de données
+    /// </summary>
+    /// <returns></returns>
+    public override int SaveChanges()
+    {
+        int result = base.SaveChanges();
+        RefreshInstance();
+        return result;
+    }
+
+    /// <summary>
+    /// Override de la méthode SaveChangesAsync pour regénérer l'instance de la base de données de manière asynchrone
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        int result = await base.SaveChangesAsync(cancellationToken);
+        RefreshInstance();
+        return result;
+    }
+
+    /// <summary>
+    /// Regénère l'instance de la base de données
+    /// </summary>
+    private void RefreshInstance()
+    {
+        lock (_lock)
+        {
+            // _instance?.Dispose();
+            //
+            // _instance = new WtContext();
+
+            ChangeTracker.Clear();
+            
+            foreach (var entry in this.ChangeTracker.Entries().ToList())
+            {
+                entry.State = EntityState.Detached;
+            }
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -42,5 +100,6 @@ public class WtContext: DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseMySQL("server=127.0.0.1;port=3308;user=root;database=wt-app;password=root;");
+        optionsBuilder.EnableSensitiveDataLogging();
     }
 }

@@ -21,7 +21,7 @@ public class User : WtIdentityEntity
 
     [Required]
     [Column("roles", TypeName = "json")]
-    public JsonArray Roles { get; set; }
+    public string Roles { get; set; } = "[]";
 
     [Required]
     [Column("type")]

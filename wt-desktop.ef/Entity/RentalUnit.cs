@@ -14,8 +14,18 @@ public class RentalUnit: WtEntity
 
     [Key]
     [Required]
+    [Column("rental_id")]
+    public int RentalId { get; set; }
+
+    [Key]
+    [Required]
     [Column("unit_id")]
     public Unit Unit { get; set; }
+
+    [Key]
+    [Required]
+    [Column("unit_id")]
+    public int UnitId { get; set; }
 
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -38,6 +48,10 @@ public class RentalUnit: WtEntity
             .IsRequired(true)
         ;
         #endregion
+
+        modelBuilder.Entity<RentalUnit>().HasKey(
+            ru => new { ru.RentalId, ru.UnitId }
+        );
     }
 
     public static IQueryable<RentalUnit> Source(WtContext context)
