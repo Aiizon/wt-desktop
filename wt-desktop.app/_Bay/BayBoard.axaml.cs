@@ -26,6 +26,7 @@ public partial class BayBoard : UserControl
                 BayModel.ReloadSource();
                 break;
             case "SaveButton":
+                BayModel.AddEntity();
                 break;
             default:
                 break;

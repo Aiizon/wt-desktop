@@ -21,6 +21,8 @@ public class Bay : WtIdentityEntity
     public int Size
         => Units().ToList().Count;
 
+    public override string DisplayText => Name;
+
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {
         return;

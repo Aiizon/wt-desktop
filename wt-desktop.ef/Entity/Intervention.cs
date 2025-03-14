@@ -18,6 +18,8 @@ public class Intervention : WtIdentityEntity
     [Column("end_date")]
     public DateTime? EndDate { get; set; }
 
+    public override string DisplayText => Comment;
+
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {
         return;

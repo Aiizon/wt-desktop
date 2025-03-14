@@ -31,6 +31,10 @@ public class Offer : WtIdentityEntity
     [Column("is_active")]
     public bool IsActive { get; set; }
 
+    public override string DisplayText => Name;
+
+    public override string SearchText => $"{Name} {MaxUnits} {Availability} {MonthlyRentPrice} {Bandwidth}";
+
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {
         return;

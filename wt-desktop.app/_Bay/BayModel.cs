@@ -6,14 +6,7 @@ namespace wt_desktop.app;
 
 public class BayModel: WtModel<Bay>
 {
-    public override void ReloadSource()
-    {
-        EntitiesSource = !string.IsNullOrWhiteSpace(SearchText) ?
-            WtContext.Instance.Bay.Where(x => x.Name.Contains(SearchText)).ToList() :
-            WtContext.Instance.Bay.ToList();
-    }
-
-    public override void SaveEntity()
+    public override void AddEntity()
     {
         if (SelectedEntity == null)
         {

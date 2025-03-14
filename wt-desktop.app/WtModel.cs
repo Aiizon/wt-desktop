@@ -59,10 +59,12 @@ public abstract class WtModel<TE>: WtModel where TE: WtEntity, new()
 
     public virtual void ReloadSource()
     {
-        EntitiesSource = WtContext.Instance.Set<TE>().ToList();
+        EntitiesSource = !string.IsNullOrWhiteSpace(SearchText) ?
+            WtContext.Instance.Set<TE>().Where(x => x.MatchSearch(SearchText)).ToList() :
+            WtContext.Instance.Set<TE>().ToList();
     }
 
-    public abstract void SaveEntity();
+    public abstract void AddEntity();
 
     public abstract void EditEntity();
 

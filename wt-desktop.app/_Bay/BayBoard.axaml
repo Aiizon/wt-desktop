@@ -3,7 +3,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:iconPacks="https://github.com/MahApps/IconPacks.Avalonia"
         xmlns:app="clr-namespace:wt_desktop.app"
-        d:DataContext="{d:DesignInstance Type=app:BayBoard}"
+        d:DataContext="{d:DesignInstance Type=app:BayModel}"
+        x:DataType="app:BayModel"
         x:Class="wt_desktop.app.BayBoard"
 >
     <Grid Margin="5">
