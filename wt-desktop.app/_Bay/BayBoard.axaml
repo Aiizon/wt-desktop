@@ -1,9 +1,75 @@
 <UserControl xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:iconPacks="https://github.com/MahApps/IconPacks.Avalonia"
+        xmlns:app="clr-namespace:wt_desktop.app"
+        d:DataContext="{d:DesignInstance Type=app:BayBoard}"
         x:Class="wt_desktop.app.BayBoard"
 >
     <Grid Margin="5">
-        <TextBlock Text="efjiieffsheiefiuefhesiefhefifhesfhesie"></TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <HeaderedContentControl Grid.Row="0" HorizontalAlignment="Stretch" Header="Recherche">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="SearchBox" Grid.Column="0" Text="{Binding SearchText}" Margin="5" Watermark="Rechercher" />
+
+                <Button x:Name="SearchButton" Grid.Column="2" Margin="5" Content="Rechercher" HorizontalAlignment="Center" />
+            </Grid>
+        </HeaderedContentControl>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
+                    <TextBlock Text="Nom" VerticalAlignment="Center" Margin="5" />
+                    <TextBox x:Name="NameBox" VerticalAlignment="Center" Margin="5" Watermark="Nom" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
+                    <TextBlock Text="Localisation" VerticalAlignment="Center" Margin="5" />
+                    <TextBox x:Name="DescriptionBox" VerticalAlignment="Center" Margin="5" Watermark="Localisation" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+
+        <DataGrid Grid.Row="4" ItemsSource="{Binding EntitiesSource, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" AutoGenerateColumns="False" IsReadOnly="True" VerticalScrollBarVisibility="Visible">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="AddContextMenuItem" Header="Création" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="2*" Header="Nom" Binding="{Binding Name}" />
+                <DataGridTextColumn Width="8*" Header="Localisation" Binding="{Binding Location}" />
+                <DataGridTextColumn Width="2*" Header="Nombre d'unités" Binding="{Binding Size}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
+            <Button x:Name="SaveButton" Margin="5">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <iconPacks:PackIconMaterial Kind="ContentSave" Margin="5" />
+                    <TextBlock Text="Sauvegarder" Margin="5" />
+                </StackPanel>
+            </Button>
+            <Button x:Name="AddButton" Margin="5">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <iconPacks:PackIconMaterial Kind="Plus" Margin="5" />
+                    <TextBlock Text="Ajouter" Margin="5" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>

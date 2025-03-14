@@ -15,6 +15,7 @@
         </Grid.RowDefinitions>
 
         <UniformGrid x:Name="ModuleGrid" Grid.Row="0" Rows="1">
+            <TextBlock Text="WorkTogether" />
             <Button x:Name="AdminButton" Margin="5" FontSize="12">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                     <iconPacks:PackIconMaterial Kind="BadgeAccount" Margin="5" />

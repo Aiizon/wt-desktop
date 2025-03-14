@@ -74,7 +74,7 @@ class Program
 
         if (bay != null)
         {
-            ConsoleTools.Display($"Bay found: {bay.Id} ({bay.Units(WtContext.Instance).ToList().Count} units)");
+            ConsoleTools.Display($"Bay found: {bay.Id} ({bay.Units().ToList().Count} units)");
         }
         else
         {
