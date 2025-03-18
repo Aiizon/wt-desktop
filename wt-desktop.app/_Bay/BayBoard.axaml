@@ -27,7 +27,7 @@
 
             <TextBox x:Name="SearchBox" Grid.Column="0" Text="{Binding SearchText}" Margin="5" Watermark="Rechercher" />
 
-            <Button x:Name="SearchButton" Grid.Column="2" Margin="5" Content="Rechercher" HorizontalAlignment="Center" />
+            <Button x:Name="SearchButton" Grid.Column="2" Margin="5" Content="Rechercher" HorizontalAlignment="Center" Click="OnButtonClick" />
         </Grid>
 
         <!-- <ListBox Grid.Row="2" ItemsSource="{Binding EntitiesSource, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" IsVisible="True"> -->

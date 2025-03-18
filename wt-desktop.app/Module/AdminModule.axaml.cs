@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using wt_desktop.app.Controls;
 
 namespace wt_desktop.app.Module;
 
@@ -7,13 +8,11 @@ public partial class AdminModule : UserControl
     public AdminModule()
     {
         InitializeComponent();
-
-        BayButton.Click += OnButtonClick;
     }
 
     private void OnButtonClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        Button button = (Button)sender!;
+        NavigationButton button = (NavigationButton)sender!;
 
         switch (button.Name)
         {

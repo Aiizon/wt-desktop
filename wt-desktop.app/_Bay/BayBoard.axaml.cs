@@ -12,8 +12,7 @@ public partial class BayBoard : UserControl
         InitializeComponent();
 
         DataContext = BayModel = new BayModel();
-
-        SearchButton.Click += OnButtonClick;
+        BayModel.ReloadSource();
     }
 
     private void OnButtonClick(object? sender, RoutedEventArgs e)

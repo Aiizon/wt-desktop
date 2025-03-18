@@ -22,18 +22,14 @@
             <TextBlock Text="WorkTogether" VerticalAlignment="Center" Margin="5" />
             <controls:ModuleButton
                 x:Name="AdminButton"
-                Margin="5"
-                FontSize="12"
                 Icon="BadgeAccount"
                 Label="Administration"
                 Click="OnButtonClick"
             />
             <controls:ModuleButton
                 x:Name="AccountantButton"
-                Margin="5"
-                FontSize="12"
                 Icon="HandCoin"
-                Label="Baies"
+                Label="Comptabilité"
                 Click="OnButtonClick"
             />
         </UniformGrid>

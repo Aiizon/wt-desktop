@@ -1,6 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:iconPacks="https://github.com/MahApps/IconPacks.Avalonia"
+        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
         x:Class="wt_desktop.app.Module.AdminModule"
 >
     <Grid Margin="5">
@@ -11,12 +12,12 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0">
-            <Button x:Name="BayButton" Margin="5" FontSize="10">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                    <iconPacks:PackIconMaterial Kind="Server" Margin="5" />
-                    <TextBlock Text="Baies" Margin="5" />
-                </StackPanel>
-            </Button>
+            <controls:NavigationButton
+                x:Name="BayButton"
+                Icon="Server"
+                Label="Baies"
+                Click="OnButtonClick"
+            />
         </StackPanel>
 
         <ContentControl x:Name="PageContent" Grid.RowSpan="3" Grid.Column="2" />

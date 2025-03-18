@@ -36,5 +36,9 @@
         <DependentUpon>BayForm.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Controls\NavigationButton.axaml.cs">
+        <DependentUpon>NavigationButton.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>
