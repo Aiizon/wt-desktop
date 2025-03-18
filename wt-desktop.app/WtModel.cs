@@ -19,11 +19,11 @@ public abstract class WtModel: INotifyPropertyChanged
     #endregion
 }
 
-public abstract class WtModel<TE>: WtModel where TE: WtEntity, new()
+public abstract class WtModel<E>: WtModel where E: WtEntity, new()
 {
-    private IEnumerable<TE>? _EntitiesSource = null;
+    private IEnumerable<E>? _EntitiesSource = null;
 
-    public IEnumerable<TE>? EntitiesSource
+    public IEnumerable<E>? EntitiesSource
     {
         get => _EntitiesSource;
         set
@@ -33,9 +33,9 @@ public abstract class WtModel<TE>: WtModel where TE: WtEntity, new()
         }
     }
 
-    private TE? _SelectedEntity = null;
+    private E? _SelectedEntity = null;
 
-    public TE? SelectedEntity
+    public E? SelectedEntity
     {
         get => _SelectedEntity;
         set
@@ -60,8 +60,8 @@ public abstract class WtModel<TE>: WtModel where TE: WtEntity, new()
     public virtual void ReloadSource()
     {
         EntitiesSource = !string.IsNullOrWhiteSpace(SearchText) ?
-            WtContext.Instance.Set<TE>().Where(x => x.MatchSearch(SearchText)).ToList() :
-            WtContext.Instance.Set<TE>().ToList();
+            WtContext.Instance.Set<E>().ToList().Where(x => x.MatchSearch(SearchText)) :
+            WtContext.Instance.Set<E>().ToList();
     }
 
     public abstract void AddEntity();

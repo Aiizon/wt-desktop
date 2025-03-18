@@ -1,11 +1,15 @@
-<Window xmlns="https://github.com/avaloniaui"
+<suki:SukiWindow xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:iconPacks="https://github.com/MahApps/IconPacks.Avalonia"
+        xmlns:suki="clr-namespace:SukiUI.Controls;assembly=SukiUI"
+        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="wt_desktop.app.MainWindow"
         Title="WorkTogether"
+        Background="Transparent"
+        ExtendClientAreaToDecorationsHint="True"
+        TransparencyLevelHint="AcrylicBlur"
 >
     <Grid Margin="5">
         <Grid.RowDefinitions>
@@ -15,21 +19,25 @@
         </Grid.RowDefinitions>
 
         <UniformGrid x:Name="ModuleGrid" Grid.Row="0" Rows="1">
-            <TextBlock Text="WorkTogether" />
-            <Button x:Name="AdminButton" Margin="5" FontSize="12">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                    <iconPacks:PackIconMaterial Kind="BadgeAccount" Margin="5" />
-                    <TextBlock Text="Administration" Margin="5" />
-                </StackPanel>
-            </Button>
-            <Button x:Name="AccountantButton" Margin="5" FontSize="12">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                    <iconPacks:PackIconMaterial Kind="HandCoin" Margin="5" />
-                    <TextBlock Text="Comptabilité" Margin="5" />
-                </StackPanel>
-            </Button>
+            <TextBlock Text="WorkTogether" VerticalAlignment="Center" Margin="5" />
+            <controls:ModuleButton
+                x:Name="AdminButton"
+                Margin="5"
+                FontSize="12"
+                Icon="BadgeAccount"
+                Label="Administration"
+                Click="OnButtonClick"
+            />
+            <controls:ModuleButton
+                x:Name="AccountantButton"
+                Margin="5"
+                FontSize="12"
+                Icon="HandCoin"
+                Label="Baies"
+                Click="OnButtonClick"
+            />
         </UniformGrid>
 
         <ContentControl x:Name="MainContent" Grid.ColumnSpan="3" Grid.Row="2" />
     </Grid>
-</Window>
+</suki:SukiWindow>

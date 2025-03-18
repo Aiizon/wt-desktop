@@ -1,22 +1,21 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using SukiUI.Controls;
+using wt_desktop.app.Controls;
 using wt_desktop.app.Module;
 
 namespace wt_desktop.app;
 
-public partial class MainWindow : Window
+public partial class MainWindow : SukiWindow
 {
     public MainWindow()
     {
         InitializeComponent();
-
-        AdminButton.Click      += OnButtonClick;
-        AccountantButton.Click += OnButtonClick;
     }
 
     private void OnButtonClick(object? sender, RoutedEventArgs e)
     {
-        Button button = (Button)sender!;
+        ModuleButton button = (ModuleButton)sender!;
 
         switch (button.Name)
         {

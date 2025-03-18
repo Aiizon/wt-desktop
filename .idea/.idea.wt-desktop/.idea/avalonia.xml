@@ -4,6 +4,7 @@
     <option name="projectPerEditor">
       <map>
         <entry key="wt-desktop.app/App.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
+        <entry key="wt-desktop.app/Controls/NavigationButton.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/MainWindow.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Module/AdminModule.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Modules/AdminModule.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
