@@ -1,8 +1,8 @@
 <UserControl xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:iconPacks="https://github.com/MahApps/IconPacks.Avalonia"
         xmlns:app="clr-namespace:wt_desktop.app"
+        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
         d:DataContext="{d:DesignInstance Type=app:BayModel}"
         x:DataType="app:BayModel"
         x:Class="wt_desktop.app.BayBoard"
@@ -10,8 +10,6 @@
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <!-- <RowDefinition Height="5" /> -->
-            <!-- <RowDefinition Height="2*" /> -->
             <RowDefinition Height="5" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="5" />
@@ -27,25 +25,8 @@
 
             <TextBox x:Name="SearchBox" Grid.Column="0" Text="{Binding SearchText}" Margin="5" Watermark="Rechercher" />
 
-            <Button x:Name="SearchButton" Grid.Column="2" Margin="5" Content="Rechercher" HorizontalAlignment="Center" Click="OnButtonClick" />
+            <controls:SearchButton x:Name="SearchButton" Grid.Column="2" Click="OnButtonClick" />
         </Grid>
-
-        <!-- <ListBox Grid.Row="2" ItemsSource="{Binding EntitiesSource, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" IsVisible="True"> -->
-        <!--     <ListBox.ContextMenu> -->
-        <!--         <ContextMenu> -->
-        <!--             <MenuItem x:Name="AddContextMenuItem" Header="Création" /> -->
-        <!--         </ContextMenu> -->
-        <!--     </ListBox.ContextMenu> -->
-        <!--     <ListBox.ItemTemplate> -->
-        <!--         <DataTemplate> -->
-        <!--             <StackPanel> -->
-        <!--                 <TextBlock ToolTip.Tip="Nom" Text="{Binding Name}" /> -->
-        <!--                 <TextBlock ToolTip.Tip="Localisation" Text="{Binding Location}" /> -->
-        <!--                 <TextBlock ToolTip.Tip="Nombre d'unités" Text="{Binding Size}" /> -->
-        <!--             </StackPanel> -->
-        <!--         </DataTemplate> -->
-        <!--     </ListBox.ItemTemplate> -->
-        <!-- </ListBox> -->
 
         <DataGrid Grid.Row="2" ItemsSource="{Binding EntitiesSource, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}">
             <DataGrid.ContextMenu>
@@ -61,18 +42,9 @@
         </DataGrid>
 
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
-            <Button x:Name="SaveButton" Margin="5">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                    <iconPacks:PackIconMaterial Kind="ContentSave" Margin="5" />
-                    <TextBlock Text="Sauvegarder" Margin="5" />
-                </StackPanel>
-            </Button>
-            <Button x:Name="AddButton" Margin="5">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                    <iconPacks:PackIconMaterial Kind="Plus" Margin="5" />
-                    <TextBlock Text="Ajouter" Margin="5" />
-                </StackPanel>
-            </Button>
+            <controls:SaveButton x:Name="SaveButton" Click="OnButtonClick" />
+            <controls:AddButton  x:Name="AddButton"  Click="OnButtonClick" />
+
         </StackPanel>
     </Grid>
 </UserControl>

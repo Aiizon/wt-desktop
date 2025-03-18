@@ -40,5 +40,17 @@
         <DependentUpon>NavigationButton.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Controls\SaveButton.axaml.cs">
+        <DependentUpon>SaveButton.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Controls\AddButton.axaml.cs">
+        <DependentUpon>AddButton.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Controls\SearchButton.axaml.cs">
+        <DependentUpon>SearchButton.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>

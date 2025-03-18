@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using wt_desktop.app.Controls;
 
 namespace wt_desktop.app;
 
@@ -17,7 +18,7 @@ public partial class BayBoard : UserControl
 
     private void OnButtonClick(object? sender, RoutedEventArgs e)
     {
-        Button button = (Button)sender!;
+        UserControl button = (UserControl)sender!;
 
         switch (button.Name)
         {
@@ -25,6 +26,9 @@ public partial class BayBoard : UserControl
                 BayModel.ReloadSource();
                 break;
             case "SaveButton":
+                BayModel.SaveChanges();
+                break;
+            case "AddButton":
                 BayModel.AddEntity();
                 break;
             default:

@@ -69,4 +69,6 @@ public abstract class WtModel<E>: WtModel where E: WtEntity, new()
     public abstract void EditEntity();
 
     public abstract void RemoveEntity();
+
+    public abstract void SaveChanges();
 }

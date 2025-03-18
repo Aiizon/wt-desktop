@@ -10,6 +10,7 @@ public class BayModel: WtModel<Bay>
     {
         if (SelectedEntity == null)
         {
+            // WtContext.Instance.Bay.Add(new Bay());
             return;
         }
 
@@ -50,6 +51,12 @@ public class BayModel: WtModel<Bay>
         }
 
         WtContext.Instance.Remove(SelectedEntity);
+        WtContext.Instance.SaveChanges();
+        ReloadSource();
+    }
+
+    public override void SaveChanges()
+    {
         WtContext.Instance.SaveChanges();
         ReloadSource();
     }
