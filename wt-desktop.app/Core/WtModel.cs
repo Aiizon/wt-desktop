@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using wt_desktop.ef.Entity;
 using wt_desktop.ef;
 
-namespace wt_desktop.app;
+namespace wt_desktop.app.Core;
 
 public abstract class WtModel: INotifyPropertyChanged
 {

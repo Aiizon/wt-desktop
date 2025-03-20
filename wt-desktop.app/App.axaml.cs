@@ -6,7 +6,7 @@ using Avalonia.Styling;
 using SukiUI;
 using SukiUI.Enums;
 
-namespace wt_desktop.app;
+namespace wt_desktop.app.Core;
 
 public partial class App : Application
 {

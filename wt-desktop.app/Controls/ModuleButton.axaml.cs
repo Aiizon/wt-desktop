@@ -3,7 +3,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 
-namespace wt_desktop.app.Controls;
+namespace wt_desktop.app.Core.Controls;
 
 public partial class ModuleButton : UserControl
 {

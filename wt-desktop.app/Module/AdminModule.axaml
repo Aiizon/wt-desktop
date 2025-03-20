@@ -1,8 +1,8 @@
 <UserControl xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:iconPacks="https://github.com/MahApps/IconPacks.Avalonia"
-        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
-        x:Class="wt_desktop.app.Module.AdminModule"
+        xmlns:controls="clr-namespace:wt_desktop.app.Core.Controls"
+        x:Class="wt_desktop.app.Core.Module.AdminModule"
 >
     <Grid Margin="5">
         <Grid.ColumnDefinitions>

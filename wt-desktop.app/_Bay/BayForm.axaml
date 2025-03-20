@@ -1,28 +1,31 @@
 <UserControl xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:iconPacks="https://github.com/MahApps/IconPacks.Avalonia"
-        x:Class="wt_desktop.app.BayForm"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:core="clr-namespace:wt_desktop.app.Core"
+        d:DataContext="{d:DesignInstance Type=core:BayFormManager}"
+        x:DataType="core:BayFormManager"
+        x:Class="wt_desktop.app.Core.BayForm"
 >
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="10*" />
-            <RowDefinition Height="5" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="5"   />
+            <RowDefinition Height="2*"  />
         </Grid.RowDefinitions>
 
         <Expander Grid.Row="0" HorizontalAlignment="Stretch">
             <Grid HorizontalAlignment="Stretch" Margin="5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5" />
+                    <RowDefinition Height="5"    />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5" />
+                    <RowDefinition Height="5"    />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" SharedSizeGroup="LabelColumn" />
-                    <ColumnDefinition Width="*" SharedSizeGroup="InputColumn" />
+                    <ColumnDefinition Width="*" SharedSizeGroup="InputColumn"    />
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Nom" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" />
@@ -37,18 +40,9 @@
         </Expander>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
-            <Button x:Name="SaveButton" Margin="5">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                    <iconPacks:PackIconMaterial Kind="ContentSave" Margin="5" />
-                    <TextBlock Text="Sauvegarder" Margin="5" />
-                </StackPanel>
-            </Button>
-            <Button x:Name="CancelButton" Margin="5">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                    <iconPacks:PackIconMaterial Kind="Cancel" Margin="5" />
-                    <TextBlock Text="Annuler" Margin="5" />
-                </StackPanel>
-            </Button>
+            <Button ToolTip.Tip="Annuler"       Command="{Binding CancelCommand}" />
+            <Button ToolTip.Tip="Réinitialiser" Command="{Binding ResetCommand}"  />
+            <Button ToolTip.Tip="Enregistrer"   Command="{Binding SaveCommand}"   />
         </StackPanel>
     </Grid>
 </UserControl>

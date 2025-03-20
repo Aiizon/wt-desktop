@@ -1,10 +1,10 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using SukiUI.Controls;
-using wt_desktop.app.Controls;
-using wt_desktop.app.Module;
+using wt_desktop.app.Core.Controls;
+using wt_desktop.app.Core.Module;
 
-namespace wt_desktop.app;
+namespace wt_desktop.app.Core;
 
 public partial class MainWindow : SukiWindow
 {

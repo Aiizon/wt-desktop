@@ -1,38 +1,27 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using wt_desktop.app.Controls;
+using wt_desktop.app.Core.Controls;
+using wt_desktop.ef.Entity;
 
-namespace wt_desktop.app;
+namespace wt_desktop.app.Core;
 
 public partial class BayBoard : UserControl
 {
-    public BayModel BayModel { get; }
-
-    public BayBoard()
-    {
+    public BayBoard
+    (
+        BayController controller,
+        EBoardMode    mode,
+        string        search
+    ) {
         InitializeComponent();
 
-        DataContext = BayModel = new BayModel();
-        BayModel.ReloadSource();
+        DataContext = new BayBoardManager(controller, search);
     }
 
-    private void OnButtonClick(object? sender, RoutedEventArgs e)
-    {
-        UserControl button = (UserControl)sender!;
+    public BayBoard(EBoardMode mode, string search) : this(new BayController(), mode, search) { }
+}
 
-        switch (button.Name)
-        {
-            case "SearchButton":
-                BayModel.ReloadSource();
-                break;
-            case "SaveButton":
-                BayModel.SaveChanges();
-                break;
-            case "AddButton":
-                BayModel.AddEntity();
-                break;
-            default:
-                break;
-        }
-    }
+public class BayBoardManager : BoardManager<Bay>
+{
+    public BayBoardManager(BayController controller, string search) : base(controller, search) { }
 }

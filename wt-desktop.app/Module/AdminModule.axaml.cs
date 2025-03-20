@@ -1,7 +1,7 @@
 using Avalonia.Controls;
-using wt_desktop.app.Controls;
+using wt_desktop.app.Core.Controls;
 
-namespace wt_desktop.app.Module;
+namespace wt_desktop.app.Core.Module;
 
 public partial class AdminModule : UserControl
 {
@@ -17,7 +17,7 @@ public partial class AdminModule : UserControl
         switch (button.Name)
         {
             case "BayButton":
-                PageContent.Content = new BayBoard();
+                PageContent.Content = new BayBoard(EBoardMode.Search, "");
                 break;
             default:
                 break;

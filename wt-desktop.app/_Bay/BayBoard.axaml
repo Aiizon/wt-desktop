@@ -1,50 +1,54 @@
 <UserControl xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:app="clr-namespace:wt_desktop.app"
-        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
-        d:DataContext="{d:DesignInstance Type=app:BayModel}"
-        x:DataType="app:BayModel"
-        x:Class="wt_desktop.app.BayBoard"
+        xmlns:app="clr-namespace:wt_desktop.app.Core"
+        xmlns:controls="clr-namespace:wt_desktop.app.Core.Controls"
+        d:DataContext="{d:DesignInstance Type=app:BayBoardManager}"
+        x:DataType="app:BayBoardManager"
+        x:Class="wt_desktop.app.Core.BayBoard"
 >
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="5" />
-            <RowDefinition Height="10*" />
-            <RowDefinition Height="5" />
+            <RowDefinition Height="5"    />
+            <RowDefinition Height="10*"  />
+            <RowDefinition Height="5"    />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10*" />
-                <ColumnDefinition Width="5" />
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="5"   />
+                <ColumnDefinition Width="2*"  />
             </Grid.ColumnDefinitions>
 
             <TextBox x:Name="SearchBox" Grid.Column="0" Text="{Binding SearchText}" Margin="5" Watermark="Rechercher" />
 
-            <controls:SearchButton x:Name="SearchButton" Grid.Column="2" Click="OnButtonClick" />
+            <controls:SearchButton x:Name="SearchButton" Grid.Column="2" Command="{Binding SearchCommand}" />
         </Grid>
 
         <DataGrid Grid.Row="2" ItemsSource="{Binding EntitiesSource, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}">
             <DataGrid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem x:Name="AddContextMenuItem" Header="Création" />
+                    <MenuItem Header="Sélection"   Command="{Binding ChooseCommand}" />
+                    <MenuItem Header="Création"    Command="{Binding AddCommand}"    />
+                    <MenuItem Header="Edition"     Command="{Binding EditCommand}"   />
+                    <MenuItem Header="Suppression" Command="{Binding RemoveCommand}" />
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Columns>
-                <DataGridTextColumn Width="2*" Header="Nom" Binding="{Binding Name}" />
-                <DataGridTextColumn Width="8*" Header="Localisation" Binding="{Binding Location}" />
-                <DataGridTextColumn Width="2*" Header="Nombre d'unités" Binding="{Binding Size}" />
+                <DataGridTextColumn Width="2*" Header="Nom"             Binding="{Binding Name}"     />
+                <DataGridTextColumn Width="8*" Header="Localisation"    Binding="{Binding Location}" />
+                <DataGridTextColumn Width="2*" Header="Nombre d'unités" Binding="{Binding Size}"     />
             </DataGrid.Columns>
         </DataGrid>
 
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
-            <controls:SaveButton x:Name="SaveButton" Click="OnButtonClick" />
-            <controls:AddButton  x:Name="AddButton"  Click="OnButtonClick" />
-
+            <Button ToolTip.Tip="Sélection"   Command="{Binding ChooseCommand}"  />
+            <Button ToolTip.Tip="Création"    Command="{Binding AddCommand}"     />
+            <Button ToolTip.Tip="Edition"     Command="{Binding EditCommand}"    />
+            <Button ToolTip.Tip="Suppression" Command="{Binding RemoveCommand}"  />
         </StackPanel>
     </Grid>
 </UserControl>

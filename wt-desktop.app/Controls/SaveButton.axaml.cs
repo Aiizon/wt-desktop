@@ -1,19 +1,20 @@
 using System;
+using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 
-namespace wt_desktop.app.Controls;
+namespace wt_desktop.app.Core.Controls;
 
 public partial class AddButton : UserControl
 {
-    public new static readonly RoutedEvent<RoutedEventArgs> ClickEvent =
-        RoutedEvent.Register<ModuleButton, RoutedEventArgs>(nameof(Click), RoutingStrategies.Bubble);
+    public static readonly StyledProperty<ICommand> CommandProperty =
+        AvaloniaProperty.Register<SearchButton, ICommand>(nameof(Command));
 
-    public new event EventHandler<RoutedEventArgs> Click
+    public ICommand Command
     {
-        add    => AddHandler(ClickEvent, value);
-        remove => RemoveHandler(ClickEvent, value);
+        get => GetValue(CommandProperty);
+        set => SetValue(CommandProperty, value);
     }
 
     public AddButton()
@@ -31,7 +32,7 @@ public partial class AddButton : UserControl
         {
             button.Click += (sender, eventArgs) =>
             {
-                RaiseEvent(new RoutedEventArgs(ClickEvent));
+                Command.Execute(null);
                 eventArgs.Handled = true;
             };
         }
