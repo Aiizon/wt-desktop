@@ -28,7 +28,7 @@
             <controls:SearchButton x:Name="SearchButton" Grid.Column="2" Command="{Binding SearchCommand}" />
         </Grid>
 
-        <DataGrid Grid.Row="2" ItemsSource="{Binding EntitiesSource, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}">
+        <DataGrid Grid.Row="2" ItemsSource="{Binding EntitiesSource, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" IsReadOnly="True">
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Sélection"   Command="{Binding ChooseCommand}" />

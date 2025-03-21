@@ -43,7 +43,7 @@ public class WtContext: DbContext
     protected WtContext() { }
 
     /// <summary>
-    /// Override de la méthode SaveChanges pour regénérer l'instance de la base de données
+    /// Override de la méthode SaveChanges pour régénérer l'instance de la base de données
     /// </summary>
     /// <returns></returns>
     public override int SaveChanges()
@@ -54,7 +54,7 @@ public class WtContext: DbContext
     }
 
     /// <summary>
-    /// Override de la méthode SaveChangesAsync pour regénérer l'instance de la base de données de manière asynchrone
+    /// Override de la méthode SaveChangesAsync pour régénérer l'instance de la base de données de manière asynchrone
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
@@ -72,10 +72,6 @@ public class WtContext: DbContext
     {
         lock (_lock)
         {
-            // _instance?.Dispose();
-            //
-            // _instance = new WtContext();
-
             ChangeTracker.Clear();
             
             foreach (var entry in this.ChangeTracker.Entries().ToList())
@@ -99,7 +95,7 @@ public class WtContext: DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseMySQL("server=127.0.0.1;port=3308;user=root;database=wt-app;password=root;");
+        optionsBuilder.UseMySQL("server=172.18.0.1;port=3308;user=root;database=wt-app;password=root;");
         optionsBuilder.EnableSensitiveDataLogging();
     }
 }
