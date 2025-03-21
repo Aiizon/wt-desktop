@@ -2,6 +2,7 @@ using System;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using SukiUI.Controls;
+using wt_desktop.app.Core;
 using wt_desktop.ef;
 using wt_desktop.ef.Entity;
 
@@ -98,76 +99,20 @@ public abstract class EntityController<E> where E : WtEntity, new()
 
     public virtual void RemoveEntity(E entity)
     {
-        var window = new SukiWindow
+        var dialogManager = new DeletionConfirmationDialogManager("Voulez-vous vraiment supprimer cette entité ?");
+        var dialog        = new DeletionConfirmationDialog(dialogManager);
+
+        dialogManager.ConfirmAction = () =>
         {
-            Title = "Confirmation",
-            SizeToContent = SizeToContent.WidthAndHeight,
-            Width = 400,
-            WindowStartupLocation = WindowStartupLocation.CenterScreen
+            if (DeleteEntity(entity))
+            {
+                dialog.Close();
+            }
         };
 
-        var panel = new StackPanel
-        {
-            Spacing = 20,
-            Margin = new Avalonia.Thickness(20)
-        };
+        dialogManager.CancelAction = () => dialog.Close();
 
-        var messageText = new TextBlock
-        {
-            Text = $"Voulez-vous vraiment supprimer cette entité ?",
-            TextWrapping = Avalonia.Media.TextWrapping.Wrap
-        };
-
-        var buttonsPanel = new StackPanel
-        {
-            Orientation = Orientation.Horizontal,
-            HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Right,
-            Spacing = 10
-        };
-
-        var confirmButton = new Button { Content = "Oui" };
-        var cancelButton  = new Button { Content = "Non" };
-
-        bool confirmed = false;
-
-        confirmButton.Click += (s, e) =>
-        {
-            confirmed = true;
-            window.Close();
-        };
-
-        cancelButton.Click += (s, e) =>
-        {
-            window.Close();
-        };
-
-        buttonsPanel.Children.Add(confirmButton);
-        buttonsPanel.Children.Add(cancelButton);
-
-        panel.Children.Add(messageText);
-        panel.Children.Add(buttonsPanel);
-
-        window.Content = panel;
-
-        window.ShowDialog(MainWindow!);
-
-        if (confirmed)
-        {
-            DoRemoveEntity(entity);
-        }
-    }
-
-    protected virtual void DoRemoveEntity(E entity)
-    {
-        try
-        {
-            WtContext.Instance.Remove(entity);
-            WtContext.Instance.SaveChanges();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
+        dialog.ShowDialog(MainWindow!);
     }
     #endregion
 

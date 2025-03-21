@@ -9,6 +9,7 @@ namespace wt_desktop.app;
 
 public abstract class FormManager<E>: INotifyPropertyChanged where E: WtEntity, new()
 {
+    #region Properties
     public EntityController<E> Controller { get; }
     public EFormMode           Mode       { get; }
 
@@ -29,12 +30,13 @@ public abstract class FormManager<E>: INotifyPropertyChanged where E: WtEntity, 
     public ICommand SaveCommand   { get; }
     public ICommand ResetCommand  { get; }
     public ICommand CancelCommand { get; }
+    #endregion
 
     protected FormManager
     (
         EntityController<E> controller,
-        EFormMode mode,
-        E entity
+        EFormMode           mode,
+        E                   entity
     ) {
         Controller    = controller;
         Mode          = mode;

@@ -14,31 +14,26 @@
             <RowDefinition Height="2*"  />
         </Grid.RowDefinitions>
 
-        <Expander Grid.Row="0" HorizontalAlignment="Stretch">
-            <Grid HorizontalAlignment="Stretch" Margin="5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="4*" />
-                    <RowDefinition Height="5"  />
-                    <RowDefinition Height="4*" />
-                    <RowDefinition Height="5"  />
-                    <RowDefinition Height="4*" />
-                </Grid.RowDefinitions>
+        <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="4*" />
+            </Grid.RowDefinitions>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"  SharedSizeGroup="LabelColumn" />
-                    <ColumnDefinition Width="10*" SharedSizeGroup="InputColumn" />
-                </Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"  SharedSizeGroup="LabelColumn" />
+                <ColumnDefinition Width="10*" SharedSizeGroup="InputColumn" />
+            </Grid.ColumnDefinitions>
 
-                <TextBlock     Grid.Row="0" Grid.Column="0" Text="Nom"             HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" />
-                <TextBox       Grid.Row="0" Grid.Column="1" x:Name="NameBox"       HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Nom" />
+            <TextBlock     Grid.Row="0" Grid.Column="0" Text="Nom"                                     HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <TextBox       Grid.Row="0" Grid.Column="1" x:Name="NameBox"     Text="{Binding Name}"     HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Nom" />
 
-                <TextBlock     Grid.Row="2" Grid.Column="0" Text="Localisation"    HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" />
-                <TextBox       Grid.Row="2" Grid.Column="1" x:Name="LocationBox"   HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Localisation" />
-
-                <TextBlock     Grid.Row="4" Grid.Column="0" Text="Nombre d'unités" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" />
-                <NumericUpDown Grid.Row="4" Grid.Column="1" x:Name="SizeBox"       HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Nombre d'unités" />
-            </Grid>
-        </Expander>
+            <TextBlock     Grid.Row="2" Grid.Column="0" Text="Localisation"                            HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <TextBox       Grid.Row="2" Grid.Column="1" x:Name="LocationBox" Text="{Binding Location}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Localisation" />
+        </Grid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
             <controls:NavigationButton ToolTip.Tip="Annuler"       Label="Annuler"       Icon="Cancel"      Command="{Binding CancelCommand}" />

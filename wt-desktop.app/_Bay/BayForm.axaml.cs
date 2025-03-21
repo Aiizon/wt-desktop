@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using wt_desktop.ef;
 using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app;
@@ -38,10 +39,10 @@ public class BayFormManager : FormManager<Bay>
     
     public string? Location
     {
-        get => _Name;
+        get => _Location;
         set
         {
-            _Name = value;
+            _Location = value;
             OnPropertyChanged();
         }
     }
@@ -66,8 +67,8 @@ public class BayFormManager : FormManager<Bay>
 
     public sealed override void Reset()
     {
-        Name     = CurrentEntity?.Name     ?? "";
-        Location = CurrentEntity?.Location ?? "";
+        Name     = CurrentEntity.Name;
+        Location = CurrentEntity.Location;
     }
 
     public override bool Cancel()

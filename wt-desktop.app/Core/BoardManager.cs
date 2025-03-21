@@ -75,7 +75,7 @@ public class BoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
         Controller = controller;
         SearchText = searchText;
 
-        SearchCommand = new RelayCommand(() => ReloadSource(), () => true);
+        SearchCommand = new RelayCommand(ReloadSource, () => true);
         AddCommand    = new RelayCommand(
             () =>
             {
@@ -87,6 +87,8 @@ public class BoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
                 {
                     controller.AddEntity(new E());
                 }
+
+                ReloadSource();
             },
             () => true);
 
@@ -101,6 +103,8 @@ public class BoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
                 {
                     controller.EditEntity(SelectedEntity);
                 }
+
+                ReloadSource();
             },
             () => SelectedEntity != null);
 
@@ -115,6 +119,8 @@ public class BoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
                 {
                     controller.RemoveEntity(SelectedEntity);
                 }
+
+                ReloadSource();
             },
             () => SelectedEntity != null);
 
