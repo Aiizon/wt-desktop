@@ -45,10 +45,10 @@
         </DataGrid>
 
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
-            <Button ToolTip.Tip="Sélection"   Command="{Binding ChooseCommand}"  />
-            <Button ToolTip.Tip="Création"    Command="{Binding AddCommand}"     />
-            <Button ToolTip.Tip="Edition"     Command="{Binding EditCommand}"    />
-            <Button ToolTip.Tip="Suppression" Command="{Binding RemoveCommand}"  />
+            <controls:NavigationButton ToolTip.Tip="Sélection"   Label="Sélection"   Icon="Select"   Command="{Binding ChooseCommand}" />
+            <controls:NavigationButton ToolTip.Tip="Création"    Label="Création"    Icon="Plus"     Command="{Binding AddCommand}"    />
+            <controls:NavigationButton ToolTip.Tip="Edition"     Label="Edition"     Icon="Pen"      Command="{Binding EditCommand}"   />
+            <controls:NavigationButton ToolTip.Tip="Suppression" Label="Suppression" Icon="TrashCan" Command="{Binding RemoveCommand}" />
         </StackPanel>
     </Grid>
 </UserControl>

@@ -1,26 +1,19 @@
+using System.Windows.Input;
 using Avalonia.Controls;
-using wt_desktop.app.Core.Controls;
+using CommunityToolkit.Mvvm.Input;
 
 namespace wt_desktop.app.Core.Module;
 
 public partial class AdminModule : UserControl
 {
+    public ICommand NavigateToBayCommand { get; }
+
     public AdminModule()
     {
         InitializeComponent();
-    }
 
-    private void OnButtonClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-    {
-        NavigationButton button = (NavigationButton)sender!;
+        NavigateToBayCommand = new RelayCommand(() => PageContent.Content = new BayBoard(EBoardMode.Search, ""));
 
-        switch (button.Name)
-        {
-            case "BayButton":
-                PageContent.Content = new BayBoard(EBoardMode.Search, "");
-                break;
-            default:
-                break;
-        }
+        DataContext = this;
     }
 }

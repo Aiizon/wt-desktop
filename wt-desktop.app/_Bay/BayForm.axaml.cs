@@ -12,6 +12,8 @@ public partial class BayForm : UserControl
         Bay           entity
     ) {
         InitializeComponent();
+
+        DataContext = new BayFormManager(controller, mode, entity);
     }
 
     public BayForm(EFormMode mode, Bay entity) : this(new BayController(), mode, entity) { }

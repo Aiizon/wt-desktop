@@ -22,7 +22,14 @@ public enum EBoardMode
 
 public abstract class EntityController<E> where E : WtEntity, new()
 {
-    protected EntityController() {}
+    private Window? MainWindow { get; }
+
+    protected EntityController()
+    {
+        MainWindow = Avalonia.Application.Current!.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop
+            ? desktop.MainWindow
+            : throw new Exception("MainWindow is null");
+    }
 
     public abstract UserControl GetForm(EFormMode mode, E? entity = null);
     public abstract UserControl GetBoard(EBoardMode mode, string search);
@@ -41,7 +48,7 @@ public abstract class EntityController<E> where E : WtEntity, new()
 
         boardManager.ChooseAction = (e) => window.Close();
 
-        window.ShowDialog(window);
+        window.ShowDialog(MainWindow!);
 
         return boardManager.SelectedEntity ?? throw new Exception("SelectedEntity is null");
     }
@@ -65,7 +72,7 @@ public abstract class EntityController<E> where E : WtEntity, new()
         formManager.OnSave   = () => window.Close();
         formManager.OnCancel = () => window.Close();
 
-        window.ShowDialog(window);
+        window.ShowDialog(MainWindow!);
 
         return formManager.CurrentEntity ?? throw new Exception("CurrentEntity is null");
     }
@@ -84,7 +91,7 @@ public abstract class EntityController<E> where E : WtEntity, new()
         formManager.OnSave   = () => window.Close();
         formManager.OnCancel = () => window.Close();
 
-        window.ShowDialog(window);
+        window.ShowDialog(MainWindow!);
 
         return formManager.CurrentEntity ?? throw new Exception("CurrentEntity is null");
     }
@@ -142,7 +149,7 @@ public abstract class EntityController<E> where E : WtEntity, new()
 
         window.Content = panel;
 
-        window.ShowDialog(window);
+        window.ShowDialog(MainWindow!);
 
         if (confirmed)
         {
@@ -155,6 +162,7 @@ public abstract class EntityController<E> where E : WtEntity, new()
         try
         {
             WtContext.Instance.Remove(entity);
+            WtContext.Instance.SaveChanges();
         }
         catch (Exception e)
         {

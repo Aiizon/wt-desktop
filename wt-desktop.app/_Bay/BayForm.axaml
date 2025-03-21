@@ -2,6 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:core="clr-namespace:wt_desktop.app.Core"
+        xmlns:controls="clr-namespace:wt_desktop.app.Core.Controls"
         d:DataContext="{d:DesignInstance Type=core:BayFormManager}"
         x:DataType="core:BayFormManager"
         x:Class="wt_desktop.app.Core.BayForm"
@@ -16,33 +17,33 @@
         <Expander Grid.Row="0" HorizontalAlignment="Stretch">
             <Grid HorizontalAlignment="Stretch" Margin="5">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5"    />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5"    />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="4*" />
+                    <RowDefinition Height="5"  />
+                    <RowDefinition Height="4*" />
+                    <RowDefinition Height="5"  />
+                    <RowDefinition Height="4*" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="LabelColumn" />
-                    <ColumnDefinition Width="*" SharedSizeGroup="InputColumn"    />
+                    <ColumnDefinition Width="2*"  SharedSizeGroup="LabelColumn" />
+                    <ColumnDefinition Width="10*" SharedSizeGroup="InputColumn" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Nom" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" />
-                <TextBox Grid.Row="0" Grid.Column="1" x:Name="NameBox" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Watermark="Nom" />
+                <TextBlock     Grid.Row="0" Grid.Column="0" Text="Nom"             HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" />
+                <TextBox       Grid.Row="0" Grid.Column="1" x:Name="NameBox"       HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Nom" />
 
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="Localisation" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" />
-                <TextBox Grid.Row="2" Grid.Column="1" x:Name="LocationBox" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Watermark="Localisation" />
+                <TextBlock     Grid.Row="2" Grid.Column="0" Text="Localisation"    HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" />
+                <TextBox       Grid.Row="2" Grid.Column="1" x:Name="LocationBox"   HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Localisation" />
 
-                <TextBlock Grid.Row="4" Grid.Column="0" Text="Nombre d'unités" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" />
-                <NumericUpDown Grid.Row="4" Grid.Column="1" x:Name="SizeBox" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Watermark="Nombre d'unités" />
+                <TextBlock     Grid.Row="4" Grid.Column="0" Text="Nombre d'unités" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" />
+                <NumericUpDown Grid.Row="4" Grid.Column="1" x:Name="SizeBox"       HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Nombre d'unités" />
             </Grid>
         </Expander>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
-            <Button ToolTip.Tip="Annuler"       Command="{Binding CancelCommand}" />
-            <Button ToolTip.Tip="Réinitialiser" Command="{Binding ResetCommand}"  />
-            <Button ToolTip.Tip="Enregistrer"   Command="{Binding SaveCommand}"   />
+            <controls:NavigationButton ToolTip.Tip="Annuler"       Label="Annuler"       Icon="Cancel"      Command="{Binding CancelCommand}" />
+            <controls:NavigationButton ToolTip.Tip="Réinitialiser" Label="Réinitialiser" Icon="Restart"     Command="{Binding ResetCommand}"  />
+            <controls:NavigationButton ToolTip.Tip="Enregistrer"   Label="Enregistrer"   Icon="ContentSave" Command="{Binding SaveCommand}"   />
         </StackPanel>
     </Grid>
 </UserControl>

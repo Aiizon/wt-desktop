@@ -77,20 +77,56 @@ public class BoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
 
         SearchCommand = new RelayCommand(() => ReloadSource(), () => true);
         AddCommand    = new RelayCommand(
-            () => { if (AddAction != null) AddAction.Invoke(new E()); },
-            () => AddAction != null);
+            () =>
+            {
+                if (AddAction != null)
+                {
+                    AddAction.Invoke(new E());
+                }
+                else
+                {
+                    controller.AddEntity(new E());
+                }
+            },
+            () => true);
 
         EditCommand   = new RelayCommand(
-            () => { if (SelectedEntity != null && EditAction != null) EditAction.Invoke(SelectedEntity); },
-            () => SelectedEntity != null && EditAction != null);
+            () =>
+            {
+                if (SelectedEntity != null && EditAction != null)
+                {
+                    EditAction.Invoke(SelectedEntity);
+                }
+                else
+                {
+                    controller.EditEntity(SelectedEntity);
+                }
+            },
+            () => SelectedEntity != null);
 
         RemoveCommand = new RelayCommand(
-            () => { if (SelectedEntity != null && RemoveAction != null) RemoveAction.Invoke(SelectedEntity); },
-            () => SelectedEntity != null && RemoveAction != null);
+            () =>
+            {
+                if (SelectedEntity != null && RemoveAction != null)
+                {
+                    RemoveAction.Invoke(SelectedEntity);
+                }
+                else
+                {
+                    controller.RemoveEntity(SelectedEntity);
+                }
+            },
+            () => SelectedEntity != null);
 
         ChooseCommand = new RelayCommand(
-            () => { if (SelectedEntity != null && ChooseAction != null) ChooseAction.Invoke(SelectedEntity); },
-            () => SelectedEntity != null && ChooseAction != null);
+            () =>
+            {
+                if (SelectedEntity != null && ChooseAction != null)
+                {
+                    ChooseAction.Invoke(SelectedEntity);
+                }
+            },
+            () => SelectedEntity != null);
 
         ReloadSource();
     }

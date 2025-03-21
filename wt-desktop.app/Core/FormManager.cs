@@ -56,8 +56,9 @@ public abstract class FormManager<E>: INotifyPropertyChanged where E: WtEntity, 
                         OnSave?.Invoke();
                 }
             }
-        });
-        ResetCommand  = new RelayCommand(Reset);
+            // @todo: form error handling
+        }, () => true);
+        ResetCommand  = new RelayCommand(Reset, () => true);
         CancelCommand = new RelayCommand(() =>
         {
             if (Cancel())
@@ -65,7 +66,7 @@ public abstract class FormManager<E>: INotifyPropertyChanged where E: WtEntity, 
                 CurrentEntity = null;
                 OnCancel?.Invoke();
             }
-        });
+        }, () => true);
     }
 
     public abstract bool Save();

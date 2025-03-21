@@ -1,4 +1,5 @@
 using System;
+using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -13,14 +14,8 @@ public partial class NavigationButton : UserControl
     public static readonly StyledProperty<string> IconProperty =
         AvaloniaProperty.Register<ModuleButton, string>(nameof(Icon));
 
-    public new static readonly RoutedEvent<RoutedEventArgs> ClickEvent =
-        RoutedEvent.Register<ModuleButton, RoutedEventArgs>(nameof(Click), RoutingStrategies.Bubble);
-
-    public new event EventHandler<RoutedEventArgs> Click
-    {
-        add    => AddHandler(ClickEvent, value);
-        remove => RemoveHandler(ClickEvent, value);
-    }
+    public static readonly StyledProperty<ICommand> CommandProperty =
+        AvaloniaProperty.Register<ModuleButton, ICommand>(nameof(Command));
 
     public string Label
     {
@@ -32,6 +27,12 @@ public partial class NavigationButton : UserControl
     {
         get => GetValue(IconProperty);
         set => SetValue(IconProperty, value);
+    }
+
+    public ICommand Command
+    {
+        get => GetValue(CommandProperty);
+        set => SetValue(CommandProperty, value);
     }
 
     public NavigationButton()
@@ -49,15 +50,9 @@ public partial class NavigationButton : UserControl
         {
             button.Click += (sender, eventArgs) =>
             {
-                RaiseEvent(new RoutedEventArgs(ClickEvent));
+                Command.Execute(null);
                 eventArgs.Handled = true;
             };
         }
     }
-    //
-    // private void OnButtonClick(object? sender, RoutedEventArgs e)
-    // {
-    //     Button button = (Button)sender!;
-    //     ClickEvent
-    // }
 }
