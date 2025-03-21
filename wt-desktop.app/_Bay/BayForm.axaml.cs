@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using wt_desktop.ef.Entity;
 
-namespace wt_desktop.app.Core;
+namespace wt_desktop.app;
 
 public partial class BayForm : UserControl
 {

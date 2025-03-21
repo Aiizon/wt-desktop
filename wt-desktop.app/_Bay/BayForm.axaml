@@ -1,11 +1,11 @@
 <UserControl xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:core="clr-namespace:wt_desktop.app.Core"
-        xmlns:controls="clr-namespace:wt_desktop.app.Core.Controls"
+        xmlns:core="clr-namespace:wt_desktop.app"
+        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
         d:DataContext="{d:DesignInstance Type=core:BayFormManager}"
         x:DataType="core:BayFormManager"
-        x:Class="wt_desktop.app.Core.BayForm"
+        x:Class="wt_desktop.app.BayForm"
 >
     <Grid Margin="5">
         <Grid.RowDefinitions>

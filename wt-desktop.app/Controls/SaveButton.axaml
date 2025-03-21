@@ -1,7 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:iconPacks="https://github.com/MahApps/IconPacks.Avalonia"
-             x:Class="wt_desktop.app.Core.Controls.SaveButton"
+             x:Class="wt_desktop.app.Controls.SaveButton"
              x:Name="Control"
 >
     <Button x:Name="InnerButton"

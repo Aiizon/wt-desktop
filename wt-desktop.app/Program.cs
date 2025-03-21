@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using System;
 
-namespace wt_desktop.app.Core;
+namespace wt_desktop.app;
 
 class Program
 {

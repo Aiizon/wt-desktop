@@ -1,11 +1,11 @@
 <UserControl xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:controls="clr-namespace:wt_desktop.app.Core.Controls"
-        xmlns:module="clr-namespace:wt_desktop.app.Core.Module"
+        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+        xmlns:module="clr-namespace:wt_desktop.app.Module"
         d:DataContext="{d:DesignInstance Type=module:AdminModule}"
         x:DataType="module:AdminModule"
-        x:Class="wt_desktop.app.Core.Module.AdminModule"
+        x:Class="wt_desktop.app.Module.AdminModule"
 >
     <Grid Margin="5">
         <Grid.ColumnDefinitions>

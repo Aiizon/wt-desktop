@@ -1,10 +1,10 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using wt_desktop.app.Core.Controls;
+using wt_desktop.app.Controls;
 using wt_desktop.ef;
 using wt_desktop.ef.Entity;
 
-namespace wt_desktop.app.Core;
+namespace wt_desktop.app;
 
 public partial class BayBoard : UserControl
 {

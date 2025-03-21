@@ -3,9 +3,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:suki="clr-namespace:SukiUI.Controls;assembly=SukiUI"
-        xmlns:controls="clr-namespace:wt_desktop.app.Core.Controls"
+        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+        xmlns:root="clr-namespace:wt_desktop.app"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="wt_desktop.app.Core.MainWindow"
+        d:DataContext="{d:DesignInstance Type=root:MainWindow}"
+        x:DataType="root:MainWindow"
+        x:Class="wt_desktop.app.MainWindow"
         Title="WorkTogether"
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"
@@ -24,13 +27,13 @@
                 x:Name="AdminButton"
                 Icon="BadgeAccount"
                 Label="Administration"
-                Click="OnButtonClick"
+                Command="{Binding AdminModuleCommand}"
             />
             <controls:ModuleButton
                 x:Name="AccountantButton"
                 Icon="HandCoin"
                 Label="Comptabilité"
-                Click="OnButtonClick"
+                Command="{Binding AccountantModuleCommand}"
             />
         </UniformGrid>
 

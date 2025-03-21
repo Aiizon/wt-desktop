@@ -4,7 +4,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 
-namespace wt_desktop.app.Core.Controls;
+namespace wt_desktop.app.Controls;
 
 public partial class SaveButton : UserControl
 {
