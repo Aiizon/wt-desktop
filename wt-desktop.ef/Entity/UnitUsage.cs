@@ -15,6 +15,8 @@ public class UnitUsage: WtIdentityEntity
     [Column("color")]
     public string Color { get; set; }
 
+    public override string DisplayText => $"{Name} ({Color})";
+
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {
         return;

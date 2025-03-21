@@ -15,8 +15,13 @@ public class Bay : WtIdentityEntity
     [Column("location")]
     public string Location { get; set; }
 
-    public virtual IQueryable<Unit> Units(WtContext context)
-        => context.Unit.Where(u => u.Bay.Id == Id);
+    public virtual IQueryable<Unit> Units()
+        => WtContext.Instance.Unit.Where(u => u.Bay.Id == Id);
+
+    public int Size
+        => Units().ToList().Count;
+
+    public override string DisplayText => Name;
 
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {

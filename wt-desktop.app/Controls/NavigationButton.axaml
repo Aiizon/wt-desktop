@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:iconPacks="https://github.com/MahApps/IconPacks.Avalonia"
+             x:Class="wt_desktop.app.Controls.NavigationButton"
+             x:Name="Control"
+>
+    <Button x:Name="InnerButton"
+            Margin="5"
+            FontSize="10"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+    >
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+            <iconPacks:PackIconMaterial Kind="{Binding ElementName=Control, Path=Icon}"  Margin="5" />
+            <TextBlock                  Text="{Binding ElementName=Control, Path=Label}" Margin="5" />
+        </StackPanel>
+    </Button>
+</UserControl>

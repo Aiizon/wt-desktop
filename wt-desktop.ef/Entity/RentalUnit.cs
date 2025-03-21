@@ -27,6 +27,8 @@ public class RentalUnit: WtEntity
     [Column("unit_id")]
     public int UnitId { get; set; }
 
+    public override string DisplayText => $"{RentalId} {UnitId}";
+
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {
         #region Rental

@@ -1,34 +1,22 @@
-using Avalonia.Controls;
-using Avalonia.Interactivity;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
+using SukiUI.Controls;
 using wt_desktop.app.Module;
 
 namespace wt_desktop.app;
 
-public partial class MainWindow : Window
+public partial class MainWindow : SukiWindow
 {
+    public ICommand AdminModuleCommand      { get; }
+    public ICommand AccountantModuleCommand { get; }
+    
     public MainWindow()
     {
         InitializeComponent();
 
-        AdminButton.Click      += OnButtonClick;
-        AccountantButton.Click += OnButtonClick;
-    }
-
-    private void OnButtonClick(object? sender, RoutedEventArgs e)
-    {
-        Button button = (Button)sender!;
-
-        switch (button.Name)
-        {
-            case "AdminButton":
-                MainContent.Content = new AdminModule();
-                break;
-            case "AccountantButton":
-                MainContent.Content = null;
-                break;
-            default:
-                MainContent.Content = null;
-                break;
-        }
+        AdminModuleCommand      = new RelayCommand(() => MainContent.Content = new AdminModule(), () => true);
+        AccountantModuleCommand = new RelayCommand(() => MainContent.Content = null, () => true);
+        
+        DataContext = this;
     }
 }

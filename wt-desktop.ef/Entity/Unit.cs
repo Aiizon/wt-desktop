@@ -36,6 +36,8 @@ public class Unit : WtIdentityEntity
     public virtual IQueryable<RentalUnit> Rentals(WtContext context)
         => RentalUnit.Source(context).Where(ru => ru.Unit.Id == Id);
 
+    public override string DisplayText => Name;
+
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {
         #region Bay

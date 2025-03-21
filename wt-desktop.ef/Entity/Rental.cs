@@ -37,6 +37,10 @@ public class Rental : WtIdentityEntity
     public virtual IQueryable<RentalUnit> RentalUnits(WtContext context)
         => context.RentalUnit.Where(ru => ru.Rental.Id == Id);
 
+    public override string DisplayText => $"{Offer?.DisplayText}, {Customer?.DisplayText}";
+
+    public override string SearchText => $"{BillingType?.DisplayText} {Offer?.DisplayText} {Customer?.DisplayText} {MonthlyRentPrice} {DoRenew} {FirstRentalDate} {RentalEndDate}";
+
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {
         #region BillingType

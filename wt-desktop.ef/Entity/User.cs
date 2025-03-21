@@ -52,6 +52,8 @@ public class User : WtIdentityEntity
         return $"{FirstName} {LastName}";
     }
 
+    public override string DisplayText => GetFullName();
+
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {
         return;
