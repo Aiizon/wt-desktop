@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using wt_desktop.app.Controls;
+using wt_desktop.app.Core;
 using wt_desktop.ef;
 using wt_desktop.ef.Entity;
 

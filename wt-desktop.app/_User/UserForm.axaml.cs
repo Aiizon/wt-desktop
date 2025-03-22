@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using wt_desktop.app.Core;
 using wt_desktop.ef;
 using wt_desktop.ef.Entity;
 
@@ -23,6 +24,17 @@ public partial class UserForm : UserControl
 public class UserFormManager : FormManager<User>
 {
     #region Properties
+    private User _User;
+    
+    public User User
+    {
+        get => _User;
+        set
+        {
+            _User = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
     
     public UserFormManager
@@ -31,6 +43,8 @@ public class UserFormManager : FormManager<User>
         EFormMode      mode, 
         User           entity
     ): base(controller, mode, entity) {
+        User = entity;
+        
         Reset();
     }
 
