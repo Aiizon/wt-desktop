@@ -24,14 +24,67 @@ public partial class UserForm : UserControl
 public class UserFormManager : FormManager<User>
 {
     #region Properties
-    private User _User;
+    private string _Email;
     
-    public User User
+    public string Email
     {
-        get => _User;
+        get => _Email;
         set
         {
-            _User = value;
+            if (value == _Email) return;
+            _Email = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    private string _FirstName;
+    
+    public string FirstName
+    {
+        get => _FirstName;
+        set
+        {
+            if (value == _FirstName) return;
+            _FirstName = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    private string _LastName;
+    
+    public string LastName
+    {
+        get => _LastName;
+        set
+        {
+            if (value == _LastName) return;
+            _LastName = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    private string _Roles;
+    
+    public string Roles
+    {
+        get => _Roles;
+        set
+        {
+            if (value == _Roles) return;
+            _Roles = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    private string _Type;
+    
+    public string Type
+    {
+        get => _Type;
+        set
+        {
+            if (value == _Type) return;
+            _Type = value;
             OnPropertyChanged();
         }
     }
@@ -43,19 +96,27 @@ public class UserFormManager : FormManager<User>
         EFormMode      mode, 
         User           entity
     ): base(controller, mode, entity) {
-        User = entity;
-        
         Reset();
     }
 
     public override bool Save()
     {
-
+        CurrentEntity.Email     = Email     ?? "";
+        CurrentEntity.FirstName = FirstName ?? "";
+        CurrentEntity.LastName  = LastName  ?? "";
+        CurrentEntity.Roles     = Roles     ?? "";
+        CurrentEntity.Type      = Type      ?? "";
+        
         return true;
     }
 
     public sealed override void Reset()
     {
+        Email     = CurrentEntity.Email;
+        FirstName = CurrentEntity.FirstName;
+        LastName  = CurrentEntity.LastName;
+        Roles     = CurrentEntity.Roles;
+        Type      = CurrentEntity.Type;
     }
 
     public override bool Cancel()
