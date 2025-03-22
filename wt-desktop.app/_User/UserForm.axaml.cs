@@ -1,3 +1,4 @@
+using System.Linq;
 using Avalonia.Controls;
 using wt_desktop.app.Core;
 using wt_desktop.ef;
@@ -24,6 +25,8 @@ public partial class UserForm : UserControl
 public class UserFormManager : FormManager<User>
 {
     #region Properties
+    private User _User;
+    
     private string _Email;
     
     public string Email
@@ -88,6 +91,8 @@ public class UserFormManager : FormManager<User>
             OnPropertyChanged();
         }
     }
+    
+    public RolesEditorManager RolesEditorManager { get; }
     #endregion
     
     public UserFormManager
@@ -96,6 +101,9 @@ public class UserFormManager : FormManager<User>
         EFormMode      mode, 
         User           entity
     ): base(controller, mode, entity) {
+        _User = entity;
+        RolesEditorManager = new RolesEditorManager(_User);
+        
         Reset();
     }
 
@@ -104,19 +112,19 @@ public class UserFormManager : FormManager<User>
         CurrentEntity.Email     = Email     ?? "";
         CurrentEntity.FirstName = FirstName ?? "";
         CurrentEntity.LastName  = LastName  ?? "";
-        CurrentEntity.Roles     = Roles     ?? "";
         CurrentEntity.Type      = Type      ?? "";
+        CurrentEntity.RolesList = RolesEditorManager.Roles.ToList();
         
         return true;
     }
 
     public sealed override void Reset()
     {
-        Email     = CurrentEntity.Email;
-        FirstName = CurrentEntity.FirstName;
-        LastName  = CurrentEntity.LastName;
-        Roles     = CurrentEntity.Roles;
-        Type      = CurrentEntity.Type;
+        Email                    = CurrentEntity.Email;
+        FirstName                = CurrentEntity.FirstName;
+        LastName                 = CurrentEntity.LastName;
+        Type                     = CurrentEntity.Type;
+        RolesEditorManager.Roles = new(CurrentEntity.RolesList);
     }
 
     public override bool Cancel()

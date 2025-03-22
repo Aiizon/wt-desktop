@@ -11,15 +11,6 @@ public class RolesEditorManager
     private User   _User;
     private string _NewRole = string.Empty;
     
-    public RolesEditorManager(User user)
-    {
-        _User = user;
-        RefreshRoles();
-        
-        AddRoleCommand    = new RelayCommand        (AddRole   , ()     => true);
-        RemoveRoleCommand = new RelayCommand<string>(RemoveRole, (role) => true);
-    }
-    
     public string NewRole
     {
         get => _NewRole;
@@ -31,9 +22,25 @@ public class RolesEditorManager
     
     private ObservableCollection<string> _Roles          = new();
     private ObservableCollection<string> _AvailableRoles = new(User.UserRoles);
-    
-    public ObservableCollection<string> Roles          => _Roles;
+
+    public ObservableCollection<string> Roles
+    {
+        get => _Roles;
+        set
+        {
+            _Roles = value;
+        }
+    }
     public ObservableCollection<string> AvailableRoles => _AvailableRoles;
+    
+    public RolesEditorManager(User user)
+    {
+        _User = user;
+        RefreshRoles();
+        
+        AddRoleCommand    = new RelayCommand        (AddRole   , ()     => true);
+        RemoveRoleCommand = new RelayCommand<string>(RemoveRole, (role) => true);
+    }
     
     public ICommand AddRoleCommand    { get; }
     public ICommand RemoveRoleCommand { get; }
@@ -71,7 +78,6 @@ public class RolesEditorManager
             {
                 Roles.Add(role);
             }
-            
         }
     }
 }
