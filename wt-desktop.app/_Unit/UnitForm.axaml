@@ -16,11 +16,9 @@
 
         <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="4*" />
+                <RowDefinition Height="6*" />
                 <RowDefinition Height="5"  />
-                <RowDefinition Height="4*" />
-                <RowDefinition Height="5"  />
-                <RowDefinition Height="4*" />
+                <RowDefinition Height="6*" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -28,11 +26,11 @@
                 <ColumnDefinition Width="10*" SharedSizeGroup="InputColumn" />
             </Grid.ColumnDefinitions>
 
-            <!-- <TextBlock     Grid.Row="0" Grid.Column="0" Text="Nom"                                     HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" /> -->
-            <!-- <TextBox       Grid.Row="0" Grid.Column="1" x:Name="NameBox"     Text="{Binding Name}"     HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Nom" /> -->
-            <!-- -->
-            <!-- <TextBlock     Grid.Row="2" Grid.Column="0" Text="Localisation"                            HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" /> -->
-            <!-- <TextBox       Grid.Row="2" Grid.Column="1" x:Name="LocationBox" Text="{Binding Location}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Localisation" /> -->
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Nom"            HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <TextBox   Grid.Row="0" Grid.Column="1" Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Nom" />
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Baie"           HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <ComboBox  Grid.Row="2" Grid.Column="1"                       HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" ItemsSource="{Binding AvailableBays}" SelectedItem="{Binding SelectedBay}" />
         </Grid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">

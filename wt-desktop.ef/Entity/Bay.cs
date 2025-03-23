@@ -27,4 +27,9 @@ public class Bay : WtIdentityEntity
     {
         return;
     }
+
+    public override string ToString()
+    {
+        return Name;
+    }
 }
