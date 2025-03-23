@@ -15,8 +15,9 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0">
-            <controls:NavigationButton Icon="Server"  Label="Baies"        Command="{Binding NavigateToBayCommand}"  />
-            <controls:NavigationButton Icon="Account" Label="Utilisateurs" Command="{Binding NavigateToUserCommand}" />
+            <controls:NavigationButton Icon="Server"   Label="Baies"        Command="{Binding NavigateToBayCommand}"  />
+            <controls:NavigationButton Icon="DataBase" Label="Unités"       Command="{Binding NavigateToUnitCommand}" />
+            <controls:NavigationButton Icon="Account"  Label="Utilisateurs" Command="{Binding NavigateToUserCommand}" />
         </StackPanel>
 
         <ContentControl x:Name="PageContent" Grid.RowSpan="3" Grid.Column="2" />

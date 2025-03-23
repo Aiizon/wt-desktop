@@ -53,5 +53,21 @@
         <DependentUpon>SearchButton.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="_Unit\UnitBoard.axaml.cs">
+        <DependentUpon>UnitBoard.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="_Unit\UnitForm.axaml.cs">
+        <DependentUpon>BayForm.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="_Unit\BayBoard.axaml.cs">
+        <DependentUpon>BayBoard.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="_Unit\BayForm.axaml.cs">
+        <DependentUpon>BayForm.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>
