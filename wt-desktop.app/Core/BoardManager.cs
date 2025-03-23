@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.Input;
 using wt_desktop.ef;
 using wt_desktop.ef.Entity;
 
-namespace wt_desktop.app;
+namespace wt_desktop.app.Core;
 
 public class BoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
 {

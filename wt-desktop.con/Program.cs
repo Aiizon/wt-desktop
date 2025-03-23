@@ -15,6 +15,9 @@ class Program
 
             ConsoleTools.Pause(WtContext.Instance.Database.CanConnect() ? "Database connection successful." : "Database connection failed.");
 
+            var users = WtContext.Instance.User.Count();
+            ConsoleTools.Display($"Users found: {users}");
+            
             Bay bay = GenerateBay(reference);
             bay = WtContext.Instance.Bay.FirstOrDefault(u => u.Name == reference) ?? bay;
             SearchBay(bay.Id);

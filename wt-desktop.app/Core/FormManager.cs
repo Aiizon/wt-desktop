@@ -5,7 +5,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using wt_desktop.ef.Entity;
 
-namespace wt_desktop.app;
+namespace wt_desktop.app.Core;
 
 public abstract class FormManager<E>: INotifyPropertyChanged where E: WtEntity, new()
 {

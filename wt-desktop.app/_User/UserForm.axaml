@@ -1,0 +1,59 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:root="clr-namespace:wt_desktop.app"
+        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+        xmlns:core="clr-namespace:wt_desktop.app.Core"
+        d:DataContext="{d:DesignInstance Type=root:UserFormManager}"
+        x:DataType="root:UserFormManager"
+        x:Class="wt_desktop.app.UserForm"
+>
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="5"   />
+            <RowDefinition Height="2*"  />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="2*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"  SharedSizeGroup="LabelColumn" />
+                <ColumnDefinition Width="10*" SharedSizeGroup="InputColumn" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Email"               HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <TextBox   Grid.Row="0" Grid.Column="1" Text="{Binding Email}"     HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Email" />
+            
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Prénom"              HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <TextBox   Grid.Row="2" Grid.Column="1" Text="{Binding FirstName}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Prénom" />
+            
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Nom"                 HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <TextBox   Grid.Row="4" Grid.Column="1" Text="{Binding LastName}"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Nom" />
+            
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Role(s)"             HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <core:RolesEditor Grid.Row="6" Grid.Column="1" DataContext="{Binding RolesEditorManager}" />
+            
+            <TextBlock Grid.Row="8" Grid.Column="0" Text="Type"                HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <TextBox   Grid.Row="8" Grid.Column="1" Text="{Binding Type}"      HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Type" />
+ 
+        </Grid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
+            <controls:NavigationButton ToolTip.Tip="Annuler"       Label="Annuler"       Icon="Cancel"      Command="{Binding CancelCommand}" />
+            <controls:NavigationButton ToolTip.Tip="Réinitialiser" Label="Réinitialiser" Icon="Restart"     Command="{Binding ResetCommand}"  />
+            <controls:NavigationButton ToolTip.Tip="Enregistrer"   Label="Enregistrer"   Icon="ContentSave" Command="{Binding SaveCommand}"   />
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 
 namespace wt_desktop.ef.Entity;
@@ -9,11 +10,7 @@ namespace wt_desktop.ef.Entity;
 [Index(nameof(Email), IsUnique = true)]
 public class User : WtIdentityEntity
 {
-    public enum EUserType
-    {
-        User,
-        Customer
-    }
+    public static readonly List<string> UserRoles = new() {"ROLE_ADMIN", "ROLE_USER"};
 
     [Required, EmailAddress]
     [Column("email")]
@@ -22,19 +19,26 @@ public class User : WtIdentityEntity
     [Required]
     [Column("roles", TypeName = "json")]
     public string Roles { get; set; } = "[]";
+    
+    [NotMapped]
+    public IEnumerable<string> RolesList
+    {
+        get => JsonSerializer.Deserialize<List<string>>(Roles) ?? new List<string>();
+        set => Roles = JsonSerializer.Serialize(value);
+    }
 
     [Required]
     [Column("type")]
-    public EUserType Type { get; set; }
+    public string Type { get; set; }
 
     [Column("first_name")]
-    public string FirstName { get; set; }
+    public string? FirstName { get; set; }
 
     [Column("last_name")]
-    public string LastName { get; set; }
+    public string? LastName { get; set; }
 
     [Column("address")]
-    public string Address { get; set; }
+    public string? Address { get; set; }
 
     [Required]
     [Column("password")]
@@ -45,17 +49,37 @@ public class User : WtIdentityEntity
     public bool isVerified { get; set; }
 
     [Column("picture_path")]
-    public string PicturePath { get; set; }
+    public string? PicturePath { get; set; }
 
-    public string GetFullName()
-    {
-        return $"{FirstName} {LastName}";
-    }
-
-    public override string DisplayText => GetFullName();
+    public override string DisplayText => $"{FirstName ?? "Anonyme"} {LastName ?? "Anonyme"} {Email}";
 
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {
         return;
+    }
+    
+    public bool HasRole(string role)
+    {
+        return RolesList.Contains(role);
+    }
+    
+    public void AddRole(string role)
+    {
+        var roles = RolesList.ToList();
+        if (!roles.Contains(role))
+        {
+            roles.Add(role);
+            RolesList = roles;
+        }
+    }
+    
+    public void RemoveRole(string role)
+    {
+        var roles = RolesList.ToList();
+        if (roles.Contains(role))
+        {
+            roles.Remove(role);
+            RolesList = roles;
+        }
     }
 }
