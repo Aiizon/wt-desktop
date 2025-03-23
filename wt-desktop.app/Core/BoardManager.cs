@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.EntityFrameworkCore;
 using wt_desktop.ef;
 using wt_desktop.ef.Entity;
 
@@ -67,6 +69,7 @@ public class BoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
     public ICommand ChooseCommand  { get; }
     #endregion
 
+    [SuppressMessage("ReSharper.DPA", "DPA0007: Large number of DB records", MessageId = "count: 1260")]
     protected BoardManager
     (
         EntityController<E> controller,
@@ -139,9 +142,16 @@ public class BoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
 
     public void ReloadSource()
     {
+        var query = WtContext.Instance.Set<E>().AsQueryable();
+
+        if (typeof(E) == typeof(Unit))
+        {
+            query = query.Include(nameof(Bay));
+        }
+        
         EntitiesSource = !string.IsNullOrWhiteSpace(SearchText) ?
-            WtContext.Instance.Set<E>().ToList().Where(x => x.MatchSearch(SearchText)) :
-            WtContext.Instance.Set<E>().ToList();
+            query.ToList().Where(x => x.MatchSearch(SearchText)) :
+            query.ToList();
     }
 
     #region INotifyPropertyChanged

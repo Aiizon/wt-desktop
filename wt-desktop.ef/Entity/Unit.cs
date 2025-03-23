@@ -32,6 +32,15 @@ public class Unit : WtIdentityEntity
     [Required]
     [Column("status")]
     public EUnitStatus Status { get; set; }
+    
+    [NotMapped]
+    public string StatusText => Status switch
+    {
+        EUnitStatus.OK          => "OK",
+        EUnitStatus.KO          => "KO",
+        EUnitStatus.Maintenance => "Maintenance",
+        _                       => "Inconnu"
+    };
 
     public virtual IQueryable<RentalUnit> Rentals(WtContext context)
         => RentalUnit.Source(context).Where(ru => ru.Unit.Id == Id);
