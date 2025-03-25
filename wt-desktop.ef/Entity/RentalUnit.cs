@@ -7,22 +7,14 @@ namespace wt_desktop.ef.Entity;
 [Table("rental_unit")]
 public class RentalUnit: WtEntity
 {
-    [Key]
-    [Required]
-    [Column("rental_id")]
-    public Rental Rental { get; set; }
+    public Rental? Rental { get; set; }
 
-    [Key]
     [Required]
     [Column("rental_id")]
     public int RentalId { get; set; }
 
-    [Key]
-    [Required]
-    [Column("unit_id")]
-    public Unit Unit { get; set; }
+    public Unit? Unit { get; set; }
 
-    [Key]
     [Required]
     [Column("unit_id")]
     public int UnitId { get; set; }
@@ -35,7 +27,7 @@ public class RentalUnit: WtEntity
         modelBuilder.Entity<RentalUnit>()
             .HasOne(ru => ru.Rental)
             .WithMany()
-            .HasForeignKey("rental_id")
+            .HasForeignKey(ru => ru.RentalId)
             .HasConstraintName("FK_53F75393A7CF2329")
             .IsRequired(true)
         ;
@@ -45,7 +37,7 @@ public class RentalUnit: WtEntity
         modelBuilder.Entity<RentalUnit>()
             .HasOne(ru => ru.Unit)
             .WithMany()
-            .HasForeignKey("unit_id")
+            .HasForeignKey(ru => ru.UnitId)
             .HasConstraintName("FK_53F75393F8BD700D")
             .IsRequired(true)
         ;
@@ -56,9 +48,9 @@ public class RentalUnit: WtEntity
         );
     }
 
-    public static IQueryable<RentalUnit> Source(WtContext context)
+    public static IQueryable<RentalUnit> Source()
     {
-        return context.RentalUnit
+        return WtContext.Instance.RentalUnit
             .Include(ru => ru.Rental)
             .Include(ru => ru.Unit)
         ;

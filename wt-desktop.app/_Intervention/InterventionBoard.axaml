@@ -1,0 +1,76 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:root="clr-namespace:wt_desktop.app"
+        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+        d:DataContext="{d:DesignInstance Type=root:InterventionBoardManager}"
+        x:DataType="root:InterventionBoardManager"
+        x:Class="wt_desktop.app.InterventionBoard"
+>
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="5"    />
+            <RowDefinition Height="10*"  />
+            <RowDefinition Height="5"    />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*" />
+                <ColumnDefinition Width="5"   />
+                <ColumnDefinition Width="2*"  />
+            </Grid.ColumnDefinitions>
+
+            <TextBox x:Name="SearchBox" Grid.Column="0" Text="{Binding SearchText}" Margin="5" Watermark="Rechercher" />
+
+            <controls:SearchButton x:Name="SearchButton" Grid.Column="2" Command="{Binding SearchCommand}" />
+        </Grid>
+
+        <TabControl Grid.Row="2" x:Name="TabControl">
+            <TabItem Header="En cours">
+                <DataGrid ItemsSource="{Binding CurrentInterventions, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" IsReadOnly="True">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Sélection"   Command="{Binding ChooseCommand}" />
+                            <MenuItem Header="Création"    Command="{Binding AddCommand}"    />
+                            <MenuItem Header="Edition"     Command="{Binding EditCommand}"   />
+                            <MenuItem Header="Suppression" Command="{Binding RemoveCommand}" />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="3*" Header="Commentaire"      Binding="{Binding Comment}"   />
+                        <DataGridTextColumn Width="2*" Header="Date de début"    Binding="{Binding StartDate, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" />
+                        <DataGridTextColumn Width="2*" Header="Date de fin"      Binding="{Binding EndDate,   StringFormat=\{0:dd/MM/yyyy HH:mm\}}" />
+                        <DataGridTextColumn Width="5*" Header="Unités affectées" Binding="{Binding UnitsText}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Prochainement">
+                <DataGrid ItemsSource="{Binding UpcomingInterventions, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" IsReadOnly="True">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Sélection"   Command="{Binding ChooseCommand}" />
+                            <MenuItem Header="Création"    Command="{Binding AddCommand}"    />
+                            <MenuItem Header="Edition"     Command="{Binding EditCommand}"   />
+                            <MenuItem Header="Suppression" Command="{Binding RemoveCommand}" />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="3*" Header="Commentaire"      Binding="{Binding Comment}"   />
+                        <DataGridTextColumn Width="2*" Header="Date de début"    Binding="{Binding StartDate, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" />
+                        <DataGridTextColumn Width="2*" Header="Date de fin"      Binding="{Binding EndDate,   StringFormat=\{0:dd/MM/yyyy HH:mm\}}" />
+                        <DataGridTextColumn Width="5*" Header="Unités affectées" Binding="{Binding UnitsText}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
+            <controls:NavigationButton ToolTip.Tip="Création"    Label="Création"    Icon="Plus"     Command="{Binding AddCommand}"    />
+            <controls:NavigationButton ToolTip.Tip="Edition"     Label="Edition"     Icon="Pen"      Command="{Binding EditCommand}"   />
+            <controls:NavigationButton ToolTip.Tip="Suppression" Label="Suppression" Icon="TrashCan" Command="{Binding RemoveCommand}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
@@ -78,6 +79,7 @@ public class BoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
         Controller = controller;
         SearchText = searchText;
 
+        #region Commands
         SearchCommand = new RelayCommand(ReloadSource, () => true);
         AddCommand    = new RelayCommand(
             () =>
@@ -136,20 +138,28 @@ public class BoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
                 }
             },
             () => SelectedEntity != null);
+        #endregion
 
         ReloadSource();
     }
 
     public void ReloadSource()
     {
-        var query = WtContext.Instance.Set<E>().AsQueryable();
+        Type          entityType   = typeof(E);
+        MethodInfo?   sourceMethod = entityType.GetMethod("Source");
+        IQueryable<E> query;
 
-        if (typeof(E) == typeof(Unit))
+        if (sourceMethod != null)
         {
-            query = query.Include(nameof(Bay));
+            query = (IQueryable<E>)sourceMethod.Invoke(null, null)!;
+        }
+        else
+        {
+            query = WtContext.Instance.Set<E>().AsQueryable();
         }
         
-        EntitiesSource = !string.IsNullOrWhiteSpace(SearchText) ?
+        
+        EntitiesSource = !string.IsNullOrWhiteSpace(SearchText)  ?
             query.ToList().Where(x => x.MatchSearch(SearchText)) :
             query.ToList();
     }
@@ -157,7 +167,7 @@ public class BoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
     #region INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private void OnPropertyChanged([CallerMemberName]string? propertyName = null)
+    protected void OnPropertyChanged([CallerMemberName]string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

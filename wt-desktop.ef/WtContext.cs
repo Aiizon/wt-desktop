@@ -21,23 +21,25 @@ public class WtContext: DbContext
     }
 
     #region sets
-    public DbSet<Unit>          Unit         { get; set; }
+    public DbSet<Unit>              Unit            { get; set; }
 
-    public DbSet<Bay>           Bay          { get; set; }
+    public DbSet<Bay>               Bay             { get; set; }
 
-    public DbSet<User>          User         { get; set; }
+    public DbSet<User>              User            { get; set; }
 
-    public DbSet<Offer>         Offer        { get; set; }
+    public DbSet<Offer>             Offer           { get; set; }
 
-    public DbSet<BillingType>   BillingType  { get; set; }
+    public DbSet<BillingType>       BillingType     { get; set; }
 
-    public DbSet<Rental>        Rental       { get; set; }
+    public DbSet<Rental>            Rental          { get; set; }
 
-    public DbSet<RentalUnit>    RentalUnit   { get; set; }
+    public DbSet<RentalUnit>        RentalUnit      { get; set; }
 
-    public DbSet<Intervention>  Intervention { get; set; }
+    public DbSet<Intervention>      Intervention    { get; set; }
+    
+    public DbSet<UnitIntervention> UnitIntervention { get; set; }
 
-    public DbSet<UnitUsage>     UnitUsage    { get; set; }
+    public DbSet<UnitUsage>         UnitUsage       { get; set; }
     #endregion
 
     protected WtContext() { }

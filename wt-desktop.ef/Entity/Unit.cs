@@ -42,10 +42,15 @@ public class Unit : WtIdentityEntity
         _                       => "Inconnu"
     };
 
-    public virtual IQueryable<RentalUnit> Rentals(WtContext context)
-        => RentalUnit.Source(context).Where(ru => ru.Unit.Id == Id);
+    public virtual IQueryable<Rental?> Rentals
+        => RentalUnit
+            .Source()
+            .Where(ru => ru.UnitId == Id)
+            .Select(ru => ru.Rental);
 
     public override string DisplayText => Name;
+    
+    public string DisplayTextWithBay => $"{Name} ({Bay!.Name})";
 
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -74,9 +79,9 @@ public class Unit : WtIdentityEntity
     /// Returns the Unit with Bay and UnitUsage included.
     /// </summary>
     /// <param name="context">Context</param>
-    public static IQueryable<Unit> Source(WtContext context)
+    public static IQueryable<Unit> Source()
     {
-        return context.Unit
+        return WtContext.Instance.Unit
             .Include(u => u.Bay)
             .Include(u => u.UnitUsage)
         ;

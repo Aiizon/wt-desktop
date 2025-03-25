@@ -1,0 +1,71 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:core="clr-namespace:wt_desktop.app"
+        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+        d:DataContext="{d:DesignInstance Type=core:InterventionFormManager}"
+        x:DataType="core:InterventionFormManager"
+        x:Class="wt_desktop.app.InterventionForm"
+>
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="5"   />
+            <RowDefinition Height="2*"  />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="2*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"  SharedSizeGroup="LabelColumn" />
+                <ColumnDefinition Width="10*" SharedSizeGroup="InputColumn" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock  Grid.Row="0" Grid.Column="0" Text="Commentaire"                    HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5"  />
+            <TextBox    Grid.Row="0" Grid.Column="1" Text="{Binding Comment}"              HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Nom" />
+            
+            <TextBlock  Grid.Row="2" Grid.Column="0" Text="Date de début"                  HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5"  />
+            <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding StartDate}"    HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5"  />
+            
+            <TextBlock  Grid.Row="4" Grid.Column="0" Text="Date de fin"                    HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5"  />
+            <DatePicker Grid.Row="4" Grid.Column="1" SelectedDate="{Binding EndDate}"      HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5"  />
+            
+            <TextBlock  Grid.Row="6" Grid.Column="0" Text="Baies affectées"                 HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <ListBox    Grid.Row="6" Grid.Column="1" ItemsSource="{Binding AvailableBays}"  SelectedItems="{Binding SelectedBays}"   SelectionMode="Multiple" Height="150">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            
+            <TextBlock  Grid.Row="8" Grid.Column="0" Text="Unités individuelles affectées"  HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <ListBox    Grid.Row="8" Grid.Column="1" ItemsSource="{Binding AvailableUnits}" SelectedItems="{Binding SelectedUnits}" SelectionMode="Multiple" Height="150">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding DisplayTextWithBay}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
+            <controls:NavigationButton ToolTip.Tip="Annuler"       Label="Annuler"       Icon="Cancel"      Command="{Binding CancelCommand}" />
+            <controls:NavigationButton ToolTip.Tip="Réinitialiser" Label="Réinitialiser" Icon="Restart"     Command="{Binding ResetCommand}"  />
+            <controls:NavigationButton ToolTip.Tip="Enregistrer"   Label="Enregistrer"   Icon="ContentSave" Command="{Binding SaveCommand}"   />
+        </StackPanel>
+    </Grid>
+</UserControl>
