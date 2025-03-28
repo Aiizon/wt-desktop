@@ -19,6 +19,8 @@
         <entry key="wt-desktop.app/_Bay/BayForm.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/_Unit/BayBoard.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/_Unit/BayForm.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
+        <entry key="wt-desktop.app/_Unit/UnitBoard.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
+        <entry key="wt-desktop.app/_Unit/UnitForm.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/_User/BayForm.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/_User/UserBoard.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/_User/UserForm.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
