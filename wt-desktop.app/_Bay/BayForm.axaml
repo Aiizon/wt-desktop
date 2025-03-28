@@ -36,9 +36,9 @@
         </Grid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
-            <controls:NavigationButton ToolTip.Tip="Annuler"       Label="Annuler"       Icon="Cancel"      Command="{Binding CancelCommand}" />
-            <controls:NavigationButton ToolTip.Tip="Réinitialiser" Label="Réinitialiser" Icon="Restart"     Command="{Binding ResetCommand}"  />
-            <controls:NavigationButton ToolTip.Tip="Enregistrer"   Label="Enregistrer"   Icon="ContentSave" Command="{Binding SaveCommand}"   />
+            <controls:NavigationButton Label="Annuler"       Icon="Cancel"      Command="{Binding CancelCommand}" />
+            <controls:NavigationButton Label="Réinitialiser" Icon="Restart"     Command="{Binding ResetCommand}"  />
+            <controls:NavigationButton Label="Enregistrer"   Icon="ContentSave" Command="{Binding SaveCommand}"   />
         </StackPanel>
     </Grid>
 </UserControl>
