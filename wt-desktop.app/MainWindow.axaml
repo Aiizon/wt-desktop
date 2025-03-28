@@ -21,16 +21,14 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <UniformGrid x:Name="ModuleGrid" Grid.Row="0" Rows="1">
+        <UniformGrid Grid.Row="0" Rows="1">
             <TextBlock Text="WorkTogether" VerticalAlignment="Center" Margin="5" />
             <controls:ModuleButton
-                x:Name="AdminButton"
                 Icon="BadgeAccount"
                 Label="Administration"
                 Command="{Binding AdminModuleCommand}"
             />
             <controls:ModuleButton
-                x:Name="AccountantButton"
                 Icon="HandCoin"
                 Label="Comptabilité"
                 Command="{Binding AccountantModuleCommand}"

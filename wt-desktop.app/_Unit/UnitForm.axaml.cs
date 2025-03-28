@@ -28,7 +28,7 @@ public class UnitFormManager : FormManager<Unit>
     #region Properties
     private string? _Name;
     
-    public string? Name
+    public string?  Name
     {
         get => _Name;
         set
@@ -40,7 +40,7 @@ public class UnitFormManager : FormManager<Unit>
     
     private Bay? _SelectedBay;
     
-    public Bay? SelectedBay
+    public Bay?  SelectedBay
     {
         get => _SelectedBay;
         set
@@ -52,7 +52,7 @@ public class UnitFormManager : FormManager<Unit>
     
     private ObservableCollection<Bay> _AvailableBays = new();
     
-    public ObservableCollection<Bay> AvailableBays
+    public ObservableCollection<Bay>  AvailableBays
     {
         get => _AvailableBays;
         set
@@ -77,8 +77,13 @@ public class UnitFormManager : FormManager<Unit>
 
     public override bool Save()
     {
+        if (!Validate())
+        {
+            return false;
+        }
+        
         CurrentEntity.Name = Name ?? "";
-        CurrentEntity.Bay  = AvailableBays.FirstOrDefault(b => b.Id == SelectedBay?.Id) ?? new Bay();
+        CurrentEntity.Bay  = AvailableBays.FirstOrDefault(b => b.Id == SelectedBay?.Id);
         
         return true;
     }
@@ -92,5 +97,38 @@ public class UnitFormManager : FormManager<Unit>
     public override bool Cancel()
     {
         return true;
+    }
+
+    protected override void ValidateProperty(string propertyName)
+    {
+        ClearErrors(propertyName);
+
+        switch (propertyName)
+        {
+            case nameof(Name):
+                if (string.IsNullOrWhiteSpace(Name))
+                {
+                    SetError(nameof(Name), "Le nom ne peut pas être vide.");
+                }
+                break;
+            
+            case nameof(SelectedBay):
+                if 
+                (
+                    SelectedBay == null ||
+                    SelectedBay.Id == 0 ||
+                    WtContext.Instance.Bay.Find(SelectedBay.Id) == null
+                ) 
+                {
+                    SetError(nameof(SelectedBay), "La baie ne peut pas être vide.");
+                }
+                break;
+        }
+    }
+
+    public override void ValidateForm()
+    {
+        ValidateProperty(nameof(Name));
+        ValidateProperty(nameof(SelectedBay));
     }
 }

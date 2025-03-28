@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DotNetEnv;
+using Microsoft.EntityFrameworkCore;
 using wt_desktop.ef.Entity;
 
 namespace wt_desktop.ef;
@@ -97,7 +98,9 @@ public class WtContext: DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseMySQL("server=172.18.0.1;port=3308;user=root;database=wt-app;password=root;");
+        Env.Load(Path.Combine(AppContext.BaseDirectory, ".env"));
+        optionsBuilder.UseMySQL(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? 
+                                throw new Exception("DB_CONNECTION_STRING introuvable dans le fichier .env."));
         optionsBuilder.EnableSensitiveDataLogging();
     }
 }
