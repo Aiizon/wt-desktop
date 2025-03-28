@@ -42,8 +42,6 @@ public partial class App : Application
             {
                 throw new Exception("Database connection failed.");
             }
-            var units = WtContext.Instance.Unit.ToList();
-            var bays = WtContext.Instance.Bay.ToList();
         }
         catch (Exception e)
         {

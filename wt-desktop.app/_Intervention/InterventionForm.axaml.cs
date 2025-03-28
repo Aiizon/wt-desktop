@@ -39,9 +39,9 @@ public class InterventionFormManager: FormManager<Intervention>
         }
     }
     
-    private DateTime? _StartDate;
+    private DateTimeOffset? _StartDate;
     
-    public DateTime? StartDate
+    public DateTimeOffset?  StartDate
     {
         get => _StartDate;
         set
@@ -51,9 +51,9 @@ public class InterventionFormManager: FormManager<Intervention>
         }
     }
     
-    private DateTime? _EndDate;
+    private DateTimeOffset? _EndDate;
     
-    public DateTime? EndDate
+    public DateTimeOffset?  EndDate
     {
         get => _EndDate;
         set
@@ -101,6 +101,28 @@ public class InterventionFormManager: FormManager<Intervention>
             OnPropertyChanged();
         }
     }
+
+    private string _UnitSearchText;
+    
+    public string UnitSearchText
+    {
+        get => _UnitSearchText;
+        set
+        {
+            _UnitSearchText = value;
+
+            if (_UnitSearchText.Length > 3)
+            {
+                SearchUnits();
+            }
+            else
+            {
+                _AvailableUnits.Clear();
+            }
+            
+            OnPropertyChanged();
+        }
+    }
     #endregion
     
     public InterventionFormManager
@@ -109,6 +131,9 @@ public class InterventionFormManager: FormManager<Intervention>
         EFormMode              mode,
         Intervention           entity
     ) : base(controller, mode, entity) {
+        _AvailableBays  = new(WtContext.Instance.Bay.ToList()!);
+        _AvailableUnits = new(WtContext.Instance.Unit.ToList()!);
+        
         Reset();
     }
     
@@ -119,9 +144,9 @@ public class InterventionFormManager: FormManager<Intervention>
             return false;
         }
         
-        CurrentEntity.Comment   = Comment   ?? "";
-        CurrentEntity.StartDate = StartDate ?? DateTime.Now;
-        CurrentEntity.EndDate   = EndDate   ?? DateTime.Now;
+        CurrentEntity.Comment   = Comment ?? "";
+        CurrentEntity.StartDate = StartDate!.Value.DateTime;
+        CurrentEntity.EndDate   = EndDate?.DateTime;
         
         InterventionUnitHandler.HandleSave(CurrentEntity, SelectedBays, SelectedUnits);
         
@@ -131,14 +156,8 @@ public class InterventionFormManager: FormManager<Intervention>
     public override void Reset()
     {
         Comment   = CurrentEntity.Comment;
-        StartDate = CurrentEntity.StartDate;
-        EndDate   = CurrentEntity.EndDate;
-        
-        _AvailableBays  = new(WtContext.Instance.Bay.ToList()!);
-        _AvailableUnits = new(WtContext.Instance.Unit.ToList()!);
-        
-        _SelectedUnits.Clear();
-        _SelectedBays .Clear();
+        StartDate = new DateTimeOffset(CurrentEntity.StartDate ?? DateTime.Now);
+        EndDate   = new DateTimeOffset(CurrentEntity.EndDate   ?? DateTime.Now);
         
         (_SelectedBays, _AvailableUnits) = InterventionUnitHandler.HandleReset(CurrentEntity);
     }
@@ -182,5 +201,54 @@ public class InterventionFormManager: FormManager<Intervention>
         ValidateProperty(nameof(Comment));
         ValidateProperty(nameof(StartDate));
         ValidateProperty(nameof(EndDate));
+    }
+
+    private void SearchUnits()
+    {
+        var queryResult = WtContext.Instance.Unit
+            .Where(u => u.Name.Contains(UnitSearchText))
+            .Take(30)
+            .ToHashSet();
+        
+        var unitsInSelectedBays = SelectedBays
+            .SelectMany(b => b!.Units)
+            .Select(u => u.Id)
+            .ToHashSet();
+        
+        _AvailableUnits.Clear();
+        
+        foreach (var unit in queryResult)
+        {
+            if (!unitsInSelectedBays.Contains(unit.Id))
+            {
+                _AvailableUnits.Add(unit);
+            }
+        }
+        
+        OnPropertyChanged(nameof(AvailableUnits));
+    }
+    
+    public void AddUnitToSelected(Unit? unit)
+    {
+        if (unit == null || _SelectedUnits.Contains(unit))
+        {
+            return;
+        }
+        
+        _SelectedUnits.Add(unit);
+        _AvailableUnits.Remove(unit);
+        OnPropertyChanged(nameof(SelectedUnits));
+    }
+    
+    public void RemoveUnitFromSelected(Unit? unit)
+    {
+        if (unit == null || !_SelectedUnits.Contains(unit))
+        {
+            return;
+        }
+        
+        _SelectedUnits.Remove(unit);
+        _AvailableUnits.Add(unit);
+        OnPropertyChanged(nameof(SelectedUnits));
     }
 }

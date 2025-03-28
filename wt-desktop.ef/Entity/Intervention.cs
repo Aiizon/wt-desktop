@@ -13,7 +13,7 @@ public class Intervention : WtIdentityEntity
 
     [Required]
     [Column("start_date")]
-    public DateTime StartDate { get; set; }
+    public DateTime? StartDate { get; set; }
 
     [Column("end_date")]
     public DateTime? EndDate { get; set; }

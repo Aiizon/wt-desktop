@@ -22,11 +22,9 @@
                 <RowDefinition Height="5"  />
                 <RowDefinition Height="2*" />
                 <RowDefinition Height="5"  />
-                <RowDefinition Height="2*" />
+                <RowDefinition Height="3*" />
                 <RowDefinition Height="5"  />
-                <RowDefinition Height="2*" />
-                <RowDefinition Height="5"  />
-                <RowDefinition Height="2*" />
+                <RowDefinition Height="3*" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -40,26 +38,72 @@
             <TextBlock  Grid.Row="2" Grid.Column="0" Text="Date de début"                  HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5"  />
             <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding StartDate}"    HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5"  />
             
-            <TextBlock  Grid.Row="4" Grid.Column="0" Text="Date de fin"                    HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5"  />
+            <TextBlock  Grid.Row="4" Grid.Column="0" Text="Date de fin"                    HorizontalAlignment="Right"   VerticalAlignment="Top" Margin="5"  />
             <DatePicker Grid.Row="4" Grid.Column="1" SelectedDate="{Binding EndDate}"      HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5"  />
             
-            <TextBlock  Grid.Row="6" Grid.Column="0" Text="Baies affectées"                 HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
-            <ListBox    Grid.Row="6" Grid.Column="1" ItemsSource="{Binding AvailableBays}"  SelectedItems="{Binding SelectedBays}"   SelectionMode="Multiple" Height="150">
+            <TextBlock  Grid.Row="6" Grid.Column="0" Text="Baies affectées"                HorizontalAlignment="Right"   VerticalAlignment="Top" Margin="5" />
+            <!-- Avec avalonia, ComboBox ne permet pas de sélectionner plusieurs éléments, j'utilise donc une ListBox -->
+            <ListBox    Grid.Row="6" Grid.Column="1" 
+                        ItemsSource="{Binding AvailableBays}"  
+                        SelectedItems="{Binding SelectedBays}"   
+                        SelectionMode="Multiple" 
+                        BorderBrush="LightSlateGray"
+                        BorderThickness="1"
+            >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}"/>
+                        <TextBlock Text="{Binding Name}" Foreground="White" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
             
-            <TextBlock  Grid.Row="8" Grid.Column="0" Text="Unités individuelles affectées"  HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
-            <ListBox    Grid.Row="8" Grid.Column="1" ItemsSource="{Binding AvailableUnits}" SelectedItems="{Binding SelectedUnits}" SelectionMode="Multiple" Height="150">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding DisplayTextWithBay}"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <!-- <StackPanel Grid.Row="8" Grid.Column="1" Spacing="5"> -->
+            <!--     <AutoCompleteBox  -->
+            <!--         Watermark="Rechercher une unité (au moins 4 caractères)" -->
+            <!--         Text="{Binding UnitSearchText}" -->
+            <!--         ItemsSource="{Binding AvailableUnits}" -->
+            <!--         MinimumPrefixLength="4" -->
+            <!--         FilterMode="None" -->
+            <!--         Background="{DynamicResource ComboBoxBackground}" -->
+            <!--         BorderBrush="{DynamicResource ComboBoxBorderBrush}" -->
+            <!--         BorderThickness="1" -->
+            <!--     > -->
+            <!--         <AutoCompleteBox.ItemTemplate> -->
+            <!--             <DataTemplate> -->
+            <!--                 <TextBlock Text="{Binding DisplayTextWithBay}" /> -->
+            <!--             </DataTemplate> -->
+            <!--         </AutoCompleteBox.ItemTemplate> -->
+            <!--     </AutoCompleteBox> -->
+            <!--      -->
+            <!--     <Border  -->
+            <!--         BorderBrush="LightSlateGray"  -->
+            <!--         BorderThickness="1"  -->
+            <!--         Background="{DynamicResource ComboBoxBackground}" -->
+            <!--         MinHeight="100"> -->
+            <!--         <ItemsControl ItemsSource="{Binding SelectedUnits}"> -->
+            <!--             <ItemsControl.ItemTemplate> -->
+            <!--                 <DataTemplate> -->
+            <!--                     <Grid Margin="2"> -->
+            <!--                         <Grid.ColumnDefinitions> -->
+            <!--                             <ColumnDefinition Width="*" /> -->
+            <!--                             <ColumnDefinition Width="Auto" /> -->
+            <!--                         </Grid.ColumnDefinitions> -->
+            <!--                         <TextBlock Text="{Binding DisplayTextWithBay}" Foreground="White" VerticalAlignment="Center" /> -->
+            <!--                         <Button  -->
+            <!--                             Grid.Column="1" -->
+            <!--                             Content="✕" -->
+            <!--                             DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}" -->
+            <!--                             Command="{Binding RemoveUnitFromSelection, RelativeSource={RelativeSource AncestorType=ItemsControl}}" -->
+            <!--                             CommandParameter="{Binding}"  -->
+            <!--                             Background="Transparent"  -->
+            <!--                             Foreground="Red" -->
+            <!--                             Padding="5,0" /> -->
+            <!--                     </Grid> -->
+            <!--                 </DataTemplate> -->
+            <!--             </ItemsControl.ItemTemplate> -->
+            <!--         </ItemsControl> -->
+            <!--     </Border> -->
+            <!-- </StackPanel> -->
         </Grid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
