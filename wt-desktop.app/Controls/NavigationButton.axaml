@@ -9,6 +9,7 @@
             FontSize="10"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center"
+            ToolTip.Tip="{Binding ElementName=Control, Path=Label}"
     >
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
             <iconPacks:PackIconMaterial Kind="{Binding ElementName=Control, Path=Icon}"  Margin="5" />
