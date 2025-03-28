@@ -17,7 +17,7 @@ public partial class App : Application
         AvaloniaXamlLoader.Load(this);
 
         SukiTheme.GetInstance().ChangeBaseTheme(ThemeVariant.Dark);
-        SukiTheme.GetInstance().ChangeColorTheme(SukiColor.Red);
+        SukiTheme.GetInstance().ChangeColorTheme(SukiColor.Blue);
     }
 
     public override void OnFrameworkInitializationCompleted()

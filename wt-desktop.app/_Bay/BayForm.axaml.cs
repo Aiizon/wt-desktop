@@ -93,6 +93,7 @@ public class BayFormManager : FormManager<Bay>
                     SetError(nameof(Name), "Le nom ne peut pas être vide.");
                 }
                 break;
+            
             case nameof(Location):
                 if (string.IsNullOrWhiteSpace(Location))
                 {

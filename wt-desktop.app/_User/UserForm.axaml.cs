@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia.Controls;
 using wt_desktop.app.Core;
@@ -29,7 +30,7 @@ public class UserFormManager : FormManager<User>
     
     private string _Email;
     
-    public string Email
+    public string  Email
     {
         get => _Email;
         set
@@ -42,7 +43,7 @@ public class UserFormManager : FormManager<User>
     
     private string _FirstName;
     
-    public string FirstName
+    public string  FirstName
     {
         get => _FirstName;
         set
@@ -55,7 +56,7 @@ public class UserFormManager : FormManager<User>
     
     private string _LastName;
     
-    public string LastName
+    public string  LastName
     {
         get => _LastName;
         set
@@ -68,7 +69,7 @@ public class UserFormManager : FormManager<User>
     
     private string _Roles;
     
-    public string Roles
+    public string  Roles
     {
         get => _Roles;
         set
@@ -81,7 +82,7 @@ public class UserFormManager : FormManager<User>
     
     private string _Type;
     
-    public string Type
+    public string  Type
     {
         get => _Type;
         set
@@ -93,6 +94,30 @@ public class UserFormManager : FormManager<User>
     }
     
     public RolesEditorManager RolesEditorManager { get; }
+
+    private string _SelectedType;
+    
+    public string SelectedType
+    {
+        get => _SelectedType;
+        set
+        {
+            _SelectedType = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    private ObservableCollection<string> _AvailableTypes = new();
+    
+    public ObservableCollection<string>  AvailableTypes
+    {
+        get => _AvailableTypes;
+        set
+        {
+            _AvailableTypes = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
     
     public UserFormManager
@@ -102,6 +127,9 @@ public class UserFormManager : FormManager<User>
         User           entity
     ): base(controller, mode, entity) {
         _User = entity;
+        
+        AvailableTypes = new(User.UserTypes);
+        
         RolesEditorManager = new RolesEditorManager(_User);
         
         Reset();
@@ -114,10 +142,10 @@ public class UserFormManager : FormManager<User>
             return false;
         }
         
-        CurrentEntity.Email     = Email     ?? "";
-        CurrentEntity.FirstName = FirstName ?? "";
-        CurrentEntity.LastName  = LastName  ?? "";
-        CurrentEntity.Type      = Type      ?? "";
+        CurrentEntity.Email     = Email        ?? "";
+        CurrentEntity.FirstName = FirstName    ?? "";
+        CurrentEntity.LastName  = LastName     ?? "";
+        CurrentEntity.Type      = SelectedType ?? "";
         CurrentEntity.RolesList = RolesEditorManager.Roles.ToList();
         
         return true;
@@ -128,7 +156,7 @@ public class UserFormManager : FormManager<User>
         Email                    = CurrentEntity.Email;
         FirstName                = CurrentEntity.FirstName;
         LastName                 = CurrentEntity.LastName;
-        Type                     = CurrentEntity.Type;
+        SelectedType             = CurrentEntity.Type;
         RolesEditorManager.Roles = new(CurrentEntity.RolesList);
     }
 
@@ -143,32 +171,24 @@ public class UserFormManager : FormManager<User>
 
         switch (propertyName)
         {
-            case nameof(_Email):
-                if (string.IsNullOrWhiteSpace(_Email))
+            case nameof(Email):
+                if (string.IsNullOrWhiteSpace(Email))
                 {
-                    SetError(propertyName, "L'email est obligatoire.");
+                    SetError(nameof(Email), "L'email est obligatoire.");
                 }
                 break;
             
-            case nameof(_FirstName):
-                if (string.IsNullOrWhiteSpace(_FirstName))
+            case nameof(FirstName):
+                if (string.IsNullOrWhiteSpace(FirstName))
                 {
-                    SetError(propertyName, "Le prénom est obligatoire.");
+                    SetError(nameof(FirstName), "Le prénom est obligatoire.");
                 }
                 break;
             
-            case nameof(_LastName):
-                if (string.IsNullOrWhiteSpace(_LastName))
+            case nameof(LastName):
+                if (string.IsNullOrWhiteSpace(LastName))
                 {
-                    SetError(propertyName, "Le nom est obligatoire.");
-                }
-                break;
-            
-            case nameof(_Type):
-                // @todo: combobox for type to make sure it's a valid value
-                if (string.IsNullOrWhiteSpace(_Type))
-                {
-                    SetError(propertyName, "Le type est obligatoire.");
+                    SetError(nameof(LastName), "Le nom est obligatoire.");
                 }
                 break;
         }
@@ -176,9 +196,8 @@ public class UserFormManager : FormManager<User>
 
     public override void ValidateForm()
     {
-        ValidateProperty(nameof(_Email));
-        ValidateProperty(nameof(_FirstName));
-        ValidateProperty(nameof(_LastName));
-        ValidateProperty(nameof(_Type));
+        ValidateProperty(nameof(Email));
+        ValidateProperty(nameof(FirstName));
+        ValidateProperty(nameof(LastName));
     }
 }

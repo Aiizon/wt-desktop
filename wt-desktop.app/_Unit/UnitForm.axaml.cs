@@ -28,7 +28,7 @@ public class UnitFormManager : FormManager<Unit>
     #region Properties
     private string? _Name;
     
-    public string? Name
+    public string?  Name
     {
         get => _Name;
         set
@@ -40,7 +40,7 @@ public class UnitFormManager : FormManager<Unit>
     
     private Bay? _SelectedBay;
     
-    public Bay? SelectedBay
+    public Bay?  SelectedBay
     {
         get => _SelectedBay;
         set
@@ -52,7 +52,7 @@ public class UnitFormManager : FormManager<Unit>
     
     private ObservableCollection<Bay> _AvailableBays = new();
     
-    public ObservableCollection<Bay> AvailableBays
+    public ObservableCollection<Bay>  AvailableBays
     {
         get => _AvailableBays;
         set
@@ -83,7 +83,7 @@ public class UnitFormManager : FormManager<Unit>
         }
         
         CurrentEntity.Name = Name ?? "";
-        CurrentEntity.Bay  = AvailableBays.FirstOrDefault(b => b.Id == SelectedBay?.Id) ?? new Bay();
+        CurrentEntity.Bay  = AvailableBays.FirstOrDefault(b => b.Id == SelectedBay?.Id);
         
         return true;
     }
@@ -105,19 +105,22 @@ public class UnitFormManager : FormManager<Unit>
 
         switch (propertyName)
         {
-            case nameof(_Name):
-                if (string.IsNullOrWhiteSpace(_Name))
+            case nameof(Name):
+                if (string.IsNullOrWhiteSpace(Name))
                 {
-                    SetError(propertyName, "Le nom ne peut pas être vide.");
+                    SetError(nameof(Name), "Le nom ne peut pas être vide.");
                 }
                 break;
             
-            case nameof(_SelectedBay):
-                if (_SelectedBay == null ||
-                    _SelectedBay.Id == 0 ||
-                    WtContext.Instance.Bay.Find(_SelectedBay.Id) == null)
+            case nameof(SelectedBay):
+                if 
+                (
+                    SelectedBay == null ||
+                    SelectedBay.Id == 0 ||
+                    WtContext.Instance.Bay.Find(SelectedBay.Id) == null
+                ) 
                 {
-                    SetError(propertyName, "La baie ne peut pas être vide.");
+                    SetError(nameof(SelectedBay), "La baie ne peut pas être vide.");
                 }
                 break;
         }
@@ -125,7 +128,7 @@ public class UnitFormManager : FormManager<Unit>
 
     public override void ValidateForm()
     {
-        ValidateProperty(nameof(_Name));
-        ValidateProperty(nameof(_SelectedBay));
+        ValidateProperty(nameof(Name));
+        ValidateProperty(nameof(SelectedBay));
     }
 }
