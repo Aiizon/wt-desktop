@@ -77,6 +77,11 @@ public class UnitFormManager : FormManager<Unit>
 
     public override bool Save()
     {
+        if (!Validate())
+        {
+            return false;
+        }
+        
         CurrentEntity.Name = Name ?? "";
         CurrentEntity.Bay  = AvailableBays.FirstOrDefault(b => b.Id == SelectedBay?.Id) ?? new Bay();
         
@@ -92,5 +97,35 @@ public class UnitFormManager : FormManager<Unit>
     public override bool Cancel()
     {
         return true;
+    }
+
+    protected override void ValidateProperty(string propertyName)
+    {
+        ClearErrors(propertyName);
+
+        switch (propertyName)
+        {
+            case nameof(_Name):
+                if (string.IsNullOrWhiteSpace(_Name))
+                {
+                    SetError(propertyName, "Le nom ne peut pas être vide.");
+                }
+                break;
+            
+            case nameof(_SelectedBay):
+                if (_SelectedBay == null ||
+                    _SelectedBay.Id == 0 ||
+                    WtContext.Instance.Bay.Find(_SelectedBay.Id) == null)
+                {
+                    SetError(propertyName, "La baie ne peut pas être vide.");
+                }
+                break;
+        }
+    }
+
+    public override void ValidateForm()
+    {
+        ValidateProperty(nameof(_Name));
+        ValidateProperty(nameof(_SelectedBay));
     }
 }

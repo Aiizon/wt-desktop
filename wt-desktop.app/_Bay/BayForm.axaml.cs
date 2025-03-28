@@ -59,6 +59,11 @@ public class BayFormManager : FormManager<Bay>
 
     public override bool Save()
     {
+        if (!Validate())
+        {
+            return false;
+        }
+        
         CurrentEntity.Name     = Name     ?? "";
         CurrentEntity.Location = Location ?? "";
 
@@ -74,5 +79,32 @@ public class BayFormManager : FormManager<Bay>
     public override bool Cancel()
     {
         return true;
+    }
+
+    protected override void ValidateProperty(string propertyName)
+    {
+        ClearErrors(propertyName);
+        
+        switch (propertyName)
+        {
+            case nameof(Name):
+                if (string.IsNullOrWhiteSpace(Name))
+                {
+                    SetError(nameof(Name), "Le nom ne peut pas être vide.");
+                }
+                break;
+            case nameof(Location):
+                if (string.IsNullOrWhiteSpace(Location))
+                {
+                    SetError(nameof(Location), "L'emplacement ne peut pas être vide.");
+                }
+                break;
+        }
+    }
+
+    public override void ValidateForm()
+    {
+        ValidateProperty(nameof(Name));
+        ValidateProperty(nameof(Location));
     }
 }

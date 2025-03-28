@@ -109,6 +109,11 @@ public class UserFormManager : FormManager<User>
 
     public override bool Save()
     {
+        if (!Validate())
+        {
+            return false;
+        }
+        
         CurrentEntity.Email     = Email     ?? "";
         CurrentEntity.FirstName = FirstName ?? "";
         CurrentEntity.LastName  = LastName  ?? "";
@@ -130,5 +135,50 @@ public class UserFormManager : FormManager<User>
     public override bool Cancel()
     {
         return true;
+    }
+
+    protected override void ValidateProperty(string propertyName)
+    {
+        ClearErrors(propertyName);
+
+        switch (propertyName)
+        {
+            case nameof(_Email):
+                if (string.IsNullOrWhiteSpace(_Email))
+                {
+                    SetError(propertyName, "L'email est obligatoire.");
+                }
+                break;
+            
+            case nameof(_FirstName):
+                if (string.IsNullOrWhiteSpace(_FirstName))
+                {
+                    SetError(propertyName, "Le prénom est obligatoire.");
+                }
+                break;
+            
+            case nameof(_LastName):
+                if (string.IsNullOrWhiteSpace(_LastName))
+                {
+                    SetError(propertyName, "Le nom est obligatoire.");
+                }
+                break;
+            
+            case nameof(_Type):
+                // @todo: combobox for type to make sure it's a valid value
+                if (string.IsNullOrWhiteSpace(_Type))
+                {
+                    SetError(propertyName, "Le type est obligatoire.");
+                }
+                break;
+        }
+    }
+
+    public override void ValidateForm()
+    {
+        ValidateProperty(nameof(_Email));
+        ValidateProperty(nameof(_FirstName));
+        ValidateProperty(nameof(_LastName));
+        ValidateProperty(nameof(_Type));
     }
 }
