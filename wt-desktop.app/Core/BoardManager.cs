@@ -59,7 +59,6 @@ public class BoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
     public Action<E> AddAction    { get; set; }
     public Action<E> EditAction   { get; set; }
     public Action<E> RemoveAction { get; set; }
-    public Action<E> ChooseAction { get; set; }
     #endregion
 
     #region Commands
@@ -67,7 +66,6 @@ public class BoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
     public ICommand AddCommand     { get; }
     public ICommand EditCommand    { get; }
     public ICommand RemoveCommand  { get; }
-    public ICommand ChooseCommand  { get; }
     #endregion
 
     [SuppressMessage("ReSharper.DPA", "DPA0007: Large number of DB records", MessageId = "count: 1260")]
@@ -126,16 +124,6 @@ public class BoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
                 }
 
                 ReloadSource();
-            },
-            () => SelectedEntity != null);
-
-        ChooseCommand = new RelayCommand(
-            () =>
-            {
-                if (SelectedEntity != null && ChooseAction != null)
-                {
-                    ChooseAction.Invoke(SelectedEntity);
-                }
             },
             () => SelectedEntity != null);
         #endregion

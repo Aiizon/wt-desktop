@@ -31,7 +31,6 @@
         <DataGrid Grid.Row="2" ItemsSource="{Binding EntitiesSource, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" IsReadOnly="True">
             <DataGrid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Sélection"   Command="{Binding ChooseCommand}" />
                     <MenuItem Header="Création"    Command="{Binding AddCommand}"    />
                     <MenuItem Header="Edition"     Command="{Binding EditCommand}"   />
                     <MenuItem Header="Suppression" Command="{Binding RemoveCommand}" />

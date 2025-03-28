@@ -36,24 +36,6 @@ public abstract class EntityController<E> where E : WtEntity, new()
     public abstract UserControl GetBoard(EBoardMode mode, string search);
 
     #region View
-    public virtual E ChooseEntity(string search)
-    {
-        var board        = GetBoard(EBoardMode.Search, search);
-        var boardManager = board.DataContext as BoardManager<E> ?? throw new Exception("DataContext is not a BoardManager<E>");
-
-        var window = new SukiWindow
-        {
-            Title = "Selection d'une entité",
-            Content = board
-        };
-
-        boardManager.ChooseAction = (e) => window.Close();
-
-        window.ShowDialog(MainWindow!);
-
-        return boardManager.SelectedEntity ?? throw new Exception("SelectedEntity is null");
-    }
-
     public virtual UserControl ShowBoard(EBoardMode mode, string search)
     {
         return GetBoard(mode, search);
