@@ -13,10 +13,39 @@ public class Intervention : WtIdentityEntity
 
     [Required]
     [Column("start_date")]
-    public DateTime StartDate { get; set; }
+    public DateTime? StartDate { get; set; }
 
     [Column("end_date")]
     public DateTime? EndDate { get; set; }
+    
+    [NotMapped]
+    public IQueryable<UnitIntervention> UnitInterventions
+        => WtContext.Instance.UnitIntervention
+            .Where(ui => ui.InterventionId == Id)
+            .Select(ui => ui);
+    
+    [NotMapped]
+    public IQueryable<Unit?> Units
+        => UnitIntervention
+            .Source()
+            .Where(ui => ui.InterventionId == Id)
+            .Select(ui => ui.Unit);
+    
+    [NotMapped]
+    public string UnitsText
+        => string.Join(", ", Units.Select(u => $"{u!.Name} ({u.Bay!.Name ?? "N/A"})"));
+
+    [NotMapped]
+    public IQueryable<Bay?> Bays
+        => UnitIntervention
+            .Source()
+            .Where(ui => ui.InterventionId == Id)
+            .Select(ui => ui.Unit)
+            .Select(u => u!.Bay);
+    
+    [NotMapped]
+    public string BaysText
+        => string.Join(", ", Bays.Select(b => b!.DisplayText));
 
     public override string DisplayText => Comment;
 

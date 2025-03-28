@@ -34,8 +34,11 @@ public class Rental : WtIdentityEntity
     [Column("rental_end_date")]
     public DateTime? RentalEndDate { get; set; }
 
-    public virtual IQueryable<RentalUnit> RentalUnits(WtContext context)
-        => context.RentalUnit.Where(ru => ru.Rental.Id == Id);
+    public virtual IQueryable<Unit?> Units()
+        => RentalUnit
+            .Source()
+            .Where(ru => ru.RentalId == Id)
+            .Select(ru => ru.Unit);
 
     public override string DisplayText => $"{Offer?.DisplayText}, {Customer?.DisplayText}";
 
@@ -74,9 +77,9 @@ public class Rental : WtIdentityEntity
         #endregion
     }
 
-    public static IQueryable<Rental> Source(WtContext context)
+    public static IQueryable<Rental> Source()
     {
-        return context.Rental
+        return WtContext.Instance.Rental
             .Include(r => r.BillingType)
             .Include(r => r.Offer)
             .Include(r => r.Customer)

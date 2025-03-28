@@ -18,6 +18,14 @@ class Program
             var users = WtContext.Instance.User.Count();
             ConsoleTools.Display($"Users found: {users}");
             
+            ConsoleTools.Pause();
+            
+            var intervention = WtContext.Instance.Intervention.First();
+            var interventionUnit = intervention.Units.First();
+            ConsoleTools.Display($"Intervention found: {intervention.Id}, {intervention.Comment}, {interventionUnit!.Id}");
+            
+            ConsoleTools.Pause();
+            
             Bay bay = GenerateBay(reference);
             bay = WtContext.Instance.Bay.FirstOrDefault(u => u.Name == reference) ?? bay;
             SearchBay(bay.Id);
@@ -77,7 +85,7 @@ class Program
 
         if (bay != null)
         {
-            ConsoleTools.Display($"Bay found: {bay.Id} ({bay.Units().ToList().Count} units)");
+            ConsoleTools.Display($"Bay found: {bay.Id} ({bay.Size} units)");
         }
         else
         {
