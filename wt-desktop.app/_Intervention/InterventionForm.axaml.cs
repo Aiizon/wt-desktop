@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia.Controls;
@@ -115,6 +114,11 @@ public class InterventionFormManager: FormManager<Intervention>
     
     public override bool Save()
     {
+        if (!Validate())
+        {
+            return false;
+        }
+        
         CurrentEntity.Comment   = Comment   ?? "";
         CurrentEntity.StartDate = StartDate ?? DateTime.Now;
         CurrentEntity.EndDate   = EndDate   ?? DateTime.Now;
@@ -142,5 +146,41 @@ public class InterventionFormManager: FormManager<Intervention>
     public override bool Cancel()
     {
         return true;
+    }
+
+    protected override void ValidateProperty(string propertyName)
+    {
+        ClearErrors(propertyName);
+        
+        switch (propertyName)
+        {
+            case nameof(Comment):
+                if (string.IsNullOrWhiteSpace(Comment))
+                {
+                    SetError(nameof(Comment), "Le commentaire ne peut pas être vide.");
+                }
+                break;
+            
+            case nameof(StartDate):
+                if (StartDate == null)
+                {
+                    SetError(nameof(StartDate), "La date de début ne peut pas être vide.");
+                }
+                break;
+            
+            case nameof(EndDate):
+                if (EndDate == null)
+                {
+                    SetError(nameof(EndDate), "La date de fin ne peut pas être vide.");
+                }
+                break;
+        }
+    }
+    
+    public override void ValidateForm()
+    {
+        ValidateProperty(nameof(Comment));
+        ValidateProperty(nameof(StartDate));
+        ValidateProperty(nameof(EndDate));
     }
 }
