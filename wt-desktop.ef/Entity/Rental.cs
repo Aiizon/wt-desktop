@@ -34,7 +34,7 @@ public class Rental : WtIdentityEntity
     [Column("rental_end_date")]
     public DateTime? RentalEndDate { get; set; }
 
-    public virtual IQueryable<Unit?> Units
+    public virtual IQueryable<Unit?> Units()
         => RentalUnit
             .Source()
             .Where(ru => ru.RentalId == Id)

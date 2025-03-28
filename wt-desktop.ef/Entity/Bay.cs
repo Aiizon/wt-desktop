@@ -17,22 +17,20 @@ public class Bay : WtIdentityEntity
 
     private IQueryable<Unit?>? _Units = null;
 
-    public virtual IQueryable<Unit> Units
+    public virtual IQueryable<Unit> Units()
     {
-        get
+        if (_Units == null)
         {
-            if (_Units == null)
-            {
-                _Units = WtContext.Instance.Unit
-                    .Include(u => u.Bay)
-                    .Where(u => u.Bay!.Id == Id);
-            }
-            return _Units!;
+            _Units = WtContext.Instance.Unit
+                .Include(u => u.Bay)
+                .Where(u => u.Bay!.Id == Id);
         }
+        
+        return _Units!;
     }
     
     public int Size
-        => Units.Count();
+        => Units().Count();
 
     public override string DisplayText => Name;
 

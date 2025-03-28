@@ -42,7 +42,7 @@ public class Unit : WtIdentityEntity
         _                       => "Inconnu"
     };
 
-    public virtual IQueryable<Rental?> Rentals
+    public virtual IQueryable<Rental?> Rentals()
         => RentalUnit
             .Source()
             .Where(ru => ru.UnitId == Id)

@@ -24,7 +24,7 @@ public static class InterventionUnitHandler
         
         foreach (var bay in bays)
         {
-            foreach (var unit in bay!.Units)
+            foreach (var unit in bay!.Units())
             {
                 selectedUnits.Add(unit.Id);
             }
@@ -67,32 +67,32 @@ public static class InterventionUnitHandler
     (
         Intervention intervention
     ) {
-        // Copy the units to a hash set to avoid modifying the original collection
+        // Clone la liste d'unités originelle
         var interventionUnits = new HashSet<Unit?>();
         if (intervention.Id != 0)
         {
             interventionUnits = intervention.Units.ToHashSet();
         }
         
-        // Find the bays that contain all the units & add them to the selected bays
-        // & remove their units from the intervention units
+        // Trouve les baies ayant toutes leurs unités associées à l'intervention
+        // & retire leurs unités de la liste
         var selectedBays = new HashSet<Bay?>();
         var bays         = WtContext.Instance.Bay.ToList();
         foreach (var bay in bays)
         {
-            if (bay.Units.Any() && 
-                bay.Units.All(unit => interventionUnits.Contains(unit)))
+            if (bay.Units().Any() && 
+                bay.Units().All(unit => interventionUnits.Contains(unit)))
             {
                 selectedBays.Add(bay);
                 
-                foreach (var unit in bay.Units)
+                foreach (var unit in bay.Units())
                 {
                     interventionUnits.Remove(unit);
                 }
             }
         }
 
-        // Return filtered bays & units
+        // Renvoie les liste d'unités & baies filtrées
         return (new(selectedBays), new(interventionUnits));
     }
 }

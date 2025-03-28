@@ -110,17 +110,7 @@ public class InterventionFormManager: FormManager<Intervention>
         set
         {
             _UnitSearchText = value;
-
-            if (_UnitSearchText.Length > 3)
-            {
-                SearchUnits();
-            }
-            else
-            {
-                _AvailableUnits.Clear();
-            }
-            
-            OnPropertyChanged();
+            SearchUnits();
         }
     }
     #endregion
@@ -131,10 +121,10 @@ public class InterventionFormManager: FormManager<Intervention>
         EFormMode              mode,
         Intervention           entity
     ) : base(controller, mode, entity) {
-        _AvailableBays  = new(WtContext.Instance.Bay.ToList()!);
-        _AvailableUnits = new(WtContext.Instance.Unit.ToList()!);
-        
         Reset();
+        
+        _AvailableBays  = new(WtContext.Instance.Bay.ToList()!);
+        _AvailableUnits = _SelectedUnits;
     }
     
     public override bool Save()
@@ -159,7 +149,7 @@ public class InterventionFormManager: FormManager<Intervention>
         StartDate = new DateTimeOffset(CurrentEntity.StartDate ?? DateTime.Now);
         EndDate   = new DateTimeOffset(CurrentEntity.EndDate   ?? DateTime.Now);
         
-        (_SelectedBays, _AvailableUnits) = InterventionUnitHandler.HandleReset(CurrentEntity);
+        (_SelectedBays, _SelectedUnits) = InterventionUnitHandler.HandleReset(CurrentEntity);
     }
     
     public override bool Cancel()
@@ -205,13 +195,19 @@ public class InterventionFormManager: FormManager<Intervention>
 
     private void SearchUnits()
     {
+        if (UnitSearchText.Length < 3)
+        {
+            _AvailableUnits = new(_SelectedUnits);
+            return;
+        }
+        
         var queryResult = WtContext.Instance.Unit
-            .Where(u => u.Name.Contains(UnitSearchText))
+            .Where(u => u.Name.Contains(UnitSearchText) || u.Bay!.Name.Contains(UnitSearchText))
             .Take(30)
             .ToHashSet();
         
         var unitsInSelectedBays = SelectedBays
-            .SelectMany(b => b!.Units)
+            .SelectMany(b => b!.Units())
             .Select(u => u.Id)
             .ToHashSet();
         
@@ -226,29 +222,5 @@ public class InterventionFormManager: FormManager<Intervention>
         }
         
         OnPropertyChanged(nameof(AvailableUnits));
-    }
-    
-    public void AddUnitToSelected(Unit? unit)
-    {
-        if (unit == null || _SelectedUnits.Contains(unit))
-        {
-            return;
-        }
-        
-        _SelectedUnits.Add(unit);
-        _AvailableUnits.Remove(unit);
-        OnPropertyChanged(nameof(SelectedUnits));
-    }
-    
-    public void RemoveUnitFromSelected(Unit? unit)
-    {
-        if (unit == null || !_SelectedUnits.Contains(unit))
-        {
-            return;
-        }
-        
-        _SelectedUnits.Remove(unit);
-        _AvailableUnits.Add(unit);
-        OnPropertyChanged(nameof(SelectedUnits));
     }
 }
