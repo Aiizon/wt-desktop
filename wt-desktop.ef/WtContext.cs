@@ -6,6 +6,7 @@ namespace wt_desktop.ef;
 
 public class WtContext: DbContext
 {
+    #region Singleton
     private static WtContext? _instance;
 
     private static readonly object _lock = new object();
@@ -20,8 +21,11 @@ public class WtContext: DbContext
             }
         }
     }
+    
+    protected WtContext() { }
+    #endregion
 
-    #region sets
+    #region Sets
     public DbSet<Unit>              Unit            { get; set; }
 
     public DbSet<Bay>               Bay             { get; set; }
@@ -42,9 +46,7 @@ public class WtContext: DbContext
 
     public DbSet<UnitUsage>         UnitUsage       { get; set; }
     #endregion
-
-    protected WtContext() { }
-
+    
     /// <summary>
     /// Override de la méthode SaveChanges pour régénérer l'instance de la base de données
     /// </summary>
