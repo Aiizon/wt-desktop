@@ -79,6 +79,14 @@ public class LoginWindowManager: INotifyPropertyChanged
             ErrorMessage = e.Message;
             return;
         }
+        
+        if (!AuthProvider.Instance.CurrentUser!.HasRole("ROLE_ADMIN") &&
+            !AuthProvider.Instance.CurrentUser!.HasRole("ROLE_ACCOUNTANT"))
+        {
+            AuthProvider.Instance.Logout();
+            ErrorMessage = "Vous n'avez pas les droits d'accès à cette application.";
+            return;
+        }
 
         var mainWindow = new MainWindow();
         

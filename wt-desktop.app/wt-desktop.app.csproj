@@ -70,5 +70,9 @@
         <DependentUpon>BayForm.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Module\AccountingModule.axaml.cs">
+        <DependentUpon>AccountingModule.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>
