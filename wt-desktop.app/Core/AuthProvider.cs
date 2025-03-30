@@ -42,7 +42,7 @@ public class AuthProvider
             throw new Exception("L'email et le mot de passe ne peuvent pas être vides.");
         }
         
-        var user = WtContext.Instance.User.FirstOrDefault(u => u.Email == email);
+        var user = WtContext.Instance.User.FirstOrDefault(u => u.Email == email && u.Type == "user");
 
         if (user == null || !VerifyPassword(password, user.Password))
         {
