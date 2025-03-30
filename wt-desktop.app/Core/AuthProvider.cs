@@ -39,14 +39,14 @@ public class AuthProvider
     {
         if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
         {
-            return false;
+            throw new Exception("L'email et le mot de passe ne peuvent pas être vides.");
         }
         
-        var user = WtContext.Instance.User.FirstOrDefault(u => u.Email == email && u.Password == password);
+        var user = WtContext.Instance.User.FirstOrDefault(u => u.Email == email);
 
         if (user == null || !VerifyPassword(password, user.Password))
         {
-            return false;
+            throw new Exception("L'email ou le mot de passe est incorrect.");
         }
         
         _CurrentUser = user;

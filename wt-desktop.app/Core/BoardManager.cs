@@ -68,7 +68,6 @@ public class BoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
     public ICommand RemoveCommand  { get; }
     #endregion
 
-    [SuppressMessage("ReSharper.DPA", "DPA0007: Large number of DB records", MessageId = "count: 1260")]
     protected BoardManager
     (
         EntityController<E> controller,
