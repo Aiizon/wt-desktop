@@ -138,11 +138,36 @@ public class InterventionFormManager: FormManager<Intervention>
         CurrentEntity.StartDate = StartDate!.Value.DateTime;
         CurrentEntity.EndDate   = EndDate?.DateTime;
         
-        InterventionUnitHandler.HandleSave(CurrentEntity, SelectedBays, SelectedUnits);
-        
         return true;
     }
-    
+
+    public override void HandleSave()
+    {
+        if (!Save())
+        {
+            return;
+        }
+        
+        if (Mode == EFormMode.Create)
+        {
+            if (Controller.InsertEntity(CurrentEntity))
+            {
+                InterventionUnitHandler.HandleSave(CurrentEntity, SelectedBays, SelectedUnits);
+                OnSave?.Invoke();
+            }
+        }
+        else
+        if (Mode == EFormMode.Update)
+        {
+            // @fixme: update crashes on second save (entity is already tracked)
+            if (Controller.UpdateEntity(CurrentEntity))
+            {
+                InterventionUnitHandler.HandleSave(CurrentEntity, SelectedBays, SelectedUnits);
+                OnSave?.Invoke();
+            }
+        }
+    }
+
     public override void Reset()
     {
         Comment   = CurrentEntity.Comment;

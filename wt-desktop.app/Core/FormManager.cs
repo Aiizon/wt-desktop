@@ -47,27 +47,7 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
         Mode          = mode;
         CurrentEntity = entity;
 
-        SaveCommand   = new RelayCommand(() =>
-        {
-            if (Save())
-            {
-                if (Mode == EFormMode.Create)
-                {
-                    if (Controller.InsertEntity(CurrentEntity))
-                    {
-                        OnSave?.Invoke();
-                    }
-                }
-                else
-                if (Mode == EFormMode.Update)
-                {
-                    if (Controller.UpdateEntity(CurrentEntity))
-                    {
-                        OnSave?.Invoke();
-                    }
-                }
-            }
-        }, () => !HasErrors);
+        SaveCommand   = new RelayCommand(HandleSave, () => !HasErrors);
         ResetCommand  = new RelayCommand(Reset, () => true);
         CancelCommand = new RelayCommand(() =>
         {
@@ -77,6 +57,30 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
                 OnCancel?.Invoke();
             }
         }, () => true);
+    }
+    
+    public virtual void HandleSave()
+    {
+        if (!Save())
+        {
+            return;
+        }
+        
+        if (Mode == EFormMode.Create)
+        {
+            if (Controller.InsertEntity(CurrentEntity))
+            {
+                OnSave?.Invoke();
+            }
+        }
+        else
+        if (Mode == EFormMode.Update)
+        {
+            if (Controller.UpdateEntity(CurrentEntity))
+            {
+                OnSave?.Invoke();
+            }
+        }
     }
 
     public abstract bool Save();
