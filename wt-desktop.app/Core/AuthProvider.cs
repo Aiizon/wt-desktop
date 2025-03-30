@@ -49,6 +49,12 @@ public class AuthProvider
             throw new Exception("L'email ou le mot de passe est incorrect.");
         }
         
+        if (!user.HasRole("ROLE_ADMIN") &&
+            !user.HasRole("ROLE_ACCOUNTANT"))
+        {
+            throw new Exception("Vous n'avez pas les droits d'accès à cette application.");
+        }
+        
         _CurrentUser = user;
         OnAuthenticationStateChanged();
         return IsAuthenticated;
