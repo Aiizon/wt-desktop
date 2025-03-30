@@ -1,0 +1,35 @@
+<suki:SukiWindow xmlns="https://github.com/avaloniaui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:suki="clr-namespace:SukiUI.Controls;assembly=SukiUI"
+                 xmlns:root="clr-namespace:wt_desktop.app"
+                 mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="300"
+                 d:DataContext="{d:DesignInstance Type=root:LoginWindowManager}"
+                 x:DataType="root:LoginWindowManager"
+                 x:Class="wt_desktop.app.LoginWindow"
+                 Title="Se connecter à WorkTogether"
+                 Background="Transparent"
+                 ExtendClientAreaToDecorationsHint="True"
+                 TransparencyLevelHint="AcrylicBlur"
+>
+    <Border CornerRadius="8" Margin="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*"    />
+            </Grid.RowDefinitions>
+            <TextBlock  Grid.Row="0" Text="WorkTogether"      HorizontalAlignment="Center" FontSize="24" Margin="0,40,0,0" />
+            <StackPanel Grid.Row="1" Spacing="20" Width="200" VerticalAlignment="Center"   Orientation="Vertical">
+                <TextBlock Text="Connexion" FontSize="18"     HorizontalAlignment="Center" Margin="0,0,0,20" />
+                
+                <TextBox   Text="{Binding Email}"        Watermark="Adresse mail"                  />
+                <TextBox   Text="{Binding Password}"     Watermark="Mot de passe" PasswordChar="•" />
+                
+                <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" TextWrapping="Wrap" IsVisible="{Binding !!ErrorMessage}" />
+                
+                <Button    Content="Se connecter"        Command="{Binding LoginCommand}" HorizontalAlignment="Stretch" Margin="0,20,0,0" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</suki:SukiWindow>

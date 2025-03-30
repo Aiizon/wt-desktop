@@ -11,7 +11,9 @@
         <entry key="wt-desktop.app/Controls/SearchButton.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Core/DeletionConfirmationDialog.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Core/RolesEditor.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
+        <entry key="wt-desktop.app/LoginWindow.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/MainWindow.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
+        <entry key="wt-desktop.app/Module/AccountingModule.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Module/AdminModule.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Modules/AdminModule.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/_Bay/AdminModule.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />

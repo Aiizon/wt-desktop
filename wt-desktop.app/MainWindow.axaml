@@ -27,11 +27,13 @@
                 Icon="BadgeAccount"
                 Label="Administration"
                 Command="{Binding AdminModuleCommand}"
+                IsVisible="{Binding IsAdmin}"
             />
             <controls:ModuleButton
                 Icon="HandCoin"
                 Label="Comptabilité"
                 Command="{Binding AccountantModuleCommand}"
+                IsVisible="{Binding IsAdmin}"
             />
         </UniformGrid>
 

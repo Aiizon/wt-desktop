@@ -2,7 +2,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia.Controls;
 using wt_desktop.app.Core;
-using wt_desktop.ef;
 using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app;
@@ -178,26 +177,26 @@ public class UserFormManager : FormManager<User>
                 }
                 break;
             
-            case nameof(FirstName):
-                if (string.IsNullOrWhiteSpace(FirstName))
-                {
-                    SetError(nameof(FirstName), "Le prénom est obligatoire.");
-                }
-                break;
-            
-            case nameof(LastName):
-                if (string.IsNullOrWhiteSpace(LastName))
-                {
-                    SetError(nameof(LastName), "Le nom est obligatoire.");
-                }
-                break;
+            // case nameof(FirstName):
+            //     if (string.IsNullOrWhiteSpace(FirstName))
+            //     {
+            //         SetError(nameof(FirstName), "Le prénom est obligatoire.");
+            //     }
+            //     break;
+            //
+            // case nameof(LastName):
+            //     if (string.IsNullOrWhiteSpace(LastName))
+            //     {
+            //         SetError(nameof(LastName), "Le nom est obligatoire.");
+            //     }
+            //     break;
         }
     }
 
     public override void ValidateForm()
     {
         ValidateProperty(nameof(Email));
-        ValidateProperty(nameof(FirstName));
-        ValidateProperty(nameof(LastName));
+        // ValidateProperty(nameof(FirstName));
+        // ValidateProperty(nameof(LastName));
     }
 }

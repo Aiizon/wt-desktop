@@ -10,7 +10,7 @@ namespace wt_desktop.ef.Entity;
 [Index(nameof(Email), IsUnique = true)]
 public class User : WtIdentityEntity
 {
-    public static readonly List<string> UserRoles = new() {"ROLE_ADMIN", "ROLE_USER"};
+    public static readonly List<string> UserRoles = new() {"ROLE_ADMIN", "ROLE_ACCOUNTANT", "ROLE_USER"};
     public static readonly List<string> UserTypes = new() {"user", "customer"};
 
     [Required, EmailAddress]
