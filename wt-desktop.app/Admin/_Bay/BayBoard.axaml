@@ -1,0 +1,26 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:admin="clr-namespace:wt_desktop.app.Admin"
+        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+        d:DataContext="{d:DesignInstance Type=admin:BayBoardManager}"
+        x:DataType="admin:BayBoardManager"
+        x:Class="wt_desktop.app.Admin.BayBoard"
+>
+    <controls:BaseBoard.BoardContent>
+        <DataGrid ItemsSource="{Binding EntitiesSource, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" IsReadOnly="True">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Création"    Command="{Binding AddCommand}"    />
+                    <MenuItem Header="Edition"     Command="{Binding EditCommand}"   />
+                    <MenuItem Header="Suppression" Command="{Binding RemoveCommand}" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="2*" Header="Nom"             Binding="{Binding Name}"     />
+                <DataGridTextColumn Width="8*" Header="Localisation"    Binding="{Binding Location}" />
+                <DataGridTextColumn Width="2*" Header="Nombre d'unités" Binding="{Binding Size}"     />
+            </DataGrid.Columns>
+        </DataGrid>
+    </controls:BaseBoard.BoardContent>
+</UserControl>

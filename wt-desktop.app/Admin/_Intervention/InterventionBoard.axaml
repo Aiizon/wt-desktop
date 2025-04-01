@@ -1,0 +1,48 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:admin="clr-namespace:wt_desktop.app.Admin"
+        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+        d:DataContext="{d:DesignInstance Type=admin:InterventionBoardManager}"
+        x:DataType="admin:InterventionBoardManager"
+        x:Class="wt_desktop.app.Admin.InterventionBoard"
+>
+    <controls:BaseBoard.BoardContent>
+        <TabControl Grid.Row="2" x:Name="TabControl">
+            <TabItem Header="En cours">
+                <DataGrid ItemsSource="{Binding CurrentInterventions, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" IsReadOnly="True">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Création"    Command="{Binding AddCommand}"    />
+                            <MenuItem Header="Edition"     Command="{Binding EditCommand}"   />
+                            <MenuItem Header="Suppression" Command="{Binding RemoveCommand}" />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="3*" Header="Commentaire"      Binding="{Binding Comment}"   />
+                        <DataGridTextColumn Width="2*" Header="Date de début"    Binding="{Binding StartDate, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" />
+                        <DataGridTextColumn Width="2*" Header="Date de fin"      Binding="{Binding EndDate,   StringFormat=\{0:dd/MM/yyyy HH:mm\}}" />
+                        <DataGridTextColumn Width="5*" Header="Unités affectées" Binding="{Binding UnitsText}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Prochainement">
+                <DataGrid ItemsSource="{Binding UpcomingInterventions, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" IsReadOnly="True">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Création"    Command="{Binding AddCommand}"    />
+                            <MenuItem Header="Edition"     Command="{Binding EditCommand}"   />
+                            <MenuItem Header="Suppression" Command="{Binding RemoveCommand}" />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="3*" Header="Commentaire"      Binding="{Binding Comment}"   />
+                        <DataGridTextColumn Width="2*" Header="Date de début"    Binding="{Binding StartDate, StringFormat=\{0:dd/MM/yyyy HH:mm\}}" />
+                        <DataGridTextColumn Width="2*" Header="Date de fin"      Binding="{Binding EndDate,   StringFormat=\{0:dd/MM/yyyy HH:mm\}}" />
+                        <DataGridTextColumn Width="5*" Header="Unités affectées" Binding="{Binding UnitsText}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+    </controls:BaseBoard.BoardContent>
+</UserControl>

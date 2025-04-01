@@ -78,5 +78,37 @@
         <DependentUpon>DeletionConfirmationDialog.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Controls\RolesEditor.axaml.cs">
+        <DependentUpon>RolesEditor.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Admin\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Admin\_Bay\BayBoard.axaml" />
+      <AdditionalFiles Include="Admin\_Bay\BayForm.axaml" />
+      <AdditionalFiles Include="Admin\_Intervention\InterventionBoard.axaml" />
+      <AdditionalFiles Include="Admin\_Intervention\InterventionForm.axaml" />
+      <AdditionalFiles Include="Admin\_Offer\OfferBoard.axaml" />
+      <AdditionalFiles Include="Admin\_Offer\OfferForm.axaml" />
+      <AdditionalFiles Include="Admin\_Unit\UnitBoard.axaml" />
+      <AdditionalFiles Include="Admin\_Unit\UnitForm.axaml" />
+      <AdditionalFiles Include="Admin\_User\UserBoard.axaml" />
+      <AdditionalFiles Include="Admin\_User\UserForm.axaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="_User\UserBoard.axaml" />
+      <UpToDateCheckInput Remove="_User\UserForm.axaml" />
+      <UpToDateCheckInput Remove="_Unit\UnitBoard.axaml" />
+      <UpToDateCheckInput Remove="_Unit\UnitForm.axaml" />
+      <UpToDateCheckInput Remove="_Offer\OfferBoard.axaml" />
+      <UpToDateCheckInput Remove="_Offer\OfferForm.axaml" />
+      <UpToDateCheckInput Remove="_Intervention\InterventionBoard.axaml" />
+      <UpToDateCheckInput Remove="_Intervention\InterventionForm.axaml" />
     </ItemGroup>
 </Project>

@@ -1,0 +1,30 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:admin="clr-namespace:wt_desktop.app.Admin"
+        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+        d:DataContext="{d:DesignInstance Type=admin:UnitFormManager}"
+        x:DataType="admin:UnitFormManager"
+        x:Class="wt_desktop.app.Admin.UnitForm"
+>
+    <controls:BaseForm.FormContent>
+        <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="6*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="6*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"  SharedSizeGroup="LabelColumn" />
+                <ColumnDefinition Width="10*" SharedSizeGroup="InputColumn" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Nom"            HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <TextBox   Grid.Row="0" Grid.Column="1" Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Nom" />
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Baie"           HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <ComboBox  Grid.Row="2" Grid.Column="1"                       HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" ItemsSource="{Binding AvailableBays}" SelectedItem="{Binding SelectedBay}" />
+        </Grid>
+    </controls:BaseForm.FormContent>
+</UserControl>
