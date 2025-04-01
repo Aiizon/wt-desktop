@@ -4,7 +4,7 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:suki="clr-namespace:SukiUI.Controls;assembly=SukiUI"
                  xmlns:root="clr-namespace:wt_desktop.app"
-                 mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="300"
+                 mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="300"
                  d:DataContext="{d:DesignInstance Type=root:LoginWindowManager}"
                  x:DataType="root:LoginWindowManager"
                  x:Class="wt_desktop.app.LoginWindow"
@@ -21,7 +21,7 @@
                 <RowDefinition Height="*"    />
             </Grid.RowDefinitions>
             <TextBlock  Grid.Row="0" Text="WorkTogether"      HorizontalAlignment="Center" FontSize="24" Margin="0,40,0,0" />
-            <StackPanel Grid.Row="1" Spacing="20" Width="200" VerticalAlignment="Center"   Orientation="Vertical">
+            <StackPanel Grid.Row="1" Spacing="20" Width="400" VerticalAlignment="Center"   Orientation="Vertical">
                 <TextBlock Text="Connexion" FontSize="18"     HorizontalAlignment="Center" Margin="0,0,0,20" />
                 
                 <TextBox   Text="{Binding Email}"        Watermark="Adresse mail"                  />
@@ -29,7 +29,7 @@
                 
                 <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" TextWrapping="Wrap" IsVisible="{Binding !!ErrorMessage}" />
                 
-                <Button    Content="Se connecter"        Command="{Binding LoginCommand}" IsDefault="True" HorizontalAlignment="Stretch" Margin="0,20,0,0" />
+                <Button    Content="Se connecter"        Command="{Binding LoginCommand}" IsDefault="True" HorizontalAlignment="Stretch" Width="200" Margin="0,20,0,0" />
             </StackPanel>
         </Grid>
     </Border>
