@@ -74,5 +74,9 @@
         <DependentUpon>AccountingModule.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Controls\BoardControls.axaml.cs">
+        <DependentUpon>BoardControls.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>

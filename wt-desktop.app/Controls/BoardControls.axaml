@@ -1,0 +1,12 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+             x:Class="wt_desktop.app.Controls.BoardControls"
+             x:Name="Control"
+>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
+        <controls:NavigationButton ToolTip.Tip="Création"    Label="Création"    Icon="Plus"     Command="{Binding #Control.AddCommand}"    />
+        <controls:NavigationButton ToolTip.Tip="Edition"     Label="Edition"     Icon="Pen"      Command="{Binding #Control.EditCommand}"   />
+        <controls:NavigationButton ToolTip.Tip="Suppression" Label="Suppression" Icon="TrashCan" Command="{Binding #Control.RemoveCommand}" />
+    </StackPanel>
+</UserControl>
