@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:root="clr-namespace:wt_desktop.app"
+        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+        d:DataContext="{d:DesignInstance Type=root:OfferFormManager}"
+        x:DataType="root:OfferFormManager"
+        x:Class="wt_desktop.app.OfferForm"
+>
+    <controls:BaseForm.FormContent>
+        <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="2*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"  SharedSizeGroup="LabelColumn" />
+                <ColumnDefinition Width="10*" SharedSizeGroup="InputColumn" />
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock     Grid.Row="0" Grid.Column="0" Text="Nom"                                          />
+            <TextBox       Grid.Row="0" Grid.Column="1" Text="{Binding Name}"                               />
+            
+            <TextBlock     Grid.Row="2" Grid.Column="0" Text="Unité max."                                   />
+            <TextBox       Grid.Row="2" Grid.Column="1" Text="{Binding MaxUnits}"                           />
+            
+            <TextBlock     Grid.Row="4" Grid.Column="0" Text="Disponibilité"                                />
+            <TextBox       Grid.Row="4" Grid.Column="1" Text="{Binding Availability}"                       />
+            
+            <TextBlock     Grid.Row="6" Grid.Column="0" Text="Prix mensuel"                                 />
+            <NumericUpDown Grid.Row="6" Grid.Column="1" Value="{Binding MonthlyRentPrice}" Increment="0.01" />
+            
+            <TextBlock     Grid.Row="8" Grid.Column="0" Text="Bande passante"                               />
+            <TextBox       Grid.Row="8" Grid.Column="1" Text="{Binding Bandwidth}"                          />
+            
+            <TextBlock     Grid.Row="10" Grid.Column="0" Text="Actif"                                       />
+            <CheckBox      Grid.Row="10" Grid.Column="1" IsChecked="{Binding IsActive}"                     />
+        </Grid>
+    </controls:BaseForm.FormContent>
+</UserControl>

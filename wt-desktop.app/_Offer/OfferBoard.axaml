@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:app="clr-namespace:wt_desktop.app"
+        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+        d:DataContext="{d:DesignInstance Type=app:OfferBoardManager}"
+        x:DataType="app:OfferBoardManager"
+        x:Class="wt_desktop.app.OfferBoard"
+>
+    <controls:BaseBoard.BoardContent>
+        <DataGrid Grid.Row="2" ItemsSource="{Binding EntitiesSource, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" IsReadOnly="True">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Création"    Command="{Binding AddCommand}"    />
+                    <MenuItem Header="Edition"     Command="{Binding EditCommand}"   />
+                    <MenuItem Header="Suppression" Command="{Binding RemoveCommand}" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="2*" Header="Nom"            Binding="{Binding Name}"             />
+                <DataGridTextColumn Width="1*" Header="Unités max."    Binding="{Binding MaxUnits}"         />
+                <DataGridTextColumn Width="3*" Header="Disponibilité"  Binding="{Binding Availability}"     />
+                <DataGridTextColumn Width="2*" Header="Prix mensuel"   Binding="{Binding MonthlyRentPrice}" />
+                <DataGridTextColumn Width="3*" Header="Bande passante" Binding="{Binding Bandwidth}"        />
+                <DataGridTextColumn Width="1*" Header="Actif"          Binding="{Binding IsActive}"         />
+            </DataGrid.Columns>
+        </DataGrid>
+    </controls:BaseBoard.BoardContent>
+</UserControl>
