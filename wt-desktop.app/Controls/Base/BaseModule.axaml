@@ -17,13 +17,13 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Stretch">
-            <ContentControl Content="{Binding #Control.NavContent}" />
+        <DockPanel Grid.Column="0" LastChildFill="False">
+            <ContentControl DockPanel.Dock="Top" Content="{Binding #Control.NavContent}" VerticalAlignment="Center" />
             
-            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+            <StackPanel DockPanel.Dock="Bottom">
                 <controls:NavigationButton Icon="ExitRun" Label="Déconnexion" Command="{Binding LogoutCommand}" />
             </StackPanel>
-        </StackPanel>
+        </DockPanel>
 
         <ContentControl Grid.RowSpan="3" Grid.Column="2" Content="{Binding #Control.PageContent}" />
     </Grid>
