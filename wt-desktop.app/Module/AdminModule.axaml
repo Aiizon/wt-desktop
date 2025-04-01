@@ -18,6 +18,7 @@
             <controls:NavigationButton Icon="Server"   Label="Baies"         Command="{Binding NavigateToBayCommand}"          />
             <controls:NavigationButton Icon="DataBase" Label="Unités"        Command="{Binding NavigateToUnitCommand}"         />
             <controls:NavigationButton Icon="Account"  Label="Utilisateurs"  Command="{Binding NavigateToUserCommand}"         />
+            <controls:NavigationButton Icon="Bank"     Label="Offres"        Command="{Binding NavigateToOfferCommand}"        />
             <controls:NavigationButton Icon="Wrench"   Label="Interventions" Command="{Binding NavigateToInterventionCommand}" />
         </StackPanel>
 
