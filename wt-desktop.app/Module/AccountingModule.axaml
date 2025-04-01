@@ -9,7 +9,7 @@
 >
     <controls:BaseModule.NavContent>
         <StackPanel>
-            <TextBlock Text="WIP" />
+            <controls:NavigationButton Icon="Account" Label="Utilisateurs" Command="{Binding NavigateToUserCommand}" />
         </StackPanel>
     </controls:BaseModule.NavContent>
 </controls:BaseModule>

@@ -94,10 +94,25 @@
         <DependentUpon>FormControls.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Accounting\_User\UserBoard.axaml.cs">
+        <DependentUpon>UserBoard.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Accounting\_User\UserForm.axaml.cs">
+        <DependentUpon>UserForm.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Accounting\_User\UserBoard.axaml.cs">
+        <DependentUpon>UserBoard.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Accounting\_User\UserForm.axaml.cs">
+        <DependentUpon>UserForm.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Accounting\" />
       <Folder Include="Admin\" />
     </ItemGroup>
 
