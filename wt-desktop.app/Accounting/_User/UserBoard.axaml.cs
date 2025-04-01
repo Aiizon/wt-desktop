@@ -21,7 +21,7 @@ public partial class UserBoard : BaseBoard
     public UserBoard(EBoardMode mode, string search) : this(new UserController(), mode, search) { }
 }
 
-public class UserBoardManager : BoardManager<User>
+public class UserBoardManager : ReadOnlyBoardManager<User>
 {
     public UserBoardManager(UserController controller, string search) : base(controller, search) { }
 }

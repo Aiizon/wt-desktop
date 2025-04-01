@@ -9,20 +9,10 @@
 >
     <controls:BaseBoard.BoardContent>
         <DataGrid Grid.Row="2" ItemsSource="{Binding EntitiesSource, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" IsReadOnly="True">
-            <DataGrid.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Création"    Command="{Binding AddCommand}"    />
-                    <MenuItem Header="Edition"     Command="{Binding EditCommand}"   />
-                    <MenuItem Header="Suppression" Command="{Binding RemoveCommand}" />
-                </ContextMenu>
-            </DataGrid.ContextMenu>
             <DataGrid.Columns>
                 <DataGridTextColumn Width="4*" Header="Email"   Binding="{Binding Email}"       />
                 <DataGridTextColumn Width="2*" Header="Prénom"  Binding="{Binding FirstName}"   />
                 <DataGridTextColumn Width="2*" Header="Nom"     Binding="{Binding LastName}"    />
-                <DataGridTextColumn Width="2*" Header="Role(s)" Binding="{Binding RolesString}" />
-                <DataGridTextColumn Width="1*" Header="Type"    Binding="{Binding Type}"        />
-                <DataGridTextColumn Width="1*" Header="Vérifié" Binding="{Binding isVerified}"  />
             </DataGrid.Columns>
         </DataGrid>
     </controls:BaseBoard.BoardContent>
