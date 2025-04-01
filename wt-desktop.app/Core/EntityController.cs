@@ -8,39 +8,11 @@ using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app.Core;
 
-public enum EFormMode
+public abstract class EntityController<E> : ReadOnlyEntityController<E> where E : WtEntity, new()
 {
-    Create,
-    Update,
-    Read
-}
-
-public enum EBoardMode
-{
-    Search,
-    Read
-}
-
-public abstract class EntityController<E> where E : WtEntity, new()
-{
-    private Window? MainWindow { get; }
-
-    protected EntityController()
-    {
-        MainWindow = Avalonia.Application.Current!.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop
-            ? desktop.MainWindow
-            : throw new Exception("MainWindow is null");
-    }
-
     public abstract UserControl GetForm(EFormMode mode, E? entity = null);
-    public abstract UserControl GetBoard(EBoardMode mode, string search);
 
     #region View
-    public virtual UserControl ShowBoard(EBoardMode mode, string search)
-    {
-        return GetBoard(mode, search);
-    }
-
     public virtual E AddEntity(E entity, Action? onCompleted = null)
     {
         var form        = GetForm(EFormMode.Create, entity);

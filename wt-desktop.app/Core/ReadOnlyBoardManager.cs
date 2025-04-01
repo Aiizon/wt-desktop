@@ -13,7 +13,7 @@ namespace wt_desktop.app.Core;
 
 public class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
 {
-    public EntityController<E> Controller { get; }
+    public virtual ReadOnlyEntityController<E> Controller { get; }
 
     #region Properties
     private IEnumerable<E>? _EntitiesSource = null;
@@ -55,7 +55,7 @@ public class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: WtEntity, 
     #endregion
 
     protected ReadOnlyBoardManager(
-        EntityController<E> controller,
+        ReadOnlyEntityController<E> controller,
         string searchText
     ) {
         Controller = controller;

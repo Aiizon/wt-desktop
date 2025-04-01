@@ -15,6 +15,8 @@ namespace wt_desktop.app.Core;
 
 public class BoardManager<E>: ReadOnlyBoardManager<E>, IBoardManager where E: WtEntity, new()
 {
+    public override EntityController<E> Controller => (EntityController<E>)base.Controller;
+    
     #region Actions
     public Action<E> AddAction    { get; set; }
     public Action<E> EditAction   { get; set; }
