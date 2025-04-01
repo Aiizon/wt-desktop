@@ -28,6 +28,10 @@
     <ItemGroup>
       <ProjectReference Include="..\wt-desktop.ef\wt-desktop.ef.csproj" />
     </ItemGroup>
+    
+    <ItemGroup>
+        <AvaloniaResource Include="Assets/icon.ico" />
+    </ItemGroup>
 
     <ItemGroup>
       <Compile Update="Modules\AdminModule.axaml.cs">

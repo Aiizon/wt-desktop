@@ -52,8 +52,8 @@
 
         <controls:FormControls Grid.Row="2"
            CancelCommand="{Binding CancelCommand}"
-           ResetCommand="{Binding ResetCommand}"
-           SaveCommand="{Binding SaveCommand}"
+           ResetCommand ="{Binding ResetCommand}"
+           SaveCommand  ="{Binding SaveCommand}"
         />
     </Grid>
 </UserControl>

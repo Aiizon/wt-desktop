@@ -10,6 +10,7 @@
         x:DataType="root:MainWindow"
         x:Class="wt_desktop.app.MainWindow"
         Title="WorkTogether"
+        Icon="Assets/icon.ico"
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"
         TransparencyLevelHint="AcrylicBlur"

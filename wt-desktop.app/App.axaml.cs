@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -28,6 +27,10 @@ public partial class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new LoginWindow();
+        }
+        else
+        {
+            throw new Exception("Unsupported application lifetime");
         }
 
         base.OnFrameworkInitializationCompleted();

@@ -9,6 +9,7 @@
                  x:DataType="root:LoginWindowManager"
                  x:Class="wt_desktop.app.LoginWindow"
                  Title="Se connecter à WorkTogether"
+                 Icon="Assets/icon.ico"
                  Background="Transparent"
                  ExtendClientAreaToDecorationsHint="True"
                  TransparencyLevelHint="AcrylicBlur"
