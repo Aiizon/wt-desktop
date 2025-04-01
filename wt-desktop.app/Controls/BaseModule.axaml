@@ -1,0 +1,30 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             d:DataContext="{d:DesignInstance Type=controls:BaseModule}"
+             x:DataType="controls:BaseModule"
+             x:Class="wt_desktop.app.Controls.BaseModule"
+             x:Name="Control"
+             
+>
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" MinWidth="100" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Stretch">
+            <ContentControl Content="{Binding #Control.NavContent}" />
+            
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                <controls:NavigationButton Icon="ExitRun" Label="Déconnexion" Command="{Binding LogoutCommand}" />
+            </StackPanel>
+        </StackPanel>
+
+        <ContentControl Grid.RowSpan="3" Grid.Column="2" Content="{Binding #Control.PageContent}" />
+    </Grid>
+</UserControl>

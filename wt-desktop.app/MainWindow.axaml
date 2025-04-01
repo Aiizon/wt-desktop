@@ -2,6 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:iconPacks="https://github.com/MahApps/IconPacks.Avalonia"
         xmlns:suki="clr-namespace:SukiUI.Controls;assembly=SukiUI"
         xmlns:controls="clr-namespace:wt_desktop.app.Controls"
         xmlns:root="clr-namespace:wt_desktop.app"
@@ -23,7 +24,7 @@
         </Grid.RowDefinitions>
 
         <UniformGrid Grid.Row="0" Rows="1">
-            <TextBlock Text="WorkTogether" VerticalAlignment="Center" Margin="5" />
+            <TextBlock Text="WorkTogether" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" Margin="5" />
             <controls:ModuleButton
                 Icon="BadgeAccount"
                 Label="Administration"

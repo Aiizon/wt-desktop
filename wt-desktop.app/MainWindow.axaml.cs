@@ -22,6 +22,7 @@ public partial class MainWindow : SukiWindow
 
         AdminModuleCommand      = new RelayCommand(() => MainContent.Content = new AdminModule()     , () => true);
         AccountantModuleCommand = new RelayCommand(() => MainContent.Content = new AccountingModule(), () => true);
+        
 
         if (CurrentUser.HasRole("ROLE_ADMIN"))
         {

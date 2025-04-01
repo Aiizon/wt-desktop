@@ -1,27 +1,19 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
-        xmlns:module="clr-namespace:wt_desktop.app.Module"
-        d:DataContext="{d:DesignInstance Type=module:AdminModule}"
-        x:DataType="module:AdminModule"
-        x:Class="wt_desktop.app.Module.AdminModule"
+<controls:BaseModule xmlns="https://github.com/avaloniaui"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+                     xmlns:module="clr-namespace:wt_desktop.app.Module"
+                     d:DataContext="{d:DesignInstance Type=module:AdminModule}"
+                     x:DataType="module:AdminModule"
+                     x:Class="wt_desktop.app.Module.AdminModule"
 >
-    <Grid Margin="5">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" MinWidth="100" />
-            <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-
-        <StackPanel Grid.Column="0">
+    <controls:BaseModule.NavContent>
+        <StackPanel>
             <controls:NavigationButton Icon="Server"   Label="Baies"         Command="{Binding NavigateToBayCommand}"          />
             <controls:NavigationButton Icon="DataBase" Label="Unités"        Command="{Binding NavigateToUnitCommand}"         />
             <controls:NavigationButton Icon="Account"  Label="Utilisateurs"  Command="{Binding NavigateToUserCommand}"         />
             <controls:NavigationButton Icon="Bank"     Label="Offres"        Command="{Binding NavigateToOfferCommand}"        />
             <controls:NavigationButton Icon="Wrench"   Label="Interventions" Command="{Binding NavigateToInterventionCommand}" />
         </StackPanel>
-
-        <ContentControl x:Name="PageContent" Grid.RowSpan="3" Grid.Column="2" />
-    </Grid>
-</UserControl>
+    </controls:BaseModule.NavContent>
+</controls:BaseModule>
