@@ -1,11 +1,11 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:admin="clr-namespace:wt_desktop.app.Admin"
-        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
-        d:DataContext="{d:DesignInstance Type=admin:BayFormManager}"
-        x:DataType="admin:BayFormManager"
-        x:Class="wt_desktop.app.Admin.BayForm"
+<controls:BaseForm xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:admin="clr-namespace:wt_desktop.app.Admin"
+                   xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+                   d:DataContext="{d:DesignInstance Type=admin:BayFormManager}"
+                   x:DataType="admin:BayFormManager"
+                   x:Class="wt_desktop.app.Admin.BayForm"
 >
     <controls:BaseForm.FormContent>
         <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5">
@@ -29,4 +29,4 @@
             <TextBox   Grid.Row="2" Grid.Column="1" Text="{Binding Location}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Localisation" />
         </Grid>
     </controls:BaseForm.FormContent>
-</UserControl>
+</controls:BaseForm>

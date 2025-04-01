@@ -38,22 +38,6 @@
         <DependentUpon>Admin.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="Controls\NavigationButton.axaml.cs">
-        <DependentUpon>NavigationButton.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Controls\SaveButton.axaml.cs">
-        <DependentUpon>SaveButton.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Controls\AddButton.axaml.cs">
-        <DependentUpon>AddButton.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Controls\SearchButton.axaml.cs">
-        <DependentUpon>SearchButton.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
       <Compile Update="Module\AccountingModule.axaml.cs">
         <DependentUpon>AccountingModule.axaml</DependentUpon>
         <SubType>Code</SubType>
@@ -62,24 +46,52 @@
         <DependentUpon>BoardControls.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="Controls\FormControls.axaml.cs">
-        <DependentUpon>FormControls.axaml</DependentUpon>
+      <Compile Update="Controls\Base\BaseBoard.axaml.cs">
+        <DependentUpon>BaseBoard.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="Controls\SearchBox.axaml.cs">
-        <DependentUpon>SearchBox.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Controls\BaseForm.axaml.cs">
+      <Compile Update="Controls\Base\BaseForm.axaml.cs">
         <DependentUpon>BaseForm.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="Controls\DeletionConfirmationDialog.axaml.cs">
+      <Compile Update="Controls\Base\BaseModule.axaml.cs">
+        <DependentUpon>BaseModule.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Controls\Button\AddButton.axaml.cs">
+        <DependentUpon>AddButton.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Controls\Button\ModuleButton.axaml.cs">
+        <DependentUpon>ModuleButton.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Controls\Button\NavigationButton.axaml.cs">
+        <DependentUpon>NavigationButton.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Controls\Button\SaveButton.axaml.cs">
+        <DependentUpon>SaveButton.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Controls\Button\SearchButton.axaml.cs">
+        <DependentUpon>SearchButton.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Controls\Form\RolesEditor.axaml.cs">
+        <DependentUpon>RolesEditor.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Controls\Form\DeletionConfirmationDialog.axaml.cs">
         <DependentUpon>DeletionConfirmationDialog.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="Controls\RolesEditor.axaml.cs">
-        <DependentUpon>RolesEditor.axaml</DependentUpon>
+      <Compile Update="Controls\Form\SearchBox.axaml.cs">
+        <DependentUpon>SearchBox.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Controls\Form\FormControls.axaml.cs">
+        <DependentUpon>FormControls.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>

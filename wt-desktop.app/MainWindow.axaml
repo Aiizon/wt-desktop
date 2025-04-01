@@ -24,7 +24,7 @@
         </Grid.RowDefinitions>
 
         <UniformGrid Grid.Row="0" Rows="1">
-            <TextBlock Text="WorkTogether" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" Margin="5" />
+            <TextBlock Text="WorkTogether" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Margin="5" />
             <controls:ModuleButton
                 Icon="BadgeAccount"
                 Label="Administration"

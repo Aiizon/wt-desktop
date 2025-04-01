@@ -1,11 +1,11 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:admin="clr-namespace:wt_desktop.app.Admin"
-        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
-        d:DataContext="{d:DesignInstance Type=admin:UnitFormManager}"
-        x:DataType="admin:UnitFormManager"
-        x:Class="wt_desktop.app.Admin.UnitForm"
+<controls:BaseForm xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:admin="clr-namespace:wt_desktop.app.Admin"
+                   xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+                   d:DataContext="{d:DesignInstance Type=admin:UnitFormManager}"
+                   x:DataType="admin:UnitFormManager"
+                   x:Class="wt_desktop.app.Admin.UnitForm"
 >
     <controls:BaseForm.FormContent>
         <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5">
@@ -27,4 +27,4 @@
             <ComboBox  Grid.Row="2" Grid.Column="1"                       HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" ItemsSource="{Binding AvailableBays}" SelectedItem="{Binding SelectedBay}" />
         </Grid>
     </controls:BaseForm.FormContent>
-</UserControl>
+</controls:BaseForm>

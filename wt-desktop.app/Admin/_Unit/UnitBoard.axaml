@@ -1,11 +1,11 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:admin="clr-namespace:wt_desktop.app.Admin"
-        xmlns:controls="clr-namespace:wt_desktop.app.Controls"
-        d:DataContext="{d:DesignInstance Type=admin:UnitBoardManager}"
-        x:DataType="admin:UnitBoardManager"
-        x:Class="wt_desktop.app.Admin.UnitBoard"
+<controls:BaseBoard xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:admin="clr-namespace:wt_desktop.app.Admin"
+                    xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+                    d:DataContext="{d:DesignInstance Type=admin:UnitBoardManager}"
+                    x:DataType="admin:UnitBoardManager"
+                    x:Class="wt_desktop.app.Admin.UnitBoard"
 >
     <controls:BaseBoard.BoardContent>
         <DataGrid Grid.Row="2" ItemsSource="{Binding EntitiesSource, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" IsReadOnly="True">
@@ -24,4 +24,4 @@
             </DataGrid.Columns>
         </DataGrid>
     </controls:BaseBoard.BoardContent>
-</UserControl>
+</controls:BaseBoard>
