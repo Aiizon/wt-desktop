@@ -35,10 +35,10 @@
             <TextBox   Grid.Row="2" Grid.Column="1" Text="{Binding Location}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Localisation" />
         </Grid>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
-            <controls:NavigationButton Label="Annuler"       Icon="Cancel"      Command="{Binding CancelCommand}" />
-            <controls:NavigationButton Label="Réinitialiser" Icon="Restart"     Command="{Binding ResetCommand}"  />
-            <controls:NavigationButton Label="Enregistrer"   Icon="ContentSave" Command="{Binding SaveCommand}"   />
-        </StackPanel>
+        <controls:FormControls Grid.Row="2"
+            CancelCommand="{Binding CancelCommand}"
+            ResetCommand="{Binding ResetCommand}"
+            SaveCommand="{Binding SaveCommand}"
+        />
     </Grid>
 </UserControl>

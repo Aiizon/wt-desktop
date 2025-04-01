@@ -78,5 +78,9 @@
         <DependentUpon>BoardControls.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Controls\FormControls.axaml.cs">
+        <DependentUpon>FormControls.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>

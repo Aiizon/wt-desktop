@@ -33,10 +33,10 @@
             <ComboBox  Grid.Row="2" Grid.Column="1"                       HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" ItemsSource="{Binding AvailableBays}" SelectedItem="{Binding SelectedBay}" />
         </Grid>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
-            <controls:NavigationButton Label="Annuler"       Icon="Cancel"      Command="{Binding CancelCommand}" />
-            <controls:NavigationButton Label="Réinitialiser" Icon="Restart"     Command="{Binding ResetCommand}"  />
-            <controls:NavigationButton Label="Enregistrer"   Icon="ContentSave" Command="{Binding SaveCommand}"   />
-        </StackPanel>
+        <controls:FormControls Grid.Row="2"
+           CancelCommand="{Binding CancelCommand}"
+           ResetCommand="{Binding ResetCommand}"
+           SaveCommand="{Binding SaveCommand}"
+        />
     </Grid>
 </UserControl>

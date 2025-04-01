@@ -1,0 +1,12 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+             x:Class="wt_desktop.app.Controls.FormControls"
+             x:Name="Control"
+>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
+        <controls:NavigationButton Label="Annuler"       Icon="Cancel"      Command="{Binding #Control.CancelCommand}" />
+        <controls:NavigationButton Label="Réinitialiser" Icon="Restart"     Command="{Binding #Control.ResetCommand}"  />
+        <controls:NavigationButton Label="Enregistrer"   Icon="ContentSave" Command="{Binding #Control.SaveCommand}"   />
+    </StackPanel>
+</UserControl>
