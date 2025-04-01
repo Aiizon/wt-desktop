@@ -3,7 +3,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:root="clr-namespace:wt_desktop.app"
         xmlns:controls="clr-namespace:wt_desktop.app.Controls"
-        xmlns:core="clr-namespace:wt_desktop.app.Core"
         d:DataContext="{d:DesignInstance Type=root:OfferFormManager}"
         x:DataType="root:OfferFormManager"
         x:Class="wt_desktop.app.OfferForm"
@@ -20,28 +19,32 @@
                 <RowDefinition Height="2*" />
                 <RowDefinition Height="5"  />
                 <RowDefinition Height="2*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"  SharedSizeGroup="LabelColumn" />
                 <ColumnDefinition Width="10*" SharedSizeGroup="InputColumn" />
             </Grid.ColumnDefinitions>
-
-            <!-- <TextBlock        Grid.Row="0" Grid.Column="0" Text="Email"               HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" /> -->
-            <!-- <TextBox          Grid.Row="0" Grid.Column="1" Text="{Binding Email}"     HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Email"  /> -->
-            <!-- -->
-            <!-- <TextBlock        Grid.Row="2" Grid.Column="0" Text="Prénom"              HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" /> -->
-            <!-- <TextBox          Grid.Row="2" Grid.Column="1" Text="{Binding FirstName}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Prénom" /> -->
-            <!-- -->
-            <!-- <TextBlock        Grid.Row="4" Grid.Column="0" Text="Nom"                 HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" /> -->
-            <!-- <TextBox          Grid.Row="4" Grid.Column="1" Text="{Binding LastName}"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Nom"    /> -->
-            <!-- -->
-            <!-- <TextBlock        Grid.Row="6" Grid.Column="0" Text="Role(s)"             HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" /> -->
-            <!-- <core:RolesEditor Grid.Row="6" Grid.Column="1" DataContext="{Binding RolesEditorManager}" /> -->
-            <!-- -->
-            <!-- <TextBlock        Grid.Row="8" Grid.Column="0" Text="Type"                HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" /> -->
-            <!-- <ComboBox         Grid.Row="8" Grid.Column="1"                            HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" ItemsSource="{Binding AvailableTypes}" SelectedItem="{Binding SelectedType}" /> -->
- 
+            
+            <TextBlock     Grid.Row="0" Grid.Column="0" Text="Nom"                                          />
+            <TextBox       Grid.Row="0" Grid.Column="1" Text="{Binding Name}"                               />
+            
+            <TextBlock     Grid.Row="2" Grid.Column="0" Text="Unité max."                                   />
+            <TextBox       Grid.Row="2" Grid.Column="1" Text="{Binding MaxUnits}"                           />
+            
+            <TextBlock     Grid.Row="4" Grid.Column="0" Text="Disponibilité"                                />
+            <TextBox       Grid.Row="4" Grid.Column="1" Text="{Binding Availability}"                       />
+            
+            <TextBlock     Grid.Row="6" Grid.Column="0" Text="Prix mensuel"                                 />
+            <NumericUpDown Grid.Row="6" Grid.Column="1" Value="{Binding MonthlyRentPrice}" Increment="0.01" />
+            
+            <TextBlock     Grid.Row="8" Grid.Column="0" Text="Bande passante"                               />
+            <TextBox       Grid.Row="8" Grid.Column="1" Text="{Binding Bandwidth}"                          />
+            
+            <TextBlock     Grid.Row="10" Grid.Column="0" Text="Actif"                                       />
+            <CheckBox      Grid.Row="10" Grid.Column="1" IsChecked="{Binding IsActive}"                     />
         </Grid>
     </controls:BaseForm.FormContent>
 </UserControl>
