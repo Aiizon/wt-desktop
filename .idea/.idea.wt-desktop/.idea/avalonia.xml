@@ -15,6 +15,7 @@
         <entry key="wt-desktop.app/Admin/_User/UserForm.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/App.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Controls/AddButton.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
+        <entry key="wt-desktop.app/Controls/Base/BaseModule.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Controls/BaseBoard.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Controls/BaseForm.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Controls/BaseModule.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />

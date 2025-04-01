@@ -12,7 +12,7 @@ public partial class AdminModule : BaseModule
     public ICommand NavigateToBayCommand          { get; } 
     public ICommand NavigateToUnitCommand         { get; } 
     public ICommand NavigateToUserCommand         { get; } 
-    public ICommand NavigateToOfferCommand         { get; } 
+    public ICommand NavigateToOfferCommand        { get; } 
     public ICommand NavigateToInterventionCommand { get; } 
 
     public AdminModule()

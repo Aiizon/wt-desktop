@@ -27,6 +27,12 @@ public class User : WtIdentityEntity
         get => JsonSerializer.Deserialize<List<string>>(Roles) ?? new List<string>();
         set => Roles = JsonSerializer.Serialize(value);
     }
+    
+    [NotMapped]
+    public string RolesString
+    {
+        get => string.Join(", ", RolesList).ToLower().Replace("role_", "");
+    }
 
     [Required]
     [Column("type")]
