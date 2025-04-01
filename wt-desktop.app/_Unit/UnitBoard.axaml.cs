@@ -8,7 +8,7 @@ using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app;
 
-public partial class UnitBoard : UserControl
+public partial class UnitBoard : BaseBoard
 {
     public UnitBoard
     (

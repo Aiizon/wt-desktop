@@ -13,7 +13,7 @@ using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app.Core;
 
-public class BoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
+public class BoardManager<E>: INotifyPropertyChanged, IBoardManager where E: WtEntity, new()
 {
     public EntityController<E> Controller { get; }
 

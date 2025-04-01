@@ -29,7 +29,7 @@
                 
                 <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" TextWrapping="Wrap" IsVisible="{Binding !!ErrorMessage}" />
                 
-                <Button    Content="Se connecter"        Command="{Binding LoginCommand}" HorizontalAlignment="Stretch" Margin="0,20,0,0" />
+                <Button    Content="Se connecter"        Command="{Binding LoginCommand}" IsDefault="True" HorizontalAlignment="Stretch" Margin="0,20,0,0" />
             </StackPanel>
         </Grid>
     </Border>

@@ -1,10 +1,11 @@
 using Avalonia.Controls;
+using wt_desktop.app.Controls;
 using wt_desktop.app.Core;
 using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app;
 
-public partial class UserBoard : UserControl
+public partial class UserBoard : BaseBoard
 {
     public UserBoard
     (

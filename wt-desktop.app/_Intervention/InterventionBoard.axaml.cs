@@ -3,12 +3,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Avalonia.Controls;
 using Microsoft.EntityFrameworkCore.Query;
+using wt_desktop.app.Controls;
 using wt_desktop.app.Core;
 using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app;
 
-public partial class InterventionBoard : UserControl
+public partial class InterventionBoard : BaseBoard
 {
     public InterventionBoard
     (
