@@ -1,10 +1,11 @@
 using Avalonia.Controls;
+using wt_desktop.app.Controls;
 using wt_desktop.app.Core;
 using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app;
 
-public partial class BayForm : UserControl
+public partial class BayForm : BaseForm
 {
     public BayForm
     (

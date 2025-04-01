@@ -90,5 +90,9 @@
         <DependentUpon>SearchBox.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Controls\BaseForm.axaml.cs">
+        <DependentUpon>BaseForm.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>

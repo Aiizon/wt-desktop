@@ -2,13 +2,14 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia.Controls;
+using wt_desktop.app.Controls;
 using wt_desktop.app.Core;
 using wt_desktop.ef;
 using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app;
 
-public partial class InterventionForm : UserControl
+public partial class InterventionForm : BaseForm
 {
     public InterventionForm
     (

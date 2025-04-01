@@ -1,13 +1,14 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia.Controls;
+using wt_desktop.app.Controls;
 using wt_desktop.app.Core;
 using wt_desktop.ef;
 using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app;
 
-public partial class UnitForm : UserControl
+public partial class UnitForm : BaseForm
 {
     public UnitForm
     (

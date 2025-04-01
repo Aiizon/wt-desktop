@@ -10,7 +10,7 @@ using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app.Core;
 
-public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorInfo where E: WtEntity, new()
+public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorInfo, IFormManager where E: WtEntity, new()
 {
     #region Properties
     public EntityController<E> Controller { get; }

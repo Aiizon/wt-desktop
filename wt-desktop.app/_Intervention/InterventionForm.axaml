@@ -7,13 +7,7 @@
         x:DataType="core:InterventionFormManager"
         x:Class="wt_desktop.app.InterventionForm"
 >
-    <Grid Margin="5">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="10*" />
-            <RowDefinition Height="5"   />
-            <RowDefinition Height="2*"  />
-        </Grid.RowDefinitions>
-
+    <controls:BaseForm.FormContent>
         <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*" />
@@ -90,11 +84,5 @@
                 </Grid>
             </StackPanel>
         </Grid>
-
-        <controls:FormControls Grid.Row="2"
-           CancelCommand="{Binding CancelCommand}"
-           ResetCommand ="{Binding ResetCommand}"
-           SaveCommand  ="{Binding SaveCommand}"
-        />
-    </Grid>
+    </controls:BaseForm.FormContent>
 </UserControl>

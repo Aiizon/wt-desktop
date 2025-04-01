@@ -10,7 +10,7 @@ public interface IBoardManager
     string? SearchText { get; set; }
     
     ICommand SearchCommand { get; }
-    ICommand AddCommand { get; }
-    ICommand EditCommand { get; }
+    ICommand AddCommand    { get; }
+    ICommand EditCommand   { get; }
     ICommand RemoveCommand { get; }
 }

@@ -7,13 +7,7 @@
         x:DataType="core:BayFormManager"
         x:Class="wt_desktop.app.BayForm"
 >
-    <Grid Margin="5">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="10*" />
-            <RowDefinition Height="5"   />
-            <RowDefinition Height="2*"  />
-        </Grid.RowDefinitions>
-
+    <controls:BaseForm.FormContent>
         <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="4*" />
@@ -34,11 +28,5 @@
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Localisation"       HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
             <TextBox   Grid.Row="2" Grid.Column="1" Text="{Binding Location}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Localisation" />
         </Grid>
-
-        <controls:FormControls Grid.Row="2"
-            CancelCommand="{Binding CancelCommand}"
-            ResetCommand ="{Binding ResetCommand}"
-            SaveCommand  ="{Binding SaveCommand}"
-        />
-    </Grid>
+    </controls:BaseForm.FormContent>
 </UserControl>
