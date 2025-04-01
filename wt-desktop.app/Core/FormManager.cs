@@ -48,7 +48,7 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
         CurrentEntity = entity;
 
         SaveCommand   = new RelayCommand(HandleSave, () => !HasErrors);
-        ResetCommand  = new RelayCommand(Reset, () => true);
+        ResetCommand  = new RelayCommand(Reset     , () => true);
         CancelCommand = new RelayCommand(() =>
         {
             if (Cancel())
@@ -117,9 +117,8 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
         return errors;
     }
     #endregion
-    
-    // Helpers pour la gestion des erreurs
-    
+
+    #region Errors
     /// <summary>
     /// Ajoute une erreur pour une propriété donnée
     /// </summary>
@@ -161,15 +160,15 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
         foreach (var propertyName in propertyNames)
             OnErrorsChanged(propertyName);
     }
+    #endregion
     
     protected virtual void OnErrorsChanged(string propertyName)
     {
         ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         OnPropertyChanged(nameof(HasErrors));
     }
-    
-    // Validation du formulaire / des propriétés
-    
+
+    #region Validation
     /// <summary>
     /// Valide le formulaire
     /// </summary>
@@ -192,4 +191,5 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
     /// </summary>
     /// <param name="propertyName">Propriété</param>
     protected virtual void ValidateProperty(string propertyName) { }
+    #endregion
 }

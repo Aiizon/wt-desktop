@@ -42,7 +42,7 @@ public class WtContext: DbContext
 
     public DbSet<Intervention>      Intervention    { get; set; }
     
-    public DbSet<UnitIntervention> UnitIntervention { get; set; }
+    public DbSet<UnitIntervention>  UnitIntervention { get; set; }
 
     public DbSet<UnitUsage>         UnitUsage       { get; set; }
     #endregion
@@ -77,11 +77,25 @@ public class WtContext: DbContext
     {
         lock (_lock)
         {
-            ChangeTracker.Clear();
-            
-            foreach (var entry in this.ChangeTracker.Entries().ToList())
+            var oldInstance = _instance;
+
+            _instance = new WtContext();
+
+            if (oldInstance != null && !ReferenceEquals(oldInstance, this))
             {
-                entry.State = EntityState.Detached;
+                foreach (var entry in oldInstance.ChangeTracker.Entries().ToList())
+                {
+                    entry.State = EntityState.Detached;
+                }
+                
+                oldInstance.Dispose();
+            }
+            else
+            {
+                foreach (var entry in ChangeTracker.Entries().ToList())
+                {
+                    entry.State = EntityState.Detached;
+                }
             }
         }
     }

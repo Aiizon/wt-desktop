@@ -78,60 +78,62 @@ public class BoardManager<E>: INotifyPropertyChanged, IBoardManager where E: WtE
 
         #region Commands
         SearchCommand = new RelayCommand(ReloadSource, () => true);
-        AddCommand    = new RelayCommand(
-            () =>
-            {
-                if (AddAction != null)
-                {
-                    AddAction.Invoke(new E());
-                }
-                else
-                {
-                    controller.AddEntity(new E());
-                }
-
-                ReloadSource();
-            },
-            () => true);
-
-        EditCommand   = new RelayCommand(
-            () =>
-            {
-                if (SelectedEntity != null && EditAction != null)
-                {
-                    EditAction.Invoke(SelectedEntity);
-                }
-                else
-                {
-                    controller.EditEntity(SelectedEntity);
-                }
-
-                ReloadSource();
-            },
-            () => SelectedEntity != null);
-
-        RemoveCommand = new RelayCommand(
-            () =>
-            {
-                if (SelectedEntity != null && RemoveAction != null)
-                {
-                    RemoveAction.Invoke(SelectedEntity);
-                }
-                else
-                {
-                    controller.RemoveEntity(SelectedEntity);
-                }
-
-                ReloadSource();
-            },
-            () => SelectedEntity != null);
+        AddCommand    = new RelayCommand(Add   , () => true);
+        EditCommand   = new RelayCommand(Edit  , () => SelectedEntity != null);
+        RemoveCommand = new RelayCommand(Remove, () => SelectedEntity != null);
         #endregion
 
         ReloadSource();
     }
+    
+    #region Callbacks
+    private void Add()
+    {
+        if (AddAction != null)
+        {
+            AddAction.Invoke(new E());
+            ReloadSource();
+        }
+        else
+        {
+            Controller.AddEntity(new E(), ReloadSource);
+        }
+    }
 
+    private void Edit()
+    {
+        if (SelectedEntity != null && EditAction != null)
+        {
+            EditAction.Invoke(SelectedEntity);
+            ReloadSource();
+        }
+        else
+        {
+            Controller.EditEntity(SelectedEntity!, ReloadSource);
+        }
+    }
+
+    private void Remove()
+    {
+        if (SelectedEntity != null && RemoveAction != null)
+        {
+            RemoveAction.Invoke(SelectedEntity);
+            ReloadSource();
+        }
+        else
+        {
+            Controller.RemoveEntity(SelectedEntity!, ReloadSource);
+        }
+    }
+    #endregion
+    
+    /// <summary>
+    /// Recharge les entités
+    /// </summary>
     public void ReloadSource()
     {
+        // Récupère l'éventuelle méthode Source() de l'entité
+        // L'objectif est de forcer l'inclusion de clés étrangères s'il y en a
         Type          entityType   = typeof(E);
         MethodInfo?   sourceMethod = entityType.GetMethod("Source");
         IQueryable<E> query;

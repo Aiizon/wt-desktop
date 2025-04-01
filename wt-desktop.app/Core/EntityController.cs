@@ -41,7 +41,7 @@ public abstract class EntityController<E> where E : WtEntity, new()
         return GetBoard(mode, search);
     }
 
-    public virtual E AddEntity(E entity)
+    public virtual E AddEntity(E entity, Action? onCompleted = null)
     {
         var form        = GetForm(EFormMode.Create, entity);
         var formManager = form.DataContext as FormManager<E> ?? throw new Exception("DataContext is not a FormManager<E>");
@@ -52,15 +52,19 @@ public abstract class EntityController<E> where E : WtEntity, new()
             Content = form
         };
 
-        formManager.OnSave   = () => window.Close();
         formManager.OnCancel = () => window.Close();
+        formManager.OnSave   = () =>
+        {
+            onCompleted?.Invoke();
+            window.Close();
+        };
 
         window.ShowDialog(MainWindow!);
 
         return formManager.CurrentEntity ?? throw new Exception("CurrentEntity is null");
     }
 
-    public virtual E EditEntity(E entity)
+    public virtual E EditEntity(E entity, Action? onCompleted = null)
     {
         var form        = GetForm(EFormMode.Update, entity);
         var formManager = form.DataContext as FormManager<E> ?? throw new Exception("DataContext is not a FormManager<E>");
@@ -71,15 +75,19 @@ public abstract class EntityController<E> where E : WtEntity, new()
             Content = form
         };
 
-        formManager.OnSave   = () => window.Close();
         formManager.OnCancel = () => window.Close();
+        formManager.OnSave   = () =>
+        {
+            onCompleted?.Invoke();
+            window.Close();
+        };
 
         window.ShowDialog(MainWindow!);
 
         return formManager.CurrentEntity ?? throw new Exception("CurrentEntity is null");
     }
 
-    public virtual void RemoveEntity(E entity)
+    public virtual void RemoveEntity(E entity, Action? onCompleted = null)
     {
         var dialogManager = new DeletionConfirmationDialogManager("Voulez-vous vraiment supprimer cette entité ?");
         var dialog        = new DeletionConfirmationDialog(dialogManager);
@@ -88,6 +96,7 @@ public abstract class EntityController<E> where E : WtEntity, new()
         {
             if (DeleteEntity(entity))
             {
+                onCompleted?.Invoke();
                 dialog.Close();
             }
         };
