@@ -1,0 +1,24 @@
+<controls:ReadOnlyBaseBoard xmlns="https://github.com/avaloniaui"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:accounting="clr-namespace:wt_desktop.app.Accounting"
+                            xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+                            d:DataContext="{d:DesignInstance Type=accounting:RentalBoardManager}"
+                            x:DataType="accounting:RentalBoardManager"
+                            x:Class="wt_desktop.app.Accounting.RentalBoard"
+>
+    <controls:ReadOnlyBaseBoard.BoardContent>
+        <DataGrid Grid.Row="2" ItemsSource="{Binding EntitiesSource, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="2*" Header="Client"          Binding="{Binding Customer.Email}"          />
+                <DataGridTextColumn Width="2*" Header="Date de début"   Binding="{Binding FirstRentalDate}"         />
+                <DataGridTextColumn Width="2*" Header="Date de fin"     Binding="{Binding RentalEndDateString}"     />
+                <DataGridTextColumn Width="1*" Header="Offre"           Binding="{Binding Offer.Name}"              />
+                <DataGridTextColumn Width="1*" Header="Montant mensuel" Binding="{Binding MonthlyRentPriceString}"  />
+                <DataGridTextColumn Width="1*" Header="Durée"           Binding="{Binding BillingType.DisplayText}" />
+                <DataGridTextColumn Width="1*" Header="Renouvellement"  Binding="{Binding DoRenew}"                 />
+                <DataGridTextColumn Width="1*" Header="Terminée"        Binding="{Binding IsRentalEnded}"           />
+            </DataGrid.Columns>
+        </DataGrid>
+    </controls:ReadOnlyBaseBoard.BoardContent>
+</controls:ReadOnlyBaseBoard>

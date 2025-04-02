@@ -15,7 +15,7 @@ public class BillingType : WtIdentityEntity
     [Column("discount_over_monthly")]
     public double DiscountOverMonthly { get; set; }
 
-    public override string DisplayText => $"{Months} months";
+    public override string DisplayText => $"{Months} mois";
 
     public override void OnModelCreating(ModelBuilder modelBuilder)
     {

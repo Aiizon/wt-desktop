@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:wt_desktop.app.Controls"
+             xmlns:core="clr-namespace:wt_desktop.app.Core"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             d:DataContext="{d:DesignInstance Type=core:IReadOnlyBoardManager}"
+             x:DataType="core:IReadOnlyBoardManager"
+             x:Class="wt_desktop.app.Controls.ReadOnlyBaseBoard"
+             x:Name="Control"
+>
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="5"    />
+            <RowDefinition Height="12*"  />
+        </Grid.RowDefinitions>
+
+        <controls:SearchBox Grid.Row="0"
+            SearchText   ="{Binding SearchText, Mode=TwoWay}"
+            SearchCommand="{Binding SearchCommand}"
+        />
+
+        <ContentControl Grid.Row="2" x:Name="ContentArea" Content="{Binding #Control.BoardContent}" />
+    </Grid>
+</UserControl>

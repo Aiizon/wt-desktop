@@ -94,10 +94,13 @@
         <DependentUpon>FormControls.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Controls\_Base\ReadOnlyBaseBoard.axaml.cs">
+        <DependentUpon>ReadOnlyBaseBoard.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Accounting\" />
       <Folder Include="Admin\" />
     </ItemGroup>
 

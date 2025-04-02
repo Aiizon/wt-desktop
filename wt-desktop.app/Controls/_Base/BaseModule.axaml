@@ -21,7 +21,8 @@
             <ContentControl DockPanel.Dock="Top" Content="{Binding #Control.NavContent}" VerticalAlignment="Center" />
             
             <StackPanel DockPanel.Dock="Bottom">
-                <controls:NavigationButton Icon="ExitRun" Label="Déconnexion" Command="{Binding LogoutCommand}" />
+                <controls:NavigationButton Icon="ExitRun"  Label="Déconnexion" Command="{Binding LogoutCommand}" />
+                <controls:NavigationButton Icon="PowerOff" Label="Quitter"     Command="{Binding ExitCommand}" />
             </StackPanel>
         </DockPanel>
 

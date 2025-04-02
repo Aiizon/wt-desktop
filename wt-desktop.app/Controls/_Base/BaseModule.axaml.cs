@@ -10,7 +10,9 @@ namespace wt_desktop.app.Controls;
 public partial class BaseModule : UserControl
 {
     private Window? MainWindow    { get; }
+    
     public ICommand LogoutCommand { get; }
+    public ICommand ExitCommand   { get; }
 
     public static readonly StyledProperty<object> NavContentProperty =
         AvaloniaProperty.Register<BaseBoard, object>(nameof(NavContent));
@@ -38,14 +40,21 @@ public partial class BaseModule : UserControl
             ? desktop.MainWindow
             : throw new Exception("MainWindow is null");
         
-        LogoutCommand = new RelayCommand(() =>
+        LogoutCommand = new RelayCommand(
+            () =>
             {
                 AuthProvider.Instance.Logout();
                 var loginWindow = new LoginWindow();
                 loginWindow.Show();
                 MainWindow!.Close();
             }, 
-            () => true
-        );
+            () => AuthProvider.Instance.IsAuthenticated);
+        
+        ExitCommand = new RelayCommand(
+            () =>
+            {
+                Environment.Exit(0);
+            },
+            () => AuthProvider.Instance.IsAuthenticated);
     }
 }
