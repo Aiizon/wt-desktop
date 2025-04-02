@@ -22,6 +22,9 @@ public class Rental : WtIdentityEntity
     [Required]
     [Column("monthly_rent_price")]
     public double MonthlyRentPrice { get; set; }
+    
+    [NotMapped]
+    public string MonthlyRentPriceString => $"{MonthlyRentPrice} €";
 
     [Required]
     [Column("do_renew")]
@@ -33,6 +36,12 @@ public class Rental : WtIdentityEntity
 
     [Column("rental_end_date")]
     public DateTime? RentalEndDate { get; set; }
+    
+    [NotMapped]
+    public string RentalEndDateString => RentalEndDate?.ToString("dd/MM/yyyy") ?? "N/A";
+    
+    [NotMapped]
+    public bool IsRentalEnded => RentalEndDate != null && RentalEndDate < DateTime.Now;
 
     public virtual IQueryable<Unit?> Units()
         => RentalUnit

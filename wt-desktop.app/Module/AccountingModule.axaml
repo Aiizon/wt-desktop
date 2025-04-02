@@ -9,7 +9,8 @@
 >
     <controls:BaseModule.NavContent>
         <StackPanel>
-            <controls:NavigationButton Icon="Account" Label="Utilisateurs" Command="{Binding NavigateToUserCommand}" />
+            <controls:NavigationButton Icon="Account" Label="Utilisateurs" Command="{Binding NavigateToUserCommand}"   />
+            <controls:NavigationButton Icon="File"    Label="Locations"    Command="{Binding NavigateToRentalCommand}" />
         </StackPanel>
     </controls:BaseModule.NavContent>
 </controls:BaseModule>

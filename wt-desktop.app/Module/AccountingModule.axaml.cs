@@ -9,12 +9,14 @@ namespace wt_desktop.app.Module;
 public partial class AccountingModule : BaseModule
 {
     public ICommand NavigateToUserCommand { get; }
+    public ICommand NavigateToRentalCommand { get; }
     
     public AccountingModule()
     {
         InitializeComponent();
         
-        NavigateToUserCommand = new RelayCommand(() => PageContent = new UserBoard(EBoardMode.Search, ""), () => true);
+        NavigateToUserCommand   = new RelayCommand(() => PageContent = new UserBoard  (EBoardMode.Search, ""), () => true);
+        NavigateToRentalCommand = new RelayCommand(() => PageContent = new RentalBoard(EBoardMode.Search, ""), () => true);
 
         DataContext = this;
     }
