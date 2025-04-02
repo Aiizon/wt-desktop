@@ -1,11 +1,11 @@
-using Avalonia.Controls;
+using System.Linq;
 using wt_desktop.app.Controls;
 using wt_desktop.app.Core;
 using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app.Accounting;
 
-public partial class UserBoard : BaseBoard
+public partial class UserBoard : ReadOnlyBaseBoard
 {
     public UserBoard
     (
@@ -23,5 +23,10 @@ public partial class UserBoard : BaseBoard
 
 public class UserBoardManager : ReadOnlyBoardManager<User>
 {
-    public UserBoardManager(UserController controller, string search) : base(controller, search) { }
+    public UserBoardManager(UserController controller, string search) : base(controller, search)
+    {
+        EntitiesSource = EntitiesSource!
+            .Where(u => u.Type == "customer")
+            .ToList();
+    }
 }
