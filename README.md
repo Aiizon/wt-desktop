@@ -76,3 +76,14 @@ dotnet run --project wt-desktop.app
 - Gestion des locations
 - Module d'administration pour gérer les baies, unités, offres et interventions
 - Module de comptabilité
+
+## Roadmap
+
+[ ] filtre sur boards
+[ ] email grisé à l'édition
+[ ] saisie password à la création
+[ ] BI
+[ ] quantité unités à la création d'une baie
+[ ] lien user <-> intervention autocomplété avec l'utilisateur connecté
+[ ] consultation (form) en read-only pour la compta
+[ ] quantité d'unités d'une location
