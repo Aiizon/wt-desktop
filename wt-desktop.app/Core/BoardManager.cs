@@ -15,8 +15,8 @@ namespace wt_desktop.app.Core;
 
 public class BoardManager<E>: ReadOnlyBoardManager<E>, IBoardManager where E: WtEntity, new()
 {
+    #region Properties
     public override EntityController<E> Controller => (EntityController<E>)base.Controller;
-    
 
     private E? _SelectedEntity = null;
     public E? SelectedEntity
@@ -30,6 +30,7 @@ public class BoardManager<E>: ReadOnlyBoardManager<E>, IBoardManager where E: Wt
             OnPropertyChanged();
         }
     }
+    #endregion
     
     #region Actions
     public Action<E> AddAction    { get; set; }
@@ -38,7 +39,6 @@ public class BoardManager<E>: ReadOnlyBoardManager<E>, IBoardManager where E: Wt
     #endregion
 
     #region Commands
-    public ICommand SearchCommand  { get; }
     public ICommand AddCommand     { get; }
     public ICommand EditCommand    { get; }
     public ICommand RemoveCommand  { get; }
