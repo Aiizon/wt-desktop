@@ -10,6 +10,12 @@ namespace wt_desktop.ef.Entity;
 [Index(nameof(Email), IsUnique = true)]
 public class User : WtIdentityEntity
 {
+    // @todo: filtre sur boards
+    // @todo: email grisé à l'édition
+    // @todo: saisie password à la création
+    // @todo: BI
+    // @todo: quantité unités à la création d'une baie
+    // @todo: lien user <-> intervention autocomplété avec l'utilisateur connecté
     public static readonly List<string> UserRoles = new() {"ROLE_ADMIN", "ROLE_ACCOUNTANT", "ROLE_USER"};
     public static readonly List<string> UserTypes = new() {"user", "customer"};
 
