@@ -15,11 +15,11 @@ public class Unit : WtIdentityEntity
     }
 
     [Column("unit_usage_id")]
-    public UnitUsage? UnitUsage { get; set; } = null;
+    public virtual UnitUsage? UnitUsage { get; set; } = null;
 
     [Required]
     [Column("bay_id")]
-    public Bay? Bay { get; set; }
+    public virtual Bay? Bay { get; set; }
 
     [Required]
     [Column("name")]
@@ -43,8 +43,7 @@ public class Unit : WtIdentityEntity
     };
 
     public virtual IQueryable<Rental?> Rentals()
-        => RentalUnit
-            .Source()
+        => WtContext.Instance.Set<RentalUnit>()
             .Where(ru => ru.UnitId == Id)
             .Select(ru => ru.Rental);
 
@@ -73,17 +72,5 @@ public class Unit : WtIdentityEntity
             .IsRequired(false)
         ;
         #endregion
-    }
-
-    /// <summary>
-    /// Returns the Unit with Bay and UnitUsage included.
-    /// </summary>
-    /// <param name="context">Context</param>
-    public static IQueryable<Unit> Source()
-    {
-        return WtContext.Instance.Unit
-            .Include(u => u.Bay)
-            .Include(u => u.UnitUsage)
-        ;
     }
 }

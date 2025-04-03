@@ -7,13 +7,13 @@ namespace wt_desktop.ef.Entity;
 [Table("rental_unit")]
 public class RentalUnit: WtEntity
 {
-    public Rental? Rental { get; set; }
+    public virtual Rental? Rental { get; set; }
 
     [Required]
     [Column("rental_id")]
     public int RentalId { get; set; }
 
-    public Unit? Unit { get; set; }
+    public virtual Unit? Unit { get; set; }
 
     [Required]
     [Column("unit_id")]

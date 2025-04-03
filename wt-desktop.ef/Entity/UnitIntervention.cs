@@ -7,13 +7,13 @@ namespace wt_desktop.ef.Entity;
 [Table("unit_intervention")]
 public class UnitIntervention: WtEntity
 {
-    public Intervention? Intervention { get; set; }
+    public virtual Intervention? Intervention { get; set; }
     
     [Required]
     [Column("intervention_id")]
     public int InterventionId { get; set; }
     
-    public Unit? Unit { get; set; }
+    public virtual Unit? Unit { get; set; }
     
     [Required]
     [Column("unit_id")]
@@ -46,12 +46,5 @@ public class UnitIntervention: WtEntity
         modelBuilder.Entity<UnitIntervention>().HasKey(
             ui => new { ui.InterventionId, ui.UnitId }
         );
-    }
-    
-    public static IQueryable<UnitIntervention> Source()
-    {
-        return WtContext.Instance.UnitIntervention
-            .Include(ui => ui.Intervention)
-            .Include(ui => ui.Unit);
     }
 }

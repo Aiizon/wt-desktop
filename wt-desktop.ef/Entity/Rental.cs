@@ -9,15 +9,15 @@ public class Rental : WtIdentityEntity
 {
     [Required]
     [Column("billing_type_id")]
-    public BillingType? BillingType { get; set; }
+    public virtual BillingType? BillingType { get; set; }
 
     [Required]
     [Column("offer_id")]
-    public Offer? Offer { get; set; }
+    public virtual Offer? Offer { get; set; }
 
     [Required]
     [Column("customer_id")]
-    public User? Customer { get; set; }
+    public virtual User? Customer { get; set; }
 
     [Required]
     [Column("monthly_rent_price")]
@@ -44,8 +44,7 @@ public class Rental : WtIdentityEntity
     public bool IsRentalEnded => RentalEndDate != null && RentalEndDate < DateTime.Now;
 
     public virtual IQueryable<Unit?> Units()
-        => RentalUnit
-            .Source()
+        => WtContext.Instance.Set<RentalUnit>()
             .Where(ru => ru.RentalId == Id)
             .Select(ru => ru.Unit);
 
@@ -84,14 +83,5 @@ public class Rental : WtIdentityEntity
             .IsRequired(true)
         ;
         #endregion
-    }
-
-    public static IQueryable<Rental> Source()
-    {
-        return WtContext.Instance.Rental
-            .Include(r => r.BillingType)
-            .Include(r => r.Offer)
-            .Include(r => r.Customer)
-        ;
     }
 }

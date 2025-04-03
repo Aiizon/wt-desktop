@@ -33,7 +33,12 @@
         <entry key="wt-desktop.app/Controls/_Base/BaseBoard.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Controls/_Base/BaseModule.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Controls/_Base/ReadOnlyBaseBoard.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
+        <entry key="wt-desktop.app/Controls/_Button/AddButton.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
+        <entry key="wt-desktop.app/Controls/_Button/ModuleButton.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Controls/_Button/NavigationButton.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
+        <entry key="wt-desktop.app/Controls/_Button/SaveButton.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
+        <entry key="wt-desktop.app/Controls/_Button/SearchButton.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
+        <entry key="wt-desktop.app/Controls/_Form/SearchBox.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Core/DeletionConfirmationDialog.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Core/RolesEditor.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/LoginWindow.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />

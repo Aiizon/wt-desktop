@@ -15,19 +15,9 @@ public class Bay : WtIdentityEntity
     [Column("location")]
     public string Location { get; set; }
 
-    private IQueryable<Unit?>? _Units = null;
-
-    public virtual IQueryable<Unit> Units()
-    {
-        if (_Units == null)
-        {
-            _Units = WtContext.Instance.Unit
-                .Include(u => u.Bay)
-                .Where(u => u.Bay!.Id == Id);
-        }
-        
-        return _Units!;
-    }
+    public virtual IQueryable<Unit> Units() 
+        => WtContext.Instance.Unit
+            .Where(u => u.Bay!.Id == Id);
     
     public int Size
         => Units().Count();

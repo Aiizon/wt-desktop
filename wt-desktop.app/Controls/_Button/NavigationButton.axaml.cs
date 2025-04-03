@@ -1,8 +1,6 @@
-using System;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 
 namespace wt_desktop.app.Controls;
 
@@ -38,21 +36,5 @@ public partial class NavigationButton : UserControl
     public NavigationButton()
     {
         InitializeComponent();
-    }
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-
-        var button = this.FindControl<Button>("InnerButton");
-
-        if (button != null)
-        {
-            button.Click += (sender, eventArgs) =>
-            {
-                Command.Execute(null);
-                eventArgs.Handled = true;
-            };
-        }
     }
 }

@@ -115,8 +115,9 @@ public class WtContext: DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         Env.Load(Path.Combine(AppContext.BaseDirectory, ".env"));
-        optionsBuilder.UseMySQL(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? 
-                                throw new Exception("DB_CONNECTION_STRING introuvable dans le fichier .env."));
+        
+        optionsBuilder.UseLazyLoadingProxies();
+        optionsBuilder.UseMySQL(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? throw new Exception("DB_CONNECTION_STRING introuvable dans le fichier .env."));
         optionsBuilder.EnableSensitiveDataLogging();
     }
 }

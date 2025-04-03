@@ -4,10 +4,10 @@
              x:Class="wt_desktop.app.Controls.SearchButton"
              x:Name="Control"
 >
-    <Button x:Name="InnerButton"
-            Margin="5"
+    <Button Margin="5"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center"
+            Command="{Binding #Control.Command}"
     >
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
             <iconPacks:PackIconMaterial Kind="MagnifyScan" Margin="5" />

@@ -71,23 +71,10 @@ public class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: WtEntity, 
     /// </summary>
     public void ReloadSource()
     {
-        // Récupère l'éventuelle méthode Source() de l'entité
-        // L'objectif est de forcer l'inclusion de clés étrangères s'il y en a
-        Type entityType = typeof(E);
-        MethodInfo? sourceMethod = entityType.GetMethod("Source");
-        IQueryable<E> query;
-
-        if (sourceMethod != null)
-        {
-            query = (IQueryable<E>)sourceMethod.Invoke(null, null)!;
-        }
-        else
-        {
-            query = WtContext.Instance.Set<E>().AsQueryable();
-        }
+        var query = WtContext.Instance.Set<E>().AsQueryable();
 
         EntitiesSource = !string.IsNullOrWhiteSpace(SearchText) ?
-            query.ToList().Where(x => x.MatchSearch(SearchText)) :
+            query.ToList().Where(x => x.MatchSearch(SearchText)).ToList() :
             query.ToList();
     }
 

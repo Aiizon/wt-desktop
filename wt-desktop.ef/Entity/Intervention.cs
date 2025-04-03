@@ -19,15 +19,14 @@ public class Intervention : WtIdentityEntity
     public DateTime? EndDate { get; set; }
     
     [NotMapped]
-    public IQueryable<UnitIntervention> UnitInterventions
+    public virtual IQueryable<UnitIntervention> UnitInterventions
         => WtContext.Instance.UnitIntervention
             .Where(ui => ui.InterventionId == Id)
             .Select(ui => ui);
     
     [NotMapped]
-    public IQueryable<Unit?> Units
-        => UnitIntervention
-            .Source()
+    public virtual IQueryable<Unit?> Units
+        => WtContext.Instance.Set<UnitIntervention>()
             .Where(ui => ui.InterventionId == Id)
             .Select(ui => ui.Unit);
     
@@ -36,9 +35,8 @@ public class Intervention : WtIdentityEntity
         => string.Join(", ", Units.Select(u => $"{u!.Name} ({u.Bay!.Name ?? "N/A"})"));
 
     [NotMapped]
-    public IQueryable<Bay?> Bays
-        => UnitIntervention
-            .Source()
+    public virtual IQueryable<Bay?> Bays
+        => WtContext.Instance.Set<UnitIntervention>()
             .Where(ui => ui.InterventionId == Id)
             .Select(ui => ui.Unit)
             .Select(u => u!.Bay);

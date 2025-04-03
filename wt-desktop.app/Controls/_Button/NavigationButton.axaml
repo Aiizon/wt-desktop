@@ -4,16 +4,16 @@
              x:Class="wt_desktop.app.Controls.NavigationButton"
              x:Name="Control"
 >
-    <Button x:Name="InnerButton"
-            Margin="5"
+    <Button Margin="5"
             FontSize="10"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center"
-            ToolTip.Tip="{Binding ElementName=Control, Path=Label}"
+            ToolTip.Tip="{Binding #Control.Label}"
+            Command="{Binding #Control.Command}"
     >
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-            <iconPacks:PackIconMaterial Kind="{Binding ElementName=Control, Path=Icon}"  Margin="5" />
-            <TextBlock                  Text="{Binding ElementName=Control, Path=Label}" Margin="5" />
+            <iconPacks:PackIconMaterial Kind="{Binding #Control.Icon}"  Margin="5" />
+            <TextBlock                  Text="{Binding #Control.Label}" Margin="5" />
         </StackPanel>
     </Button>
 </UserControl>
