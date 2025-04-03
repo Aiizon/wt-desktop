@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
-using wt_desktop.ef.Entity;
+using wt_desktop.ef;
 
 namespace wt_desktop.app.Core;
 

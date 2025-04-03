@@ -4,7 +4,7 @@ using Avalonia.Layout;
 using SukiUI.Controls;
 using wt_desktop.app.Core;
 using wt_desktop.ef;
-using wt_desktop.ef.Entity;
+using wt_desktop.ef;
 
 namespace wt_desktop.app.Core;
 

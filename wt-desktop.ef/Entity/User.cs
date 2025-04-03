@@ -16,6 +16,8 @@ public class User : WtIdentityEntity
     // @todo: BI
     // @todo: quantité unités à la création d'une baie
     // @todo: lien user <-> intervention autocomplété avec l'utilisateur connecté
+    // @todo: consultation (form) en read-only pour la compta
+    // @todo: quantité d'unités d'une location
     public static readonly List<string> UserRoles = new() {"ROLE_ADMIN", "ROLE_ACCOUNTANT", "ROLE_USER"};
     public static readonly List<string> UserTypes = new() {"user", "customer"};
 
