@@ -17,6 +17,20 @@ public class BoardManager<E>: ReadOnlyBoardManager<E>, IBoardManager where E: Wt
 {
     public override EntityController<E> Controller => (EntityController<E>)base.Controller;
     
+
+    private E? _SelectedEntity = null;
+    public E? SelectedEntity
+    {
+        get => _SelectedEntity;
+        set
+        {
+            _SelectedEntity = value;
+            ((RelayCommand)EditCommand)  .NotifyCanExecuteChanged();
+            ((RelayCommand)RemoveCommand).NotifyCanExecuteChanged();
+            OnPropertyChanged();
+        }
+    }
+    
     #region Actions
     public Action<E> AddAction    { get; set; }
     public Action<E> EditAction   { get; set; }

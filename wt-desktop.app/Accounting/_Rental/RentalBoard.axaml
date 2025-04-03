@@ -8,7 +8,7 @@
                             x:Class="wt_desktop.app.Accounting.RentalBoard"
 >
     <controls:ReadOnlyBaseBoard.BoardContent>
-        <DataGrid Grid.Row="2" ItemsSource="{Binding EntitiesSource, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" IsReadOnly="True">
+        <DataGrid Grid.Row="2" ItemsSource="{Binding EntitiesSource, Mode=OneWay}" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="2*" Header="Client"          Binding="{Binding Customer.Email}"          />
                 <DataGridTextColumn Width="2*" Header="Date de début"   Binding="{Binding FirstRentalDate}"         />

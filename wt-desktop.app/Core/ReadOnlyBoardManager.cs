@@ -27,17 +27,6 @@ public class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: WtEntity, 
         }
     }
 
-    private E? _SelectedEntity = null;
-    public E? SelectedEntity
-    {
-        get => _SelectedEntity;
-        set
-        {
-            _SelectedEntity = value;
-            OnPropertyChanged();
-        }
-    }
-
     private string? _SearchText = null;
     public string? SearchText
     {
