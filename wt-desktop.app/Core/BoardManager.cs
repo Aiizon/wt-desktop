@@ -13,7 +13,7 @@ using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app.Core;
 
-public class BoardManager<E>: ReadOnlyBoardManager<E>, IBoardManager where E: WtEntity, new()
+public abstract class BoardManager<E>: ReadOnlyBoardManager<E>, IBoardManager where E: WtEntity, new()
 {
     #region Properties
     public override EntityController<E> Controller => (EntityController<E>)base.Controller;

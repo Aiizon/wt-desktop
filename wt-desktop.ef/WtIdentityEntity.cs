@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace wt_desktop.ef.Entity;
+namespace wt_desktop.ef;
 
 public abstract class WtIdentityEntity: WtEntity
 {

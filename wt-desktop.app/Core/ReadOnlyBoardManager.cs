@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
@@ -11,7 +12,7 @@ using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app.Core;
 
-public class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
+public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
 {
     public virtual ReadOnlyEntityController<E> Controller { get; }
 
@@ -26,6 +27,10 @@ public class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: WtEntity, 
             OnPropertyChanged();
         }
     }
+    
+    private ObservableCollection<E> _EntitiesSourceFiltered = new();
+    
+    public ObservableCollection<E>  EntitiesSourceFiltered => _EntitiesSourceFiltered;
 
     private string? _SearchText = null;
     public string? SearchText
@@ -37,10 +42,13 @@ public class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: WtEntity, 
             OnPropertyChanged();
         }
     }
+    
+    protected Dictionary<string, (bool IsEnabled, Func<E, bool> Predicate)> _Filters = new();
     #endregion
 
     #region Commands
-    public ICommand SearchCommand { get; }
+    public ICommand SearchCommand      { get; }
+    public ICommand ResetFilterCommand { get; }
     #endregion
 
     protected ReadOnlyBoardManager(
@@ -50,7 +58,8 @@ public class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: WtEntity, 
         Controller = controller;
         SearchText = searchText;
 
-        SearchCommand = new RelayCommand(ReloadSource, () => true);
+        SearchCommand      = new RelayCommand(ReloadSource, () => true);
+        ResetFilterCommand = new RelayCommand(ResetFilters, () => true);
 
         ReloadSource();
     }
@@ -66,6 +75,49 @@ public class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: WtEntity, 
             query.ToList().Where(x => x.MatchSearch(SearchText)).ToList() :
             query.ToList();
     }
+
+    protected void ApplyFilters()
+    {
+        _EntitiesSourceFiltered.Clear();
+
+        if (EntitiesSource == null)
+        {
+            return;
+        }
+        
+        var filtered = EntitiesSource.Where(entity =>
+            _Filters.Values.All(filter => !filter.IsEnabled || filter.Predicate(entity))
+        );
+        
+        _EntitiesSourceFiltered = new(filtered);
+        OnPropertyChanged(nameof(EntitiesSourceFiltered));
+    }
+    
+    protected void ToggleFilter(string key, bool isEnabled)
+    {
+        if (_Filters.ContainsKey(key))
+        {
+            var (_, predicate) = _Filters[key];
+            _Filters[key] = (isEnabled, predicate);
+            ApplyFilters();
+        }
+
+        ReloadSource();
+    }
+
+    public void ResetFilters()
+    {
+        foreach (var key in _Filters.Keys.ToList())
+        {
+            var (_, predicate) = _Filters[key];
+            _Filters[key] = (false, predicate);
+        }
+        
+        ApplyFilters();
+        UpdateFilterProperties();
+    }
+
+    protected virtual void UpdateFilterProperties() { }
 
     #region INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
