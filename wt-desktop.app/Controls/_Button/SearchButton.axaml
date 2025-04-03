@@ -8,6 +8,7 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center"
             Command="{Binding #Control.Command}"
+            IsDefault="True"
     >
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
             <iconPacks:PackIconMaterial Kind="MagnifyScan" Margin="5" />
