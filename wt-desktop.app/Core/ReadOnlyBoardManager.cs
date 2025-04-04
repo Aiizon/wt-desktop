@@ -16,7 +16,7 @@ namespace wt_desktop.app.Core;
 /// Classe de gestion de la liste des entités en lecture seule.
 /// </summary>
 /// <typeparam name="E">Type de l'entité</typeparam>
-public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
+public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged, IReadOnlyBoardManager where E: WtEntity, new()
 {
     public virtual ReadOnlyEntityController<E> Controller { get; }
 
@@ -27,8 +27,10 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: W
         get => _EntitiesSource;
         set
         {
-            _EntitiesSource = value;
+            _EntitiesSource         = value;
+            _EntitiesSourceFiltered = new ObservableCollection<E>(value ?? new List<E>());
             OnPropertyChanged();
+            OnPropertyChanged(nameof(EntitiesSourceFiltered));
         }
     }
     
@@ -46,12 +48,15 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: W
             OnPropertyChanged();
         }
     }
-    
+
     protected Dictionary<string, (bool IsEnabled, Func<E, bool> Predicate)> _Filters = new();
+    
+    public bool HasFilters => _Filters.Any();
     #endregion
 
     #region Commands
     public ICommand SearchCommand      { get; }
+    public ICommand ApplyFilterCommand { get; }
     public ICommand ResetFilterCommand { get; }
     #endregion
 
@@ -63,6 +68,7 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: W
         SearchText = searchText;
 
         SearchCommand      = new RelayCommand(ReloadSource, () => true);
+        ApplyFilterCommand = new RelayCommand(ApplyFilters, () => true);
         ResetFilterCommand = new RelayCommand(ResetFilters, () => true);
 
         ReloadSource();
@@ -78,10 +84,58 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: W
         EntitiesSource = !string.IsNullOrWhiteSpace(SearchText) ?
             query.ToList().Where(x => x.MatchSearch(SearchText)).ToList() :
             query.ToList();
+        
+        if (HasFilters)
+        {
+            ApplyFilters();
+        }
     }
 
-    // WIP
     #region Filters
+    /// <summary>
+    /// Active ou désactive un filtre
+    /// </summary>
+    /// <param name="key">Nom de la propriété</param>
+    /// <param name="isEnabled">Le filtre est-il actif?</param>
+    protected void ToggleFilter(string key, bool isEnabled)
+    {
+        if (_Filters.ContainsKey(key))
+        {
+            var (_, predicate) = _Filters[key];
+            _Filters[key] = (isEnabled, predicate);
+            ApplyFilters();
+        }
+
+        ReloadSource();
+    }
+    
+    /// <summary>
+    /// Ajoute un filtre à la liste des filtres
+    /// </summary>
+    /// <param name="key">Nom de la propriété</param>
+    /// <param name="predicate">Prédicat de validité</param>
+    /// <param name="isEnabled">Le filtre est-il actif par défaut?</param>
+    protected void RegisterFilter(string key, Func<E, bool> predicate, bool isEnabled = false)
+    {
+        _Filters[key] = (isEnabled, predicate);
+    }
+
+    /// <summary>
+    /// Réinitialise les filtres
+    /// </summary>
+    public void ResetFilters()
+    {
+        foreach (var key in _Filters.Keys.ToList())
+        {
+            var (_, predicate) = _Filters[key];
+            _Filters[key] = (false, predicate);
+            OnPropertyChanged(key);
+        }
+        
+        ReloadSource();
+        UpdateFilterProperties();
+    }
+    
     /// <summary>
     /// Applique les filtres sur la liste des entités
     /// </summary>
@@ -100,38 +154,6 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: W
         
         _EntitiesSourceFiltered = new(filtered);
         OnPropertyChanged(nameof(EntitiesSourceFiltered));
-    }
-    
-    /// <summary>
-    /// Ajoute un filtre à la liste des entités
-    /// </summary>
-    /// <param name="key">Nom de la propriété</param>
-    /// <param name="isEnabled">Le filtre est-il actif?</param>
-    protected void ToggleFilter(string key, bool isEnabled)
-    {
-        if (_Filters.ContainsKey(key))
-        {
-            var (_, predicate) = _Filters[key];
-            _Filters[key] = (isEnabled, predicate);
-            ApplyFilters();
-        }
-
-        ReloadSource();
-    }
-
-    /// <summary>
-    /// Réinitialise les filtres
-    /// </summary>
-    public void ResetFilters()
-    {
-        foreach (var key in _Filters.Keys.ToList())
-        {
-            var (_, predicate) = _Filters[key];
-            _Filters[key] = (false, predicate);
-        }
-        
-        ApplyFilters();
-        UpdateFilterProperties();
     }
 
     /// <summary>

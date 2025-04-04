@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:iconPacks="https://github.com/MahApps/IconPacks.Avalonia"
+             x:Class="wt_desktop.app.Controls.ResetFilterButton"
+             x:Name="Control"
+>
+    <Button Margin="5"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            Command="{Binding #Control.Command}"
+            IsDefault="True"
+            FontSize="6"
+    >
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+            <iconPacks:PackIconMaterial Kind="Reload" Margin="1" />
+        </StackPanel>
+    </Button>
+</UserControl>
