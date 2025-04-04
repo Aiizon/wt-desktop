@@ -10,6 +10,7 @@ wt-desktop est une application de bureau conçue pour gérer des utilisateurs, d
 - **Framework UI**: Avalonia UI & SukiUI
 - **Architecture**: MVVM (Model-View-ViewModel)
 - **ORM**: Entity Framework Core
+- **Tests**: xUnit
 
 ## Prérequis
 
@@ -66,9 +67,14 @@ dotnet run --project wt-desktop.app
     - **Module**: Contient les modules de l'application (Accounting, Admin, etc.)
     - **Controls**: Contrôles UI personnalisés
     - **Core**: Fonctionnalités de base de l'application
+    - **Admin**: Module d'administration
+    - **Accounting**: Module de comptabilité
+    - **Assets**: Ressources statiques (images, styles, etc.)
 
 - **wt-desktop.ef**: Couche d'accès aux données avec Entity Framework
     - **Entity**: Entités de base de données (User, etc.)
+
+- **wt-desktop.tests**: Tests unitaires pour l'application
 
 ## Fonctionnalités
 
@@ -76,6 +82,7 @@ dotnet run --project wt-desktop.app
 - Gestion des locations
 - Module d'administration pour gérer les baies, unités, offres et interventions
 - Module de comptabilité
+- Tests unitaires pour assurer la qualité du code
 
 ## Roadmap
 

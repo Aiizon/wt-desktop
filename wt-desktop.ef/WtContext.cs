@@ -7,23 +7,48 @@ namespace wt_desktop.ef;
 public class WtContext: DbContext
 {
     #region Singleton
-    private static WtContext? _instance;
+    private static WtContext? _Instance;
 
-    private static readonly object _lock = new object();
+    private static readonly object _Lock = new object();
 
     public static WtContext Instance
     {
         get
         {
-            lock (_lock)
+            lock (_Lock)
             {
-                return _instance ??= new WtContext();
+                return _Instance ??= new WtContext();
+            }
+        }
+    }
+    
+    public static WtContext TestInstance
+    {
+        get
+        {
+            lock (_Lock)
+            {
+                _Instance = GetTestInstance();
+                return _Instance;
             }
         }
     }
     
     protected WtContext() { }
     #endregion
+    
+    private WtContext(DbContextOptions<WtContext> options) : base(options) { }
+    
+    public static WtContext GetTestInstance()
+    {
+        return new WtContext
+        (
+            new DbContextOptionsBuilder<WtContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .EnableSensitiveDataLogging()
+                .Options
+        );
+    }
 
     #region Sets
     public DbSet<Unit>              Unit            { get; set; }
@@ -75,11 +100,11 @@ public class WtContext: DbContext
     /// </summary>
     private void RefreshInstance()
     {
-        lock (_lock)
+        lock (_Lock)
         {
-            var oldInstance = _instance;
+            var oldInstance = _Instance;
 
-            _instance = new WtContext();
+            _Instance = new WtContext();
 
             if (oldInstance != null && !ReferenceEquals(oldInstance, this))
             {
@@ -114,6 +139,11 @@ public class WtContext: DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        if (optionsBuilder.IsConfigured)
+        {
+            return;
+        }
+        
         Env.Load(Path.Combine(AppContext.BaseDirectory, ".env"));
         
         optionsBuilder.UseLazyLoadingProxies();

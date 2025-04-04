@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using SukiUI.Controls;
 using wt_desktop.app.Core;
 using wt_desktop.app.Module;
+using wt_desktop.ef;
 using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app;

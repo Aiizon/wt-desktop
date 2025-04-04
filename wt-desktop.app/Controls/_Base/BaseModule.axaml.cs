@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
 using wt_desktop.app.Core;
+using wt_desktop.ef;
 
 namespace wt_desktop.app.Controls;
 
