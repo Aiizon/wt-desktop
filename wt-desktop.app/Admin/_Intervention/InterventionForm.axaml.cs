@@ -194,12 +194,28 @@ public class InterventionFormManager: FormManager<Intervention>
                 {
                     SetError(nameof(Comment), "Le commentaire ne peut pas être vide.");
                 }
+                
+                if (Comment!.Length > 255)
+                {
+                    SetError(nameof(Comment), "Le commentaire ne peut pas dépasser 255 caractères.");
+                }
                 break;
             
             case nameof(StartDate):
                 if (StartDate == null)
                 {
                     SetError(nameof(StartDate), "La date de début ne peut pas être vide.");
+                    break;
+                }
+                
+                if (StartDate > EndDate)
+                {
+                    SetError(nameof(StartDate), "La date de début ne peut pas être supérieure à la date de fin.");
+                }
+                
+                if (StartDate < DateTimeOffset.Now)
+                {
+                    SetError(nameof(StartDate), "La date de début ne peut pas être passée.");
                 }
                 break;
             
@@ -207,6 +223,12 @@ public class InterventionFormManager: FormManager<Intervention>
                 if (EndDate == null)
                 {
                     SetError(nameof(EndDate), "La date de fin ne peut pas être vide.");
+                    break;
+                }
+                
+                if (EndDate < StartDate)
+                {
+                    SetError(nameof(EndDate), "La date de fin ne peut pas être inférieure à la date de début.");
                 }
                 break;
         }

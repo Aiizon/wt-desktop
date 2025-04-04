@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using Avalonia.Controls;
 using wt_desktop.app.Controls;
@@ -29,7 +30,7 @@ public class OfferFormManager : FormManager<Offer>
 
     private string _Name;
     
-    public string Name
+    public string  Name
     {
         get => _Name;
         set
@@ -39,9 +40,9 @@ public class OfferFormManager : FormManager<Offer>
         }
     }
 
-    private int _MaxUnits;
+    private int? _MaxUnits;
     
-    public int MaxUnits
+    public int?  MaxUnits
     {
         get => _MaxUnits;
         set
@@ -53,7 +54,7 @@ public class OfferFormManager : FormManager<Offer>
     
     private string _Availability;
     
-    public string Availability
+    public string  Availability
     {
         get => _Availability;
         set
@@ -63,9 +64,9 @@ public class OfferFormManager : FormManager<Offer>
         }
     }
     
-    private double _MonthlyRentPrice;
+    private double? _MonthlyRentPrice;
     
-    public double MonthlyRentPrice
+    public double?  MonthlyRentPrice
     {
         get => _MonthlyRentPrice;
         set
@@ -77,7 +78,7 @@ public class OfferFormManager : FormManager<Offer>
     
     private string _Bandwidth;
     
-    public string Bandwidth
+    public string  Bandwidth
     {
         get => _Bandwidth;
         set
@@ -89,7 +90,7 @@ public class OfferFormManager : FormManager<Offer>
     
     private bool _IsActive;
     
-    public bool IsActive
+    public bool  IsActive
     {
         get => _IsActive;
         set
@@ -117,11 +118,27 @@ public class OfferFormManager : FormManager<Offer>
         }
         
         CurrentEntity.Name             = Name;
-        CurrentEntity.MaxUnits         = MaxUnits;
-        CurrentEntity.Availability     = Availability;
-        CurrentEntity.MonthlyRentPrice = MonthlyRentPrice;
-        CurrentEntity.Bandwidth        = Bandwidth;
+        CurrentEntity.MaxUnits         = MaxUnits ?? 1;
+        CurrentEntity.MonthlyRentPrice = MonthlyRentPrice ?? 0.01;
         CurrentEntity.IsActive         = IsActive;
+
+        if (Availability.Contains("%"))
+        {
+            CurrentEntity.Availability = Availability;
+        }
+        else
+        {
+            CurrentEntity.Availability = Availability + " %";
+        }
+        
+        if (Bandwidth.Contains("Mbps"))
+        {
+            CurrentEntity.Bandwidth = Bandwidth;
+        }
+        else
+        {
+            CurrentEntity.Bandwidth = Bandwidth + " Mbps";
+        }
         
         return true;
     }
@@ -129,11 +146,11 @@ public class OfferFormManager : FormManager<Offer>
     public sealed override void Reset()
     {
         Name             = CurrentEntity.Name;
-        MaxUnits         = CurrentEntity.MaxUnits;
-        Availability     = CurrentEntity.Availability;
-        MonthlyRentPrice = CurrentEntity.MonthlyRentPrice;
-        Bandwidth        = CurrentEntity.Bandwidth;
+        MaxUnits         = CurrentEntity.MaxUnits ?? 1;
+        MonthlyRentPrice = CurrentEntity.MonthlyRentPrice ?? 0.01;
         IsActive         = CurrentEntity.IsActive;
+        Availability     = CurrentEntity.Availability;
+        Bandwidth        = CurrentEntity.Bandwidth;
     }
 
     public override bool Cancel()
@@ -150,25 +167,80 @@ public class OfferFormManager : FormManager<Offer>
             case nameof(Name):
                 if (string.IsNullOrWhiteSpace(Name))
                 {
-                    SetError(propertyName, "Le nom ne peut pas être vide.");
+                    SetError(nameof(Name), "Le nom ne peut pas être vide.");
+                    break;
+                }
+                
+                if (Name.Length < 3)
+                {
+                    SetError(nameof(Name), "Le nom doit contenir au moins 3 caractères.");
+                }
+                
+                if (Name.Length > 50)
+                {
+                    SetError(nameof(Name), "Le nom doit contenir au maximum 50 caractères.");
                 }
                 break;
+            
             case nameof(MaxUnits):
-                if (MaxUnits <= 0)
+                if (MaxUnits == null)
                 {
-                    SetError(propertyName, "Le nombre d'unités doit être supérieur à 0.");
+                    SetError(nameof(MaxUnits), "Le nombre d'unités ne peut pas être vide.");
+                    break;
+                }
+                
+                if (MaxUnits > 42)
+                {
+                    SetError(nameof(MaxUnits), "Le nombre d'unités ne peut pas dépasser 42.");
                 }
                 break;
-            case nameof(MonthlyRentPrice):
-                if (MonthlyRentPrice <= 0)
-                {
-                    SetError(propertyName, "Le prix doit être supérieur à 0.");
-                }
-                break;
+            
             case nameof(Availability):
                 if (string.IsNullOrWhiteSpace(Availability))
                 {
-                    SetError(propertyName, "La disponibilité ne peut pas être vide.");
+                    SetError(nameof(Availability), "La disponibilité ne peut pas être vide.");
+                    break;
+                }
+
+                double availabilityResult;
+                if (double.TryParse(Availability.Trim()                 , out availabilityResult) || 
+                    double.TryParse(Availability.Replace("%", "").Trim(), out availabilityResult))
+                {
+                    if (availabilityResult < 0)
+                    {
+                        SetError(nameof(Availability), "La disponibilité doit être un nombre positif.");
+                    }
+                    
+                    if (availabilityResult > 100)
+                    {
+                        SetError(nameof(Availability), "La disponibilité ne peut pas dépasser 100%.");
+                    }
+                }
+                else
+                {
+                    SetError(nameof(Availability), "La disponibilité doit être un nombre ou pourcentage valide.");
+                }
+                break;
+            
+            case nameof(Bandwidth):
+                if (string.IsNullOrWhiteSpace(Bandwidth))
+                {
+                    SetError(nameof(Bandwidth), "La bande passante ne peut pas être vide.");
+                    break;
+                }
+
+                int bandwidthResult;
+                if (int.TryParse(Bandwidth                           , out bandwidthResult) ||
+                    int.TryParse(Bandwidth.Replace("Mbps", "").Trim(), out bandwidthResult))
+                {
+                    if (bandwidthResult < 0)
+                    {
+                        SetError(nameof(Bandwidth), "La bande passante doit être un nombre positif.");
+                    }
+                }
+                else
+                {
+                    SetError(nameof(Bandwidth), "La bande passante doit être un nombre ou une valeur en Mbps valide.");
                 }
                 break;
         }
@@ -178,7 +250,7 @@ public class OfferFormManager : FormManager<Offer>
     {
         ValidateProperty(nameof(Name));
         ValidateProperty(nameof(MaxUnits));
-        ValidateProperty(nameof(MonthlyRentPrice));
         ValidateProperty(nameof(Availability));
+        ValidateProperty(nameof(Bandwidth));
     }
 }

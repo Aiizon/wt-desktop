@@ -47,7 +47,7 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
         Mode          = mode;
         CurrentEntity = entity;
 
-        SaveCommand   = new RelayCommand(HandleSave, () => !HasErrors);
+        SaveCommand   = new RelayCommand(HandleSave, () => true);
         ResetCommand  = new RelayCommand(Reset     , () => true);
         CancelCommand = new RelayCommand(() =>
         {
@@ -158,7 +158,9 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
         _Errors.Clear();
         
         foreach (var propertyName in propertyNames)
+        {
             OnErrorsChanged(propertyName);
+        }
     }
     #endregion
     

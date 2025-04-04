@@ -1,8 +1,10 @@
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Avalonia.Controls;
 using wt_desktop.app.Controls;
 using wt_desktop.app.Core;
+using wt_desktop.ef;
 using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app.Admin;
@@ -87,7 +89,10 @@ public class UserFormManager : FormManager<User>
         get => _Type;
         set
         {
-            if (value == _Type) return;
+            if (value == _Type)
+            {
+                return;
+            }
             _Type = value;
             OnPropertyChanged();
         }
@@ -175,29 +180,72 @@ public class UserFormManager : FormManager<User>
                 if (string.IsNullOrWhiteSpace(Email))
                 {
                     SetError(nameof(Email), "L'email est obligatoire.");
+                    break;
+                }
+                
+                if (!Regex.IsMatch(Email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,})+)$"))
+                {
+                    SetError(nameof(Email), "L'email n'est pas valide.");
+                }
+                
+                if (WtContext.Instance.User.Any(u => u.Email == Email))
+                {
+                    SetError(nameof(Email), "L'email est déjà utilisé.");
                 }
                 break;
             
-            // case nameof(FirstName):
-            //     if (string.IsNullOrWhiteSpace(FirstName))
-            //     {
-            //         SetError(nameof(FirstName), "Le prénom est obligatoire.");
-            //     }
-            //     break;
-            //
-            // case nameof(LastName):
-            //     if (string.IsNullOrWhiteSpace(LastName))
-            //     {
-            //         SetError(nameof(LastName), "Le nom est obligatoire.");
-            //     }
-            //     break;
+            case nameof(FirstName):
+                if (SelectedType == "user")
+                {
+                    break;
+                }
+                
+                if (string.IsNullOrWhiteSpace(FirstName))
+                {
+                    SetError(nameof(FirstName), "Le prénom est obligatoire.");
+                    break;
+                }
+                
+                if (FirstName.Length < 2)
+                {
+                    SetError(nameof(FirstName), "Le prénom doit contenir au moins 2 caractères.");
+                }
+                
+                if (FirstName.Length > 50)
+                {
+                    SetError(nameof(FirstName), "Le prénom ne peut pas dépasser 50 caractères.");
+                }
+                break;
+            
+            case nameof(LastName):
+                if (SelectedType == "user")
+                {
+                    break;
+                }
+                
+                if (string.IsNullOrWhiteSpace(LastName))
+                {
+                    SetError(nameof(LastName), "Le nom est obligatoire.");
+                    break;
+                }
+                
+                if (LastName.Length < 2)
+                {
+                    SetError(nameof(LastName), "Le nom doit contenir au moins 2 caractères.");
+                }
+                
+                if (LastName.Length > 50)
+                {
+                    SetError(nameof(LastName), "Le nom ne peut pas dépasser 50 caractères.");
+                }
+                break;
         }
     }
 
     public override void ValidateForm()
     {
         ValidateProperty(nameof(Email));
-        // ValidateProperty(nameof(FirstName));
-        // ValidateProperty(nameof(LastName));
+        ValidateProperty(nameof(FirstName));
+        ValidateProperty(nameof(LastName));
     }
 }
