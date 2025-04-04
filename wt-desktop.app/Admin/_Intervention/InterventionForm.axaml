@@ -26,16 +26,16 @@
                 <ColumnDefinition Width="10*" SharedSizeGroup="InputColumn" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock  Grid.Row="0" Grid.Column="0" Text="Commentaire"                    HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5"  />
+            <TextBlock  Grid.Row="0" Grid.Column="0" Text="Commentaire"                    HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5"                 />
             <TextBox    Grid.Row="0" Grid.Column="1" Text="{Binding Comment}"              HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Nom" />
             
-            <TextBlock  Grid.Row="2" Grid.Column="0" Text="Date de début"                  HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5"  />
-            <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding StartDate}"    HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5"  />
+            <TextBlock  Grid.Row="2" Grid.Column="0" Text="Date de début"                  HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5"                 />
+            <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding StartDate}"    HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5"                 />
             
-            <TextBlock  Grid.Row="4" Grid.Column="0" Text="Date de fin"                    HorizontalAlignment="Right"   VerticalAlignment="Top" Margin="5"  />
-            <DatePicker Grid.Row="4" Grid.Column="1" SelectedDate="{Binding EndDate}"      HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5"  />
+            <TextBlock  Grid.Row="4" Grid.Column="0" Text="Date de fin"                    HorizontalAlignment="Right"   VerticalAlignment="Top"    Margin="5"                 />
+            <DatePicker Grid.Row="4" Grid.Column="1" SelectedDate="{Binding EndDate}"      HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5"                 />
             
-            <TextBlock  Grid.Row="6" Grid.Column="0" Text="Baies affectées"                HorizontalAlignment="Right"   VerticalAlignment="Top" Margin="5" />
+            <TextBlock  Grid.Row="6" Grid.Column="0" Text="Baies affectées"                HorizontalAlignment="Right"   VerticalAlignment="Top"    Margin="5"                 />
             <!-- Avec avalonia, ComboBox ne permet pas de sélectionner plusieurs éléments, j'utilise donc une ListBox -->
             <ListBox    Grid.Row="6" Grid.Column="1" 
                         ItemsSource="{Binding AvailableBays}"  

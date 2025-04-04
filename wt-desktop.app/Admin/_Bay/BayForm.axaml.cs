@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Avalonia.Controls;
 using wt_desktop.app.Controls;
 using wt_desktop.app.Core;
@@ -93,12 +94,42 @@ public class BayFormManager : FormManager<Bay>
                 {
                     SetError(nameof(Name), "Le nom ne peut pas être vide.");
                 }
+                
+                if (Name!.Length != 4)
+                {
+                    SetError(nameof(Name), "Le nom doit contenir exactement 4 caractères.");
+                }
+                
+                if (!Regex.IsMatch(Name!, @"^[a-zA-Z0-9\s]+$"))
+                {
+                    SetError(nameof(Name), "Le nom ne peut contenir que des lettres, des chiffres et des espaces.");
+                }
+                
+                if (!Regex.IsMatch(Name!, @"B[0-9]{3}"))
+                {
+                    SetError(nameof(Name), "Le nom doit commencer par 'B' suivi de 3 chiffres.");
+                }
                 break;
             
             case nameof(Location):
                 if (string.IsNullOrWhiteSpace(Location))
                 {
                     SetError(nameof(Location), "L'emplacement ne peut pas être vide.");
+                }
+                
+                if (Location!.Length > 50)
+                {
+                    SetError(nameof(Location), "L'emplacement ne peut pas dépasser 50 caractères.");
+                }
+                
+                if (Location.Length < 2)
+                {
+                    SetError(nameof(Location), "L'emplacement doit contenir au moins 2 caractères.");
+                }
+                
+                if (!Regex.IsMatch(Location!, @"^[a-zA-Z0-9\s]+$"))
+                {
+                    SetError(nameof(Location), "L'emplacement ne peut contenir que des lettres, des chiffres et des espaces.");
                 }
                 break;
         }

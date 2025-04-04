@@ -13,7 +13,7 @@ public class Offer : WtIdentityEntity
 
     [Required]
     [Column("max_units")]
-    public int MaxUnits { get; set; }
+    public int? MaxUnits { get; set; }
 
     [Required]
     [Column("availability")]
@@ -21,7 +21,7 @@ public class Offer : WtIdentityEntity
 
     [Required]
     [Column("monthly_rent_price")]
-    public double MonthlyRentPrice { get; set; }
+    public double? MonthlyRentPrice { get; set; }
 
     [Required]
     [Column("bandwidth")]

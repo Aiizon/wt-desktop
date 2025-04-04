@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Avalonia.Controls;
 using wt_desktop.app.Controls;
 using wt_desktop.app.Core;
@@ -110,18 +111,34 @@ public class UnitFormManager : FormManager<Unit>
                 if (string.IsNullOrWhiteSpace(Name))
                 {
                     SetError(nameof(Name), "Le nom ne peut pas être vide.");
+                    break;
+                }
+                
+                if (Name!.Length != 4)
+                {
+                    SetError(nameof(Name), "Le nom doit contenir exactement 4 caractères.");
+                }
+                
+                if (!Regex.IsMatch(Name!, @"^[a-zA-Z0-9\s]+$"))
+                {
+                    SetError(nameof(Name), "Le nom ne peut contenir que des lettres, des chiffres et des espaces.");
+                }
+                
+                if (!Regex.IsMatch(Name!, @"U[0-9]{3}"))
+                {
+                    SetError(nameof(Name), "Le nom doit commencer par 'U' suivi de 3 chiffres.");
                 }
                 break;
             
             case nameof(SelectedBay):
                 if 
                 (
-                    SelectedBay == null ||
-                    SelectedBay.Id == 0 ||
+                    SelectedBay    == null ||
+                    SelectedBay.Id == 0    ||
                     WtContext.Instance.Bay.Find(SelectedBay.Id) == null
                 ) 
                 {
-                    SetError(nameof(SelectedBay), "La baie ne peut pas être vide.");
+                    SetError(nameof(SelectedBay), "La baie est obligatoire.");
                 }
                 break;
         }

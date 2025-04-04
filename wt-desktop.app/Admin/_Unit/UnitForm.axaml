@@ -21,7 +21,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Nom"            HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
-            <TextBox   Grid.Row="0" Grid.Column="1" Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Nom" />
+            <TextBox   Grid.Row="0" Grid.Column="1" Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Uxxx" />
 
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Baie"           HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
             <ComboBox  Grid.Row="2" Grid.Column="1"                       HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" ItemsSource="{Binding AvailableBays}" SelectedItem="{Binding SelectedBay}" />
