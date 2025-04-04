@@ -27,8 +27,10 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged, IReadOnly
         get => _EntitiesSource;
         set
         {
-            _EntitiesSource = value;
+            _EntitiesSource         = value;
+            _EntitiesSourceFiltered = new ObservableCollection<E>(value ?? new List<E>());
             OnPropertyChanged();
+            OnPropertyChanged(nameof(EntitiesSourceFiltered));
         }
     }
     
@@ -47,7 +49,7 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged, IReadOnly
         }
     }
 
-    private Dictionary<string, (bool IsEnabled, Func<E, bool> Predicate)> _Filters = new();
+    protected Dictionary<string, (bool IsEnabled, Func<E, bool> Predicate)> _Filters = new();
     
     public bool HasFilters => _Filters.Any();
     #endregion
@@ -82,12 +84,16 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged, IReadOnly
         EntitiesSource = !string.IsNullOrWhiteSpace(SearchText) ?
             query.ToList().Where(x => x.MatchSearch(SearchText)).ToList() :
             query.ToList();
+        
+        if (HasFilters)
+        {
+            ApplyFilters();
+        }
     }
 
-    // WIP
     #region Filters
     /// <summary>
-    /// Ajoute un filtre à la liste des entités
+    /// Active ou désactive un filtre
     /// </summary>
     /// <param name="key">Nom de la propriété</param>
     /// <param name="isEnabled">Le filtre est-il actif?</param>
@@ -125,7 +131,7 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged, IReadOnly
             _Filters[key] = (false, predicate);
         }
         
-        ApplyFilters();
+        ReloadSource();
         UpdateFilterProperties();
     }
     

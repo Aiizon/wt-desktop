@@ -23,5 +23,33 @@ public partial class OfferBoard : BaseBoard
 
 public class OfferBoardManager : BoardManager<Offer>
 {
-    public OfferBoardManager(OfferController controller, string search) : base(controller, search) { }
+    #region Filters
+    public bool ShowActive
+    {
+        get
+        {
+            if (_Filters.ContainsKey("Active"))
+            {
+                return _Filters["Active"].IsEnabled;
+            }
+            return false;
+        }
+        set
+        {
+            if (value == _Filters["Active"].IsEnabled)
+            {
+                return;
+            }
+            ToggleFilter("Active", value);
+            ApplyFilters();
+        }
+    }
+    
+
+    #endregion
+
+    public OfferBoardManager(OfferController controller, string search) : base(controller, search)
+    {
+        RegisterFilter("Active", (e) => e.IsActive);
+    }
 }

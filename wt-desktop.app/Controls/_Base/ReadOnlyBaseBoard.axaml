@@ -23,11 +23,14 @@
                 SearchCommand="{Binding SearchCommand}"
             />
             
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsVisible="{Binding HasFilters}">
-                <ContentControl Content="#Control.FilterContent" />
-                <controls:ResetFilterButton Command="{Binding ResetFilterCommand}" />
-                <controls:ApplyFilterButton Command="{Binding ApplyFilterCommand}" />
-            </StackPanel>
+            <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" IsVisible="{Binding HasFilters}">
+                <ContentControl DockPanel.Dock="Left" Content="{Binding #Control.FilterContent}" />
+                
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <controls:ResetFilterButton Command="{Binding ResetFilterCommand}" />
+                    <controls:ApplyFilterButton Command="{Binding ApplyFilterCommand}" />
+                </StackPanel>
+            </DockPanel>
         </StackPanel>
 
         <ContentControl Grid.Row="2" x:Name="ContentArea" Content="{Binding #Control.BoardContent}" />

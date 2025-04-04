@@ -7,8 +7,12 @@
                     x:DataType="admin:OfferBoardManager"
                     x:Class="wt_desktop.app.Admin.OfferBoard"
 >
+    <controls:BaseBoard.FilterContent>
+        <CheckBox Content="Actif" IsChecked="{Binding ShowActive, Mode=TwoWay}" />
+    </controls:BaseBoard.FilterContent>
+    
     <controls:BaseBoard.BoardContent>
-        <DataGrid Grid.Row="2" ItemsSource="{Binding EntitiesSource, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" IsReadOnly="True">
+        <DataGrid Grid.Row="2" ItemsSource="{Binding EntitiesSourceFiltered, Mode=OneWay}" SelectedItem="{Binding SelectedEntity, Mode=TwoWay}" IsReadOnly="True">
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Création"    Command="{Binding AddCommand}"    />

@@ -9,9 +9,10 @@
             VerticalAlignment="Center"
             Command="{Binding #Control.Command}"
             IsDefault="True"
+            FontSize="6"
     >
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-            <iconPacks:PackIconMaterial Kind="Filter" Margin="5" />
+            <iconPacks:PackIconMaterial Kind="Filter" Margin="1" />
         </StackPanel>
     </Button>
 </UserControl>

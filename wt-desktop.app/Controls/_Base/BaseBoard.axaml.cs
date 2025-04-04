@@ -8,8 +8,8 @@ public abstract partial class BaseBoard : UserControl
     public static readonly StyledProperty<object> BoardContentProperty =
         AvaloniaProperty.Register<BaseBoard, object>(nameof(BoardContent));
     
-    public static readonly StyledProperty<string> BoardFilterProperty =
-        AvaloniaProperty.Register<BaseBoard, string>(nameof(BoardFilter));
+    public static readonly StyledProperty<object> FilterContentProperty =
+        AvaloniaProperty.Register<BaseBoard, object>(nameof(FilterContent));
     
     public object BoardContent
     {
@@ -17,10 +17,10 @@ public abstract partial class BaseBoard : UserControl
         set => SetValue(BoardContentProperty, value);
     }
     
-    public string BoardFilter
+    public object FilterContent
     {
-        get => GetValue(BoardFilterProperty);
-        set => SetValue(BoardFilterProperty, value);
+        get => GetValue(FilterContentProperty);
+        set => SetValue(FilterContentProperty, value);
     }
     
     public BaseBoard()
