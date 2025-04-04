@@ -7,6 +7,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.Input;
 using SukiUI.Controls;
 using wt_desktop.app.Core;
+using wt_desktop.ef;
 
 namespace wt_desktop.app;
 

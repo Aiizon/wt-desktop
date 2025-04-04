@@ -47,12 +47,4 @@ public class RentalUnit: WtEntity
             ru => new { ru.RentalId, ru.UnitId }
         );
     }
-
-    public static IQueryable<RentalUnit> Source()
-    {
-        return WtContext.Instance.RentalUnit
-            .Include(ru => ru.Rental)
-            .Include(ru => ru.Unit)
-        ;
-    }
 }
