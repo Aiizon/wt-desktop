@@ -28,19 +28,19 @@ public class OfferBoardManager : BoardManager<Offer>
     {
         get
         {
-            if (_Filters.ContainsKey("Active"))
+            if (_Filters.ContainsKey(nameof(Offer.IsActive)))
             {
-                return _Filters["Active"].IsEnabled;
+                return _Filters[nameof(Offer.IsActive)].IsEnabled;
             }
             return false;
         }
         set
         {
-            if (value == _Filters["Active"].IsEnabled)
+            if (value == _Filters[nameof(Offer.IsActive)].IsEnabled)
             {
                 return;
             }
-            ToggleFilter("Active", value);
+            ToggleFilter(nameof(Offer.IsActive), value);
             ApplyFilters();
         }
     }
@@ -50,6 +50,6 @@ public class OfferBoardManager : BoardManager<Offer>
 
     public OfferBoardManager(OfferController controller, string search) : base(controller, search)
     {
-        RegisterFilter("Active", (e) => e.IsActive);
+        RegisterFilter(nameof(Offer.IsActive), (e) => e.IsActive);
     }
 }

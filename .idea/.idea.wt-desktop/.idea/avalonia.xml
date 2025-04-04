@@ -42,6 +42,7 @@
         <entry key="wt-desktop.app/Controls/_Button/ResetFilterButton.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Controls/_Button/SaveButton.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Controls/_Button/SearchButton.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
+        <entry key="wt-desktop.app/Controls/_Form/FilterBox.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Controls/_Form/SearchBox.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Core/DeletionConfirmationDialog.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />
         <entry key="wt-desktop.app/Core/RolesEditor.axaml" value="wt-desktop.app/wt-desktop.app.csproj" />

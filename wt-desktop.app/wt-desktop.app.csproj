@@ -105,6 +105,10 @@
         <DependentUpon>ResetFilterButton.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Controls\_Form\FilterBox.axaml.cs">
+        <DependentUpon>FilterBox.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>

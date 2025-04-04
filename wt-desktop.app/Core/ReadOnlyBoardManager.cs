@@ -129,6 +129,7 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged, IReadOnly
         {
             var (_, predicate) = _Filters[key];
             _Filters[key] = (false, predicate);
+            OnPropertyChanged(key);
         }
         
         ReloadSource();
