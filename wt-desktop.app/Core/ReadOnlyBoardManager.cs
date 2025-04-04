@@ -16,7 +16,7 @@ namespace wt_desktop.app.Core;
 /// Classe de gestion de la liste des entités en lecture seule.
 /// </summary>
 /// <typeparam name="E">Type de l'entité</typeparam>
-public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
+public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged, IReadOnlyBoardManager where E: WtEntity, new()
 {
     public virtual ReadOnlyEntityController<E> Controller { get; }
 
@@ -46,12 +46,15 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: W
             OnPropertyChanged();
         }
     }
+
+    private Dictionary<string, (bool IsEnabled, Func<E, bool> Predicate)> _Filters = new();
     
-    protected Dictionary<string, (bool IsEnabled, Func<E, bool> Predicate)> _Filters = new();
+    public bool HasFilters => _Filters.Any();
     #endregion
 
     #region Commands
     public ICommand SearchCommand      { get; }
+    public ICommand ApplyFilterCommand { get; }
     public ICommand ResetFilterCommand { get; }
     #endregion
 
@@ -63,6 +66,7 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: W
         SearchText = searchText;
 
         SearchCommand      = new RelayCommand(ReloadSource, () => true);
+        ApplyFilterCommand = new RelayCommand(ApplyFilters, () => true);
         ResetFilterCommand = new RelayCommand(ResetFilters, () => true);
 
         ReloadSource();

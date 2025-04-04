@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.Windows.Input;
+using wt_desktop.ef;
 
 namespace wt_desktop.app.Core;
 
@@ -7,9 +10,12 @@ namespace wt_desktop.app.Core;
 /// </summary>
 public interface IReadOnlyBoardManager
 {
-    string? SearchText     { get; set; }
-    
-    ICommand SearchCommand { get; }
+    string? SearchText          { get; set; }
+    bool    HasFilters          { get; }
+
+    ICommand SearchCommand      { get; }
+    ICommand ApplyFilterCommand { get; }
+    ICommand ResetFilterCommand { get; }
 }
 
 /// <summary>

@@ -97,6 +97,14 @@
         <DependentUpon>ReadOnlyBaseBoard.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Controls\_Button\ApplyFilterButton.axaml.cs">
+        <DependentUpon>FilterButton.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Controls\_Button\ResetFilterButton.axaml.cs">
+        <DependentUpon>ResetFilterButton.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>

@@ -12,19 +12,27 @@
 >
     <Grid Margin="5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="5"    />
-            <RowDefinition Height="10*"  />
-            <RowDefinition Height="5"    />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="5"  />
+            <RowDefinition Height="9*" />
+            <RowDefinition Height="5"  />
+            <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
 
-        <controls:SearchBox Grid.Row="0"
-            SearchText   ="{Binding SearchText, Mode=TwoWay}"
-            SearchCommand="{Binding SearchCommand}"
-        />
+        <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5">
+            <controls:SearchBox
+                SearchText   ="{Binding SearchText, Mode=TwoWay}"
+                SearchCommand="{Binding SearchCommand}"
+            />
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsVisible="{Binding HasFilters}">
+                <ContentControl Content="#Control.FilterContent" />
+                <controls:ResetFilterButton Command="{Binding ResetFilterCommand}" />
+                <controls:ApplyFilterButton Command="{Binding ApplyFilterCommand}" />
+            </StackPanel>
+        </StackPanel>
 
-        <ContentControl Grid.Row="2" x:Name="ContentArea" Content="{Binding #Control.BoardContent}" />
+        <ContentControl Grid.Row="2" Content="{Binding #Control.BoardContent}" />
 
         <controls:BoardControls Grid.Row="4"
             AddCommand   ="{Binding AddCommand}"
