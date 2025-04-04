@@ -79,18 +79,17 @@ dotnet run --project wt-desktop.app
 ## Fonctionnalités
 
 - Gestion des utilisateurs avec différents rôles (Admin, Comptable, Utilisateur)
-- Gestion des locations
 - Module d'administration pour gérer les baies, unités, offres et interventions
 - Module de comptabilité
 - Tests unitaires pour assurer la qualité du code
 
 ## Roadmap
 
-[ ] filtre sur boards
-[ ] email grisé à l'édition
-[ ] saisie password à la création
-[ ] BI
-[ ] quantité unités à la création d'une baie
-[ ] lien user <-> intervention autocomplété avec l'utilisateur connecté
-[ ] consultation (form) en read-only pour la compta
-[ ] quantité d'unités d'une location
+- [ ] filtre sur boards
+- [ ] email grisé à l'édition
+- [ ] saisie password à la création
+- [ ] BI
+- [ ] quantité unités à la création d'une baie
+- [ ] lien user <-> intervention autocomplété avec l'utilisateur connecté
+- [ ] consultation (form) en read-only pour la compta
+- [ ] quantité d'unités d'une location

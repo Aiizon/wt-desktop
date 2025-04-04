@@ -11,6 +11,9 @@ public class WtContext: DbContext
 
     private static readonly object _Lock = new object();
 
+    /// <summary>
+    /// Instance de la base de données
+    /// </summary>
     public static WtContext Instance
     {
         get
@@ -22,6 +25,9 @@ public class WtContext: DbContext
         }
     }
     
+    /// <summary>
+    /// Instance de la base de données pour les tests
+    /// </summary>
     public static WtContext TestInstance
     {
         get
@@ -39,6 +45,10 @@ public class WtContext: DbContext
     
     private WtContext(DbContextOptions<WtContext> options) : base(options) { }
     
+    /// <summary>
+    /// Génère une instance de la base de données en RAM pour les tests
+    /// </summary>
+    /// <returns>instance</returns>
     public static WtContext GetTestInstance()
     {
         return new WtContext

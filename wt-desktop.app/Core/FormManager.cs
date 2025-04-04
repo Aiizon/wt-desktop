@@ -10,6 +10,10 @@ using wt_desktop.ef;
 
 namespace wt_desktop.app.Core;
 
+/// <summary>
+/// Classe de gestion des formulaires.
+/// </summary>
+/// <typeparam name="E">Type de l'entité</typeparam>
 public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorInfo, IFormManager where E: WtEntity, new()
 {
     #region Properties
@@ -59,6 +63,9 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
         }, () => true);
     }
     
+    /// <summary>
+    /// Gère l'enregistrement de l'entité
+    /// </summary>
     public virtual void HandleSave()
     {
         if (!Save())
@@ -83,8 +90,21 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
         }
     }
 
+    /// <summary>
+    /// Enregistre l'entité
+    /// </summary>
+    /// <returns>true si l'enregistrement s'est effectué</returns>
     public abstract bool Save();
+    
+    /// <summary>
+    /// Réinitialise le formulaire
+    /// </summary>
     public abstract void Reset();
+    
+    /// <summary>
+    /// Annule l'opération
+    /// </summary>
+    /// <returns>true</returns>
     public virtual bool  Cancel() => true;
 
     #region INotifyPropertyChanged

@@ -13,6 +13,10 @@ using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app.Core;
 
+/// <summary>
+/// Classe de gestion de la liste des entités.
+/// </summary>
+/// <typeparam name="E">Type de l'entité</typeparam>
 public abstract class BoardManager<E>: ReadOnlyBoardManager<E>, IBoardManager where E: WtEntity, new()
 {
     #region Properties

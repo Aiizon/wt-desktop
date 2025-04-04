@@ -8,8 +8,18 @@ using wt_desktop.ef;
 
 namespace wt_desktop.app.Core;
 
+/// <summary>
+/// Classe de gestion des entités.
+/// </summary>
+/// <typeparam name="E">Type de l'entité</typeparam>
 public abstract class EntityController<E> : ReadOnlyEntityController<E> where E : WtEntity, new()
 {
+    /// <summary>
+    /// Récupère le formulaire de l'entité.
+    /// </summary>
+    /// <param name="mode">Mode</param>
+    /// <param name="entity">Entité</param>
+    /// <returns>formulaire</returns>
     public abstract UserControl GetForm(EFormMode mode, E? entity = null);
 
     #region View

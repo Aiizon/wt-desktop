@@ -10,6 +10,9 @@ public class AuthProvider
     #region Singleton
     private static AuthProvider? _instance;
 
+    /// <summary>
+    /// Instance de la classe AuthProvider
+    /// </summary>
     public static AuthProvider Instance
     {
         get
@@ -35,6 +38,13 @@ public class AuthProvider
         AuthenticationStateChanged?.Invoke(this, EventArgs.Empty);
     }
     
+    /// <summary>
+    /// Login de l'utilisateur
+    /// </summary>
+    /// <param name="email">Email</param>
+    /// <param name="password">Mot de passe en clair</param>
+    /// <returns>true si la connection s'est effectuée avec succès, false sinon</returns>
+    /// <exception cref="Exception">Erreur lors de la connection</exception>
     public bool Login(string email, string password)
     {
         if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
@@ -60,6 +70,9 @@ public class AuthProvider
         return IsAuthenticated;
     }
     
+    /// <summary>
+    /// Déconnexion de l'utilisateur
+    /// </summary>
     public void Logout()
     {
         _CurrentUser = null;
@@ -68,11 +81,22 @@ public class AuthProvider
     #endregion
     
     #region Password
+    /// <summary>
+    /// Hash le mot de passe
+    /// </summary>
+    /// <param name="password">Mot de passe en clair</param>
+    /// <returns>hash</returns>
     public string HashPassword(string password)
     {
         return BCrypt.Net.BCrypt.HashPassword(password);
     }
     
+    /// <summary>
+    /// Vérifie si le mot de passe en clair correspond au hash
+    /// </summary>
+    /// <param name="password">Mot de passe en clair</param>
+    /// <param name="hash">Hash</param>
+    /// <returns>true si le mot de passe correspond, false sinon</returns>
     public bool VerifyPassword(string password, string hash)
     {
         return BCrypt.Net.BCrypt.Verify(password, hash);

@@ -12,6 +12,10 @@ using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app.Core;
 
+/// <summary>
+/// Classe de gestion de la liste des entités en lecture seule.
+/// </summary>
+/// <typeparam name="E">Type de l'entité</typeparam>
 public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: WtEntity, new()
 {
     public virtual ReadOnlyEntityController<E> Controller { get; }
@@ -76,6 +80,11 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: W
             query.ToList();
     }
 
+    // WIP
+    #region Filters
+    /// <summary>
+    /// Applique les filtres sur la liste des entités
+    /// </summary>
     protected void ApplyFilters()
     {
         _EntitiesSourceFiltered.Clear();
@@ -93,6 +102,11 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: W
         OnPropertyChanged(nameof(EntitiesSourceFiltered));
     }
     
+    /// <summary>
+    /// Ajoute un filtre à la liste des entités
+    /// </summary>
+    /// <param name="key">Nom de la propriété</param>
+    /// <param name="isEnabled">Le filtre est-il actif?</param>
     protected void ToggleFilter(string key, bool isEnabled)
     {
         if (_Filters.ContainsKey(key))
@@ -105,6 +119,9 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: W
         ReloadSource();
     }
 
+    /// <summary>
+    /// Réinitialise les filtres
+    /// </summary>
     public void ResetFilters()
     {
         foreach (var key in _Filters.Keys.ToList())
@@ -117,7 +134,11 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged where E: W
         UpdateFilterProperties();
     }
 
+    /// <summary>
+    /// Met à jour les propriétés des filtres
+    /// </summary>
     protected virtual void UpdateFilterProperties() { }
+    #endregion
 
     #region INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;

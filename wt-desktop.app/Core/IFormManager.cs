@@ -5,6 +5,9 @@ using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app.Core;
 
+/// <summary>
+/// Interface de gestion des formulaires.
+/// </summary>
 public interface IFormManager
 { 
     ICommand CancelCommand { get; }

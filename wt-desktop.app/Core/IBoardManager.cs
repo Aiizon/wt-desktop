@@ -2,6 +2,9 @@ using System.Windows.Input;
 
 namespace wt_desktop.app.Core;
 
+/// <summary>
+/// Interface de gestion de la liste des entités en lecture seule.
+/// </summary>
 public interface IReadOnlyBoardManager
 {
     string? SearchText     { get; set; }
@@ -9,6 +12,9 @@ public interface IReadOnlyBoardManager
     ICommand SearchCommand { get; }
 }
 
+/// <summary>
+/// Interface de gestion de la liste des entités en lecture / écriture.
+/// </summary>
 public interface IBoardManager : IReadOnlyBoardManager
 {
     ICommand AddCommand    { get; }
