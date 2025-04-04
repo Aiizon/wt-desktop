@@ -87,6 +87,49 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged, IReadOnly
     // WIP
     #region Filters
     /// <summary>
+    /// Ajoute un filtre à la liste des entités
+    /// </summary>
+    /// <param name="key">Nom de la propriété</param>
+    /// <param name="isEnabled">Le filtre est-il actif?</param>
+    protected void ToggleFilter(string key, bool isEnabled)
+    {
+        if (_Filters.ContainsKey(key))
+        {
+            var (_, predicate) = _Filters[key];
+            _Filters[key] = (isEnabled, predicate);
+            ApplyFilters();
+        }
+
+        ReloadSource();
+    }
+    
+    /// <summary>
+    /// Ajoute un filtre à la liste des filtres
+    /// </summary>
+    /// <param name="key">Nom de la propriété</param>
+    /// <param name="predicate">Prédicat de validité</param>
+    /// <param name="isEnabled">Le filtre est-il actif par défaut?</param>
+    protected void RegisterFilter(string key, Func<E, bool> predicate, bool isEnabled = false)
+    {
+        _Filters[key] = (isEnabled, predicate);
+    }
+
+    /// <summary>
+    /// Réinitialise les filtres
+    /// </summary>
+    public void ResetFilters()
+    {
+        foreach (var key in _Filters.Keys.ToList())
+        {
+            var (_, predicate) = _Filters[key];
+            _Filters[key] = (false, predicate);
+        }
+        
+        ApplyFilters();
+        UpdateFilterProperties();
+    }
+    
+    /// <summary>
     /// Applique les filtres sur la liste des entités
     /// </summary>
     protected void ApplyFilters()
@@ -104,38 +147,6 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged, IReadOnly
         
         _EntitiesSourceFiltered = new(filtered);
         OnPropertyChanged(nameof(EntitiesSourceFiltered));
-    }
-    
-    /// <summary>
-    /// Ajoute un filtre à la liste des entités
-    /// </summary>
-    /// <param name="key">Nom de la propriété</param>
-    /// <param name="isEnabled">Le filtre est-il actif?</param>
-    protected void ToggleFilter(string key, bool isEnabled)
-    {
-        if (_Filters.ContainsKey(key))
-        {
-            var (_, predicate) = _Filters[key];
-            _Filters[key] = (isEnabled, predicate);
-            ApplyFilters();
-        }
-
-        ReloadSource();
-    }
-
-    /// <summary>
-    /// Réinitialise les filtres
-    /// </summary>
-    public void ResetFilters()
-    {
-        foreach (var key in _Filters.Keys.ToList())
-        {
-            var (_, predicate) = _Filters[key];
-            _Filters[key] = (false, predicate);
-        }
-        
-        ApplyFilters();
-        UpdateFilterProperties();
     }
 
     /// <summary>

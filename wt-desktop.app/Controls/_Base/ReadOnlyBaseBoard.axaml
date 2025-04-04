@@ -12,9 +12,9 @@
 >
     <Grid Margin="5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="5"    />
-            <RowDefinition Height="12*"  />
+            <RowDefinition Height="2*"  />
+            <RowDefinition Height="5"   />
+            <RowDefinition Height="10*" />
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5">
