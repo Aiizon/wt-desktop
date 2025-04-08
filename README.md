@@ -74,7 +74,7 @@ dotnet run --project wt-desktop.app
 - **wt-desktop.ef**: Couche d'accès aux données avec Entity Framework
     - **Entity**: Entités de base de données (User, etc.)
 
-- **wt-desktop.tests**: Tests unitaires pour l'application
+- **wt-desktop.test**: Tests unitaires pour l'application
 
 ## Fonctionnalités
 
@@ -85,11 +85,10 @@ dotnet run --project wt-desktop.app
 
 ## Roadmap
 
-- [ ] filtre sur boards
+- [ ] filtre sur boards (en cours)
 - [ ] email grisé à l'édition
-- [ ] saisie password à la création
+- [ ] saisie password à la création d'un user / édition de son propre user
 - [ ] BI
 - [ ] quantité unités à la création d'une baie
 - [ ] lien user <-> intervention autocomplété avec l'utilisateur connecté
-- [ ] consultation (form) en read-only pour la compta
 - [ ] quantité d'unités d'une location
