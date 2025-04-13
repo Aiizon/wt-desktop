@@ -1,0 +1,49 @@
+<suki:SukiWindow xmlns="https://github.com/avaloniaui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:suki="clr-namespace:SukiUI.Controls;assembly=SukiUI"
+                 xmlns:root="clr-namespace:wt_desktop.app"
+                 mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="300"
+                 d:DataContext="{d:DesignInstance Type=root:ErrorWindowManager}"
+                 x:DataType="root:ErrorWindowManager"
+                 x:Class="wt_desktop.app.ErrorWindow"
+                 Title="{Binding Title}"
+                 Icon="Assets/icon.ico"
+                 Background="Transparent"
+                 ExtendClientAreaToDecorationsHint="True"
+                 TransparencyLevelHint="AcrylicBlur"
+                 WindowStartupLocation="CenterOwner"
+                 Width="450"
+                 MaxHeight="600"
+                 SizeToContent="Height"
+                 CanResize="False"
+>
+    <Border CornerRadius="8" Margin="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"   />
+                <RowDefinition Height="5"    />
+                <RowDefinition Height="4*"   />
+                <RowDefinition Height="5"    />
+                <RowDefinition Height="1*"   />
+                <RowDefinition Height="5"    />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="5"    />
+                <RowDefinition Height="1*"   />
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="0" Text="{Binding Title}"                        HorizontalAlignment="Center"  FontSize="20" FontWeight="Bold" />
+            <TextBlock Grid.Row="2" Text="{Binding Message}"                      TextWrapping="Wrap"                                           />
+            <TextBlock Grid.Row="4" Text="{Binding FormattedCode}"                IsVisible="{Binding HasCode}"                                 />
+            
+            <Expander  Grid.Row="6" Header="Détails techniques"                   IsVisible="{Binding HasException}">
+                <ScrollViewer       MaxHeight="200">
+                    <TextBlock      Text="{Binding ExceptionDetails}"             TextWrapping="Wrap"          />
+                </ScrollViewer>
+            </Expander>
+            
+            <Button    Grid.Row="8" Content="OK" Command="{Binding CloseCommand}" HorizontalAlignment="Center" />
+        </Grid>
+    </Border>
+</suki:SukiWindow>

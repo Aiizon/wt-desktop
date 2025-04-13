@@ -6,6 +6,8 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
 using SukiUI;
 using SukiUI.Enums;
+using wt_desktop.app.Controls;
+using wt_desktop.app.Core;
 using wt_desktop.ef;
 
 namespace wt_desktop.app;
@@ -22,15 +24,25 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        Task.Run(async () => await InitializeDatabaseAsync()).Wait();
-        
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            ErrorHandler.Initialize(
+                error =>
+                {
+                    var errorWindow = new ErrorWindow(error);
+                    errorWindow.Show();
+                }
+            );
+            
+            Task.Run(async () => await InitializeDatabaseAsync()).Wait();
+            
             desktop.MainWindow = new LoginWindow();
+            
+            throw new Exception("test");
         }
         else
         {
-            throw new Exception("Unsupported application lifetime");
+            throw new Exception("Type d'application non supportée.");
         }
 
         base.OnFrameworkInitializationCompleted();
@@ -43,7 +55,7 @@ public partial class App : Application
             bool canConnect = await WtContext.Instance.Database.CanConnectAsync();
             if (!canConnect)
             {
-                throw new Exception("Database connection failed.");
+                throw new Exception("Impossible de se connecter à la base de données.");
             }
         }
         catch (Exception e)

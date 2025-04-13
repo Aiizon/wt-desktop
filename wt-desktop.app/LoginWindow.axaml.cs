@@ -6,7 +6,6 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.Input;
 using SukiUI.Controls;
-using wt_desktop.app.Core;
 using wt_desktop.ef;
 
 namespace wt_desktop.app;
@@ -27,7 +26,7 @@ public class LoginWindowManager: INotifyPropertyChanged
     private readonly LoginWindow _Window;
     
     private string _Email;
-    public string Email
+    public string  Email
     {
         get => _Email;
         set
@@ -38,7 +37,7 @@ public class LoginWindowManager: INotifyPropertyChanged
     }
 
     private string _Password;
-    public string Password
+    public string  Password
     {
         get => _Password;
         set
@@ -49,7 +48,7 @@ public class LoginWindowManager: INotifyPropertyChanged
     }
     
     private string _ErrorMessage;
-    public string ErrorMessage
+    public string  ErrorMessage
     {
         get => _ErrorMessage;
         set

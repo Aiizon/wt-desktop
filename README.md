@@ -74,7 +74,7 @@ dotnet run --project wt-desktop.app
 - **wt-desktop.ef**: Couche d'accès aux données avec Entity Framework
     - **Entity**: Entités de base de données (User, etc.)
 
-- **wt-desktop.tests**: Tests unitaires pour l'application
+- **wt-desktop.test**: Tests unitaires pour l'application
 
 ## Fonctionnalités
 
@@ -93,3 +93,6 @@ dotnet run --project wt-desktop.app
 - [ ] lien user <-> intervention autocomplété avec l'utilisateur connecté
 - [ ] consultation (form) en read-only pour la compta
 - [ ] quantité d'unités d'une location
+- [ ] gestion des erreurs (messagebox, struct d'erreur -> type, message, stacktrace)
+- [ ] logging
+- [ ] try/catch sur les appels bdd + gestion des exceptions
