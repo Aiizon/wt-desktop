@@ -85,7 +85,6 @@ dotnet run --project wt-desktop.app
 
 ## Roadmap
 
-- [ ] filtre sur boards
 - [ ] email grisé à l'édition
 - [ ] saisie password à la création
 - [ ] BI
@@ -93,6 +92,4 @@ dotnet run --project wt-desktop.app
 - [ ] lien user <-> intervention autocomplété avec l'utilisateur connecté
 - [ ] consultation (form) en read-only pour la compta
 - [ ] quantité d'unités d'une location
-- [ ] gestion des erreurs (messagebox, struct d'erreur -> type, message, stacktrace)
 - [ ] logging
-- [ ] try/catch sur les appels bdd + gestion des exceptions
