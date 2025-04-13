@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -6,7 +7,6 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
 using SukiUI;
 using SukiUI.Enums;
-using wt_desktop.app.Controls;
 using wt_desktop.app.Core;
 using wt_desktop.ef;
 
@@ -24,13 +24,22 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        base.OnFrameworkInitializationCompleted();
+        
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             ErrorHandler.Initialize(
                 error =>
                 {
+                    // Affiche l'erreur dans une popup et attend qu'elle soit fermée
+                    var waitHandle = new ManualResetEvent(false);
+
                     var errorWindow = new ErrorWindow(error);
+            
+                    errorWindow.Closed += (_, _) => waitHandle.Set();
                     errorWindow.Show();
+            
+                    waitHandle.WaitOne();
                 }
             );
             
@@ -44,8 +53,6 @@ public partial class App : Application
         {
             throw new Exception("Type d'application non supportée.");
         }
-
-        base.OnFrameworkInitializationCompleted();
     }
     
     private async Task InitializeDatabaseAsync()

@@ -51,16 +51,29 @@ public static class ErrorHandler
     }
     
     /// <summary>
-    /// Traite une exception non gérée.
+    /// Transforme une exception en erreur.
     /// </summary>
-    /// <param name="exception"></param>
-    private static void ProcessException(Exception exception)
+    /// <param name="exception">Exception</param>
+    public static Error ProcessException(Exception exception)
     {
-        ShowError
-        (
+        return new Error(
             DefaultTitle,
-            DefaultMessage,
             GetUserFriendlyErrorMessage(exception),
+            null,
+            exception
+        );
+    }
+    
+    /// <summary>
+    /// Traite une exception et l'affiche.
+    /// </summary>
+    /// <param name="exception">Exception</param>
+    public static void HandleException(Exception exception)
+    {
+        ShowError(
+            DefaultTitle,
+            GetUserFriendlyErrorMessage(exception),
+            null,
             exception
         );
     }
@@ -95,7 +108,7 @@ public static class ErrorHandler
     private static void OnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
     {
         e.SetObserved();
-        ProcessException(e.Exception);
+        HandleException(e.Exception);
     }
     
     /// <summary>
@@ -105,13 +118,7 @@ public static class ErrorHandler
     {
         if (e.ExceptionObject is Exception exception)
         {
-            ProcessException(exception);
+            HandleException(exception);
         }
     }
-    
-    /// <summary>
-    /// Traite une exception.
-    /// </summary>
-    /// <param name="exception">Exception</param>
-    public static void HandleException(Exception exception) => ProcessException(exception);
 }

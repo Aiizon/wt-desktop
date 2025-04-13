@@ -20,8 +20,6 @@ class Program
         catch (Exception e)
         {
             ErrorHandler.HandleException(e);
-            Console.WriteLine(e.Message);
-            Console.ReadKey();
         }
     }
 

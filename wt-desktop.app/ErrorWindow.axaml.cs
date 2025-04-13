@@ -2,8 +2,6 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.Input;
 using SukiUI.Controls;
 using wt_desktop.app.Core;
@@ -16,44 +14,49 @@ public partial class ErrorWindow : SukiWindow
     {
         InitializeComponent();
         
-        DataContext = new ErrorWindowManager(error);
+        DataContext = new ErrorWindowManager(error, this);
     }
 }
 
-public class ErrorWindowManager
+public class ErrorWindowManager: INotifyPropertyChanged
 {
     #region Properties
-    private Error      Error;
-    public  string     Title            => Error.Title;
-    public  string     Message          => Error.Message;
+    private ErrorWindow _Window;
     
-    public  string     Code             => Error.Code ?? string.Empty;
-    public  bool       HasCode          => !string.IsNullOrEmpty(Code);
-    public  string     FormattedCode    => HasCode ? string.Empty : $"Code d'erreur : {Code}";
+    private Error       _Error;
+    public  string      Title            => _Error.Title;
+    public  string      Message          => _Error.Message;
     
-    public  Exception? Exception        => Error.Exception;
-    public  bool       HasException     => Exception != null;
-    public  string     ExceptionDetails => HasException ? Exception!.Message : string.Empty;
+    public  string      Code             => _Error.Code ?? string.Empty;
+    public  bool        HasCode          => !string.IsNullOrEmpty(Code);
+    public  string      FormattedCode    => HasCode ? string.Empty : $"Code d'erreur : {Code}";
+    
+    public  Exception?  Exception        => _Error.Exception;
+    public  bool        HasException     => Exception != null;
+    public  string      ExceptionDetails => HasException ? Exception!.Message : string.Empty;
     #endregion
     
     public ICommand CloseCommand { get; }
     
-    public ErrorWindowManager(Error error)
+    public ErrorWindowManager(Error error, ErrorWindow window)
     {
-        Error = error;
+        _Error  = error;
+        _Window = window;
         
         CloseCommand = new RelayCommand(Close, () => true);
     }
     
     private void Close()
     {
-        if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-        {
-            desktop.Shutdown();
-        }
-        else
-        {
-            throw new Exception("Type d'application non supportée.");
-        }
+        _Window.Close();
     }
+    
+    #region INotifyPropertyChanged
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected void OnPropertyChanged([CallerMemberName]string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+    #endregion
 }

@@ -13,24 +13,19 @@
                  Background="Transparent"
                  ExtendClientAreaToDecorationsHint="True"
                  TransparencyLevelHint="AcrylicBlur"
-                 WindowStartupLocation="CenterOwner"
-                 Width="450"
-                 MaxHeight="600"
-                 SizeToContent="Height"
-                 CanResize="False"
 >
     <Border CornerRadius="8" Margin="20">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*"   />
-                <RowDefinition Height="5"    />
-                <RowDefinition Height="4*"   />
-                <RowDefinition Height="5"    />
-                <RowDefinition Height="1*"   />
-                <RowDefinition Height="5"    />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="5"    />
-                <RowDefinition Height="1*"   />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             
             <TextBlock Grid.Row="0" Text="{Binding Title}"                        HorizontalAlignment="Center"  FontSize="20" FontWeight="Bold" />
