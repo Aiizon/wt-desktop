@@ -81,9 +81,16 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged, IReadOnly
     {
         var query = WtContext.Instance.Set<E>().AsQueryable();
 
-        EntitiesSource = !string.IsNullOrWhiteSpace(SearchText) ?
-            query.ToList().Where(x => x.MatchSearch(SearchText)).ToList() :
-            query.ToList();
+        try
+        {
+            EntitiesSource = !string.IsNullOrWhiteSpace(SearchText) ?
+                query.ToList().Where(x => x.MatchSearch(SearchText)).ToList() :
+                query.ToList();
+        }
+        catch (Exception e)
+        {
+            throw new Exception("Erreur lors du rechargement des entités.", e);
+        }
         
         if (HasFilters)
         {

@@ -92,23 +92,44 @@ public abstract class EntityController<E> : ReadOnlyEntityController<E> where E 
     #region Model
     public virtual bool InsertEntity(E entity)
     {
-        WtContext.Instance.Add(entity);
+        try
+        {
+            WtContext.Instance.Add(entity);
 
-        return WtContext.Instance.SaveChanges() > 0;
+            return WtContext.Instance.SaveChanges() > 0;
+        }
+        catch (Exception e)
+        {
+            throw new Exception("Erreur lors de l'insertion de l'entité.", e);
+        }
     }
 
     public virtual bool UpdateEntity(E entity)
     {
-        WtContext.Instance.Update(entity);
+        try
+        {
+            WtContext.Instance.Update(entity);
 
-        return WtContext.Instance.SaveChanges() > 0;
+            return WtContext.Instance.SaveChanges() > 0;
+        }
+        catch (Exception e)
+        {
+            throw new Exception("Erreur lors de l'insertion de l'entité.", e);
+        }
     }
 
     public virtual bool DeleteEntity(E entity)
     {
-        WtContext.Instance.Remove(entity);
+        try
+        {
+            WtContext.Instance.Remove(entity);
 
-        return WtContext.Instance.SaveChanges() > 0;
+            return WtContext.Instance.SaveChanges() > 0;
+        }
+        catch (Exception e)
+        {
+            throw new Exception("Erreur lors de l'insertion de l'entité.", e);
+        }
     }
     #endregion
 }
