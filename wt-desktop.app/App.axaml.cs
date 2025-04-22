@@ -24,42 +24,56 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        base.OnFrameworkInitializationCompleted();
-        
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             ErrorHandler.Initialize(
                 error =>
                 {
                     // Affiche l'erreur dans une popup et attend qu'elle soit fermée
-                    var waitHandle = new ManualResetEvent(false);
+                    var waitHandle  = new ManualResetEvent(false);
 
                     var errorWindow = new ErrorWindow(error);
             
                     errorWindow.Closed += (_, _) => waitHandle.Set();
-                    errorWindow.Show();
+                    desktop.MainWindow = errorWindow;
             
-                    waitHandle.WaitOne();
+                    // waitHandle.WaitOne();
                 }
             );
+            
+            AppDomain.CurrentDomain.UnhandledException += (_, e) =>
+            {
+                if (e.ExceptionObject is Exception ex)
+                {
+                    ErrorHandler.HandleException(ex);
+                }
+            };
+            
+            TaskScheduler.UnobservedTaskException += (_, e) =>
+            {
+                e.SetObserved();
+                ErrorHandler.HandleException(e.Exception);
+            };
             
             Task.Run(async () => await InitializeDatabaseAsync()).Wait();
             
             desktop.MainWindow = new LoginWindow();
-            
-            throw new Exception("test");
         }
         else
         {
             throw new Exception("Type d'application non supportée.");
         }
+        
+        
+        base.OnFrameworkInitializationCompleted();
+        throw new Exception("test");
     }
     
     private async Task InitializeDatabaseAsync()
     {
         try
         {
-            bool canConnect = await WtContext.Instance.Database.CanConnectAsync();
+            var canConnect = await WtContext.Instance.Database.CanConnectAsync();
             if (!canConnect)
             {
                 throw new Exception("Impossible de se connecter à la base de données.");

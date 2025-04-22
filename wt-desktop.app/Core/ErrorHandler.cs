@@ -19,9 +19,6 @@ public static class ErrorHandler
     public static void Initialize(Action<Error> displayErrorAction)
     {
         _DisplayErrorAction = displayErrorAction;
-        
-        AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-        TaskScheduler.UnobservedTaskException      += OnUnobservedTaskException;
     }
     
     /// <summary>
@@ -99,26 +96,6 @@ public static class ErrorHandler
                 return "La mémoire disponible est insuffisante.";
             default:
                 return "Une erreur inattendue s'est produite.";
-        }
-    }
-    
-    /// <summary>
-    /// Traite une exception non observée.
-    /// </summary>
-    private static void OnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
-    {
-        e.SetObserved();
-        HandleException(e.Exception);
-    }
-    
-    /// <summary>
-    /// Traite une exception non gérée.
-    /// </summary>
-    private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
-    {
-        if (e.ExceptionObject is Exception exception)
-        {
-            HandleException(exception);
         }
     }
 }
