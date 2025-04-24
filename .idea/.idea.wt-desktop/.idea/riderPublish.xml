@@ -5,6 +5,7 @@
       <list>
         <option value="$PROJECT_DIR$/wt-desktop.app/bin/Release/net9.0/win-x64/publish" />
         <option value="$PROJECT_DIR$/wt-desktop.launcher/bin/Release/net9.0/linux-x64/publish" />
+        <option value="$PROJECT_DIR$/wt-desktop.launcher/bin/Release/net9.0/win-x64/publish" />
       </list>
     </option>
   </component>

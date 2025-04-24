@@ -9,16 +9,14 @@ namespace wt_desktop.app.Controls;
 
 public partial class BaseModule : UserControl
 {
-    private Window? MainWindow    { get; }
-    
     public ICommand LogoutCommand { get; }
     public ICommand ExitCommand   { get; }
 
     public static readonly StyledProperty<object> NavContentProperty =
-        AvaloniaProperty.Register<BaseBoard, object>(nameof(NavContent));
+        AvaloniaProperty.Register<BaseModule, object>(nameof(NavContent));
     
     public static readonly StyledProperty<object> PageContentProperty =
-        AvaloniaProperty.Register<BaseBoard, object>(nameof(PageContent));
+        AvaloniaProperty.Register<BaseModule, object>(nameof(PageContent));
     
     public object NavContent
     {
@@ -36,25 +34,26 @@ public partial class BaseModule : UserControl
     {
         InitializeComponent();
         
-        MainWindow = Application.Current!.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop
-            ? desktop.MainWindow
-            : throw new Exception("MainWindow is null");
-        
-        LogoutCommand = new RelayCommand(
-            () =>
-            {
-                AuthProvider.Instance.Logout();
-                var loginWindow = new LoginWindow();
-                loginWindow.Show();
-                MainWindow!.Close();
-            }, 
-            () => AuthProvider.Instance.IsAuthenticated);
-        
-        ExitCommand = new RelayCommand(
-            () =>
-            {
-                Environment.Exit(0);
-            },
-            () => AuthProvider.Instance.IsAuthenticated);
+        if(Application.Current!.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            LogoutCommand = new RelayCommand(
+                () =>
+                {
+                    AuthProvider.Instance.Logout();
+                    desktop.MainWindow = new LoginWindow();
+                },
+                () => true);
+
+            ExitCommand = new RelayCommand(
+                () =>
+                {
+                    desktop.Shutdown(0);
+                },
+                () => true);
+        }
+        else
+        {
+            throw new Exception("Le support n'est pas pris en charge.");
+        }
     }
 }
