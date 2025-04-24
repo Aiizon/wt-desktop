@@ -8,7 +8,7 @@
                     x:Class="wt_desktop.app.Admin.OfferBoard"
 >
     <controls:BaseBoard.FilterContent>
-        <CheckBox Content="Actif" IsChecked="{Binding ShowActive, Mode=TwoWay}" />
+        <CheckBox Content="Actif" IsChecked="{Binding ShowActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
     </controls:BaseBoard.FilterContent>
     
     <controls:BaseBoard.BoardContent>

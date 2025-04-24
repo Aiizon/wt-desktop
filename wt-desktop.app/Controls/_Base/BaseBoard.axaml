@@ -29,6 +29,7 @@
                 FilterContent     ="{Binding #Control.FilterContent}"
                 ResetFilterCommand="{Binding ResetFilterCommand}"
                 ApplyFilterCommand="{Binding ApplyFilterCommand}"
+                IsVisible="{Binding HasFilters}"
             />
         </StackPanel>
 
