@@ -88,9 +88,16 @@ public class WtContext: DbContext
     /// <returns></returns>
     public override int SaveChanges()
     {
-        int result = base.SaveChanges();
-        RefreshInstance();
-        return result;
+        try
+        {
+            int result = base.SaveChanges();
+            RefreshInstance();
+            return result;
+        }
+        catch (Exception e)
+        {
+            throw new Exception("Erreur lors de la sauvegarde des changements dans la base de données.", e);
+        }
     }
 
     /// <summary>
@@ -100,9 +107,16 @@ public class WtContext: DbContext
     /// <returns></returns>
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        int result = await base.SaveChangesAsync(cancellationToken);
-        RefreshInstance();
-        return result;
+        try
+        {
+            int result = await base.SaveChangesAsync(cancellationToken);
+            RefreshInstance();
+            return result;
+        }
+        catch (Exception e)
+        {
+            throw new Exception("Erreur lors de la sauvegarde des changements dans la base de données.", e);
+        }
     }
 
     /// <summary>
@@ -112,25 +126,32 @@ public class WtContext: DbContext
     {
         lock (_Lock)
         {
-            var oldInstance = _Instance;
-
-            _Instance = new WtContext();
-
-            if (oldInstance != null && !ReferenceEquals(oldInstance, this))
+            try
             {
-                foreach (var entry in oldInstance.ChangeTracker.Entries().ToList())
+                var oldInstance = _Instance;
+
+                _Instance = new WtContext();
+
+                if (oldInstance != null && !ReferenceEquals(oldInstance, this))
                 {
-                    entry.State = EntityState.Detached;
+                    foreach (var entry in oldInstance.ChangeTracker.Entries().ToList())
+                    {
+                        entry.State = EntityState.Detached;
+                    }
+                    
+                    oldInstance.Dispose();
                 }
-                
-                oldInstance.Dispose();
+                else
+                {
+                    foreach (var entry in ChangeTracker.Entries().ToList())
+                    {
+                        entry.State = EntityState.Detached;
+                    }
+                }
             }
-            else
+            catch (Exception e)
             {
-                foreach (var entry in ChangeTracker.Entries().ToList())
-                {
-                    entry.State = EntityState.Detached;
-                }
+                throw new Exception("Erreur lors de la sauvegarde des changements dans la base de données.", e);
             }
         }
     }
@@ -153,11 +174,18 @@ public class WtContext: DbContext
         {
             return;
         }
-        
-        Env.Load(Path.Combine(AppContext.BaseDirectory, ".env"));
-        
-        optionsBuilder.UseLazyLoadingProxies();
-        optionsBuilder.UseMySQL(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? throw new Exception("DB_CONNECTION_STRING introuvable dans le fichier .env."));
-        optionsBuilder.EnableSensitiveDataLogging();
+
+        try
+        {
+            Env.Load(Path.Combine(AppContext.BaseDirectory, ".env"));
+            
+            optionsBuilder.UseLazyLoadingProxies();
+            optionsBuilder.UseMySQL(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? throw new Exception("DB_CONNECTION_STRING introuvable dans le fichier .env."));
+            optionsBuilder.EnableSensitiveDataLogging();
+        }
+        catch (Exception e)
+        {
+            throw new Exception("Erreur lors de la configuration de la base de données.", e);
+        }
     }
 }
