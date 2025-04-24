@@ -37,7 +37,7 @@
             <TextBlock Grid.Row="4" Text="{Binding FormattedCode}"    IsVisible="{Binding HasCode}"                                />
             
             <Expander  Grid.Row="6" Header="Détails techniques"       IsVisible="{Binding HasException}">
-                <ScrollViewer       MaxHeight="80">
+                <ScrollViewer       MaxHeight="50">
                     <TextBlock      Text="{Binding ExceptionDetails}" TextWrapping="Wrap"/>
                 </ScrollViewer>
             </Expander>

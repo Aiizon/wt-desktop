@@ -78,10 +78,10 @@ public partial class App : Application
             }
             
         }
-        else
-        {
-            ErrorHandler.ReportErrorToLauncher(new Exception("Impossible de lancer l'application."));
-        }
+        // else
+        // {
+        //     ErrorHandler.ReportErrorToLauncher(new Exception("Impossible de lancer l'application."));
+        // }
     }
     
     private string? GetErrorFilePath(string[]? args)

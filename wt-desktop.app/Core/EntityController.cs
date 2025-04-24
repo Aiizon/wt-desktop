@@ -100,7 +100,7 @@ public abstract class EntityController<E> : ReadOnlyEntityController<E> where E 
         }
         catch (Exception e)
         {
-            throw new Exception("Erreur lors de l'insertion de l'entité.", e);
+            throw new Exception($"Erreur lors de l'insertion de l'entité. : {e.InnerException!.Message}", e);
         }
     }
 
@@ -114,7 +114,7 @@ public abstract class EntityController<E> : ReadOnlyEntityController<E> where E 
         }
         catch (Exception e)
         {
-            throw new Exception("Erreur lors de l'insertion de l'entité.", e);
+            throw new Exception($"Erreur lors de la mise à jour de l'entité. : {e.InnerException!.Message}", e);
         }
     }
 
@@ -128,7 +128,7 @@ public abstract class EntityController<E> : ReadOnlyEntityController<E> where E 
         }
         catch (Exception e)
         {
-            throw new Exception("Erreur lors de l'insertion de l'entité.", e);
+            throw new Exception($"Erreur lors de la suppression de l'entité. : {e.InnerException!.Message}", e);
         }
     }
     #endregion
