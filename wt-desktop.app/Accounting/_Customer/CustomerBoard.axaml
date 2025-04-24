@@ -3,16 +3,16 @@
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:accounting="clr-namespace:wt_desktop.app.Accounting"
                             xmlns:controls="clr-namespace:wt_desktop.app.Controls"
-                            d:DataContext="{d:DesignInstance Type=accounting:UserBoardManager}"
-                            x:DataType="accounting:UserBoardManager"
-                            x:Class="wt_desktop.app.Accounting.UserBoard"
+                            d:DataContext="{d:DesignInstance Type=accounting:CustomerBoardManager}"
+                            x:DataType="accounting:CustomerBoardManager"
+                            x:Class="wt_desktop.app.Accounting.CustomerBoard"
 >
     <controls:ReadOnlyBaseBoard.BoardContent>
         <DataGrid Grid.Row="2" ItemsSource="{Binding EntitiesSource, Mode=OneWay}" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="4*" Header="Email"   Binding="{Binding Email}"       />
-                <DataGridTextColumn Width="2*" Header="Prénom"  Binding="{Binding FirstName}"   />
-                <DataGridTextColumn Width="2*" Header="Nom"     Binding="{Binding LastName}"    />
+                <DataGridTextColumn Width="4*" Header="Email"   Binding="{Binding Email}"     />
+                <DataGridTextColumn Width="2*" Header="Prénom"  Binding="{Binding FirstName}" />
+                <DataGridTextColumn Width="2*" Header="Nom"     Binding="{Binding LastName}"  />
             </DataGrid.Columns>
         </DataGrid>
     </controls:ReadOnlyBaseBoard.BoardContent>

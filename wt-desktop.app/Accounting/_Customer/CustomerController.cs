@@ -5,12 +5,12 @@ using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app.Accounting;
 
-public class UserController : ReadOnlyEntityController<User>
+public class CustomerController : ReadOnlyEntityController<User>
 {
-    public UserController() {}
+    public CustomerController() {}
 
     public override UserControl GetBoard(EBoardMode mode, string search)
     {
-        return new UserBoard(mode, search);
+        return new CustomerBoard(mode, search);
     }
 }

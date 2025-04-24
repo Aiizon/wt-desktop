@@ -8,15 +8,15 @@ namespace wt_desktop.app.Module;
 
 public partial class AccountingModule : BaseModule
 {
-    public ICommand NavigateToUserCommand { get; }
+    public ICommand NavigateToCustomerCommand { get; }
     public ICommand NavigateToRentalCommand { get; }
     
     public AccountingModule()
     {
         InitializeComponent();
         
-        NavigateToUserCommand   = new RelayCommand(() => PageContent = new UserBoard  (EBoardMode.Search, ""), () => true);
-        NavigateToRentalCommand = new RelayCommand(() => PageContent = new RentalBoard(EBoardMode.Search, ""), () => true);
+        NavigateToCustomerCommand = new RelayCommand(() => PageContent = new CustomerBoard(EBoardMode.Search, ""), () => true);
+        NavigateToRentalCommand   = new RelayCommand(() => PageContent = new RentalBoard  (EBoardMode.Search, ""), () => true);
 
         DataContext = this;
     }
