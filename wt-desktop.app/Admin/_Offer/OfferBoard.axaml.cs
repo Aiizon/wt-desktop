@@ -1,4 +1,3 @@
-using Avalonia.Controls;
 using wt_desktop.app.Controls;
 using wt_desktop.app.Core;
 using wt_desktop.ef.Entity;
@@ -28,15 +27,15 @@ public class OfferBoardManager : BoardManager<Offer>
     {
         get
         {
-            if (_Filters.ContainsKey(nameof(Offer.IsActive)))
+            if (Filters.TryGetValue(nameof(Offer.IsActive), out var filter))
             {
-                return _Filters[nameof(Offer.IsActive)].IsEnabled;
+                return filter.IsEnabled;
             }
             return false;
         }
         set
         {
-            if (value == _Filters[nameof(Offer.IsActive)].IsEnabled)
+            if (value == Filters[nameof(Offer.IsActive)].IsEnabled)
             {
                 return;
             }

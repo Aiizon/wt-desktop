@@ -23,7 +23,7 @@ public abstract partial class ReadOnlyBaseBoard : UserControl
         set => SetValue(FilterContentProperty, value);
     }
     
-    public ReadOnlyBaseBoard()
+    protected ReadOnlyBaseBoard()
     {
         InitializeComponent();
     }

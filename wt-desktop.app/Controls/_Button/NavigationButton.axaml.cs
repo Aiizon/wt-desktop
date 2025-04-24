@@ -7,13 +7,13 @@ namespace wt_desktop.app.Controls;
 public partial class NavigationButton : UserControl
 {
     public static readonly StyledProperty<string> LabelProperty =
-        AvaloniaProperty.Register<ModuleButton, string>(nameof(Label));
+        AvaloniaProperty.Register<NavigationButton, string>(nameof(Label));
 
     public static readonly StyledProperty<string> IconProperty =
-        AvaloniaProperty.Register<ModuleButton, string>(nameof(Icon));
+        AvaloniaProperty.Register<NavigationButton, string>(nameof(Icon));
 
     public static readonly StyledProperty<ICommand> CommandProperty =
-        AvaloniaProperty.Register<ModuleButton, ICommand>(nameof(Command));
+        AvaloniaProperty.Register<NavigationButton, ICommand>(nameof(Command));
 
     public string Label
     {

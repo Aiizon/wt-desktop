@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
@@ -12,7 +13,7 @@ namespace wt_desktop.app.Controls;
 
 public partial class RolesEditor : UserControl
 {
-    private RolesEditorManager? _Manager;
+    private RolesEditorManager? _manager;
     
     public RolesEditor()
     {
@@ -25,15 +26,15 @@ public partial class RolesEditor : UserControl
     {
         if (DataContext is RolesEditorManager manager)
         {
-            _Manager = manager;
-            _Manager.Roles.CollectionChanged -= OnRolesCollectionChanged;
+            _manager = manager;
+            _manager.Roles.CollectionChanged -= OnRolesCollectionChanged;
         }
         
-        _Manager = DataContext as RolesEditorManager;
+        _manager = DataContext as RolesEditorManager;
         
-        if (_Manager != null)
+        if (_manager != null)
         {
-            _Manager.Roles.CollectionChanged += OnRolesCollectionChanged;
+            _manager.Roles.CollectionChanged += OnRolesCollectionChanged;
 
             PopulateRoles();
         }
@@ -46,14 +47,14 @@ public partial class RolesEditor : UserControl
     
     private void PopulateRoles()
     {
-        if (_Manager == null)
+        if (_manager == null)
         {
             return;
         }
         
         RolesPanel.Children.Clear();
 
-        foreach (string role in _Manager.Roles)
+        foreach (string role in _manager.Roles)
         {
             RolesPanel.Children.Add(CreateRoleElement(role));
         }
@@ -88,7 +89,7 @@ public partial class RolesEditor : UserControl
             Margin  = new Thickness(5, 0, 0, 0)
         };
         
-        button.Click += (s, e) => _Manager?.RemoveRoleCommand.Execute(role);
+        button.Click += (_, _) => _manager?.RemoveRoleCommand.Execute(role);
         Grid.SetColumn(button, 1);
 
         grid.Children.Add(textBlock);
@@ -101,63 +102,45 @@ public partial class RolesEditor : UserControl
 
 public class RolesEditorManager
 {
-    private User   _User;
-    private string _NewRole = string.Empty;
-    
-    public string NewRole
-    {
-        get => _NewRole;
-        set
-        {
-            _NewRole = value;
-        }
-    }
-    
-    private ObservableCollection<string> _Roles          = new();
-    private ObservableCollection<string> _AvailableRoles = new(User.UserRoles);
+    private readonly User _user;
 
-    public ObservableCollection<string> Roles
-    {
-        get => _Roles;
-        set
-        {
-            _Roles = value;
-        }
-    }
-    public ObservableCollection<string> AvailableRoles => _AvailableRoles;
-    
+    public string NewRole { get; set; } = string.Empty;
+
+    public ObservableCollection<string> Roles          { get; set; } = new();
+    public ObservableCollection<string> AvailableRoles { get; }      = new(User.UserRoles);
+
     public RolesEditorManager(User user)
     {
-        _User = user;
+        _user = user;
         RefreshRoles();
         
-        AddRoleCommand    = new RelayCommand        (AddRole   , ()     => true);
-        RemoveRoleCommand = new RelayCommand<string>(RemoveRole, (role) => true);
+        AddRoleCommand    = new RelayCommand        (AddRole   , ()  => true);
+        RemoveRoleCommand = new RelayCommand<string>(RemoveRole, (_) => true);
     }
     
     public ICommand AddRoleCommand    { get; }
     public ICommand RemoveRoleCommand { get; }
     
-    public void AddRole()
+    private void AddRole()
     {
-        if (string.IsNullOrWhiteSpace(_NewRole) || _Roles.Contains(_NewRole))
+        if (string.IsNullOrWhiteSpace(NewRole) || Roles.Contains(NewRole))
         {
             return;
         }
         
-        _User.AddRole(NewRole);
+        _user.AddRole(NewRole);
         RefreshRoles();
         NewRole = string.Empty;
     }
     
-    public void RemoveRole(string? role)
+    private void RemoveRole(string? role)
     {
         if (role == null)
         {
             return;
         }
         
-        _User.RemoveRole(role);
+        _user.RemoveRole(role);
         RefreshRoles();
     }
     
@@ -165,12 +148,14 @@ public class RolesEditorManager
     {
         Roles.Clear();
 
-        if (_User?.RolesList != null)
+        if (!_user.RolesList.Any())
         {
-            foreach (var role in _User.RolesList)
-            {
-                Roles.Add(role);
-            }
+            return;
+        }
+        
+        foreach (var role in _user.RolesList)
+        {
+            Roles.Add(role);
         }
     }
 }

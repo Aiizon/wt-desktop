@@ -4,23 +4,23 @@ namespace wt_desktop.test;
 
 public class DatabaseFixture: IDisposable
 {
-    private readonly WtContext _Context = WtContext.TestInstance;
+    private readonly WtContext _context = WtContext.TestInstance;
     public bool ConnectionSuccessful { get; private set; }
     public bool DatabaseCreated      { get; private set; }
     
     public DatabaseFixture()
     {
-        ConnectionSuccessful = _Context.Database.CanConnect();
+        ConnectionSuccessful = _context.Database.CanConnect();
 
         if (ConnectionSuccessful)
         {
-            DatabaseCreated = _Context.Database.EnsureCreated();
+            DatabaseCreated = _context.Database.EnsureCreated();
         }
     }
     
     public void Dispose()
     {
-        _Context.Database.EnsureDeleted();
+        _context.Database.EnsureDeleted();
     }
 }
 

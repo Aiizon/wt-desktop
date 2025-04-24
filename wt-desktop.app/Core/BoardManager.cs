@@ -1,15 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.EntityFrameworkCore;
 using wt_desktop.ef;
-using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app.Core;
 
@@ -20,15 +12,15 @@ namespace wt_desktop.app.Core;
 public abstract class BoardManager<E>: ReadOnlyBoardManager<E>, IBoardManager where E: WtEntity, new()
 {
     #region Properties
-    public override EntityController<E> Controller => (EntityController<E>)base.Controller;
+    protected override EntityController<E> Controller => (EntityController<E>)base.Controller;
 
-    private E? _SelectedEntity = null;
+    private E? _selectedEntity;
     public E? SelectedEntity
     {
-        get => _SelectedEntity;
+        get => _selectedEntity;
         set
         {
-            _SelectedEntity = value;
+            _selectedEntity = value;
             ((RelayCommand)EditCommand)  .NotifyCanExecuteChanged();
             ((RelayCommand)RemoveCommand).NotifyCanExecuteChanged();
             OnPropertyChanged();

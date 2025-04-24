@@ -61,7 +61,7 @@ public static class ErrorHandler
         }
     }
     
-    internal static void ReportErrorToLauncher(Error error)
+    private static void ReportErrorToLauncher(Error error)
     {
         try
         {
@@ -83,7 +83,7 @@ public static class ErrorHandler
                 writer.WriteLine(errorJsonString);
 
             }
-            catch (Exception e)
+            catch
             {
                 ConsoleHandler.WriteError("Impossible de se connecter au pipe.");
             }

@@ -22,7 +22,7 @@
                 <DataGridTextColumn Width="2*" Header="Nom"     Binding="{Binding LastName}"    />
                 <DataGridTextColumn Width="2*" Header="Role(s)" Binding="{Binding RolesString}" />
                 <DataGridTextColumn Width="1*" Header="Type"    Binding="{Binding Type}"        />
-                <DataGridTextColumn Width="1*" Header="Vérifié" Binding="{Binding isVerified}"  />
+                <DataGridTextColumn Width="1*" Header="Vérifié" Binding="{Binding IsVerified}"  />
             </DataGrid.Columns>
         </DataGrid>
     </controls:BaseBoard.BoardContent>

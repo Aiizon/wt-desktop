@@ -7,9 +7,9 @@ namespace wt_desktop.ef;
 public class WtContext: DbContext
 {
     #region Singleton
-    private static WtContext? _Instance;
+    private static WtContext? _instance;
 
-    private static readonly object _Lock = new object();
+    private static readonly Lock Lock = new();
 
     /// <summary>
     /// Instance de la base de données
@@ -18,9 +18,9 @@ public class WtContext: DbContext
     {
         get
         {
-            lock (_Lock)
+            lock (Lock)
             {
-                return _Instance ??= new WtContext();
+                return _instance ??= new WtContext();
             }
         }
     }
@@ -32,10 +32,10 @@ public class WtContext: DbContext
     {
         get
         {
-            lock (_Lock)
+            lock (Lock)
             {
-                _Instance = GetTestInstance();
-                return _Instance;
+                _instance = GetTestInstance();
+                return _instance;
             }
         }
     }
@@ -49,7 +49,7 @@ public class WtContext: DbContext
     /// Génère une instance de la base de données en RAM pour les tests
     /// </summary>
     /// <returns>instance</returns>
-    public static WtContext GetTestInstance()
+    private static WtContext GetTestInstance()
     {
         return new WtContext
         (
@@ -124,13 +124,13 @@ public class WtContext: DbContext
     /// </summary>
     private void RefreshInstance()
     {
-        lock (_Lock)
+        lock (Lock)
         {
             try
             {
-                var oldInstance = _Instance;
+                var oldInstance = _instance;
 
-                _Instance = new WtContext();
+                _instance = new WtContext();
 
                 if (oldInstance != null && !ReferenceEquals(oldInstance, this))
                 {
@@ -158,7 +158,7 @@ public class WtContext: DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        IEnumerable<Type>? entityTypes = typeof(WtEntity).Assembly.GetTypes()
+        IEnumerable<Type> entityTypes = typeof(WtEntity).Assembly.GetTypes()
             .Where(t => t.IsSubclassOf(typeof(WtEntity)) && !t.IsAbstract);
 
         foreach (Type type in entityTypes)

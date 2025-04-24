@@ -1,10 +1,6 @@
 using System;
 using Avalonia.Controls;
-using Avalonia.Layout;
-using SukiUI.Controls;
-using wt_desktop.app.Core;
 using wt_desktop.ef;
-using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app.Core;
 
@@ -42,7 +38,7 @@ public abstract class ReadOnlyEntityController<E> where E : WtEntity, new()
     /// <param name="mode">Mode</param>
     /// <param name="search">Chaîne de recherche</param>
     /// <returns>tableau</returns>
-    public abstract UserControl GetBoard(EBoardMode mode, string search);
+    protected abstract UserControl GetBoard(EBoardMode mode, string search);
 
     /// <summary>
     /// Affiche le tableau de l'entité.

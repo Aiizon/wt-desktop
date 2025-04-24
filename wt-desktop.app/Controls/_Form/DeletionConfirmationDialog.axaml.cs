@@ -19,14 +19,14 @@ public partial class DeletionConfirmationDialog: SukiWindow
 
 public class DeletionConfirmationDialogManager: INotifyPropertyChanged
 {
-    private string? _Message;
+    private string? _message;
 
     public string? Message
     {
-        get => _Message;
+        get => _message;
         set
         {
-            _Message = value;
+            _message = value;
             OnPropertyChanged();
         }
     }
@@ -57,7 +57,7 @@ public class DeletionConfirmationDialogManager: INotifyPropertyChanged
     #region INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected void OnPropertyChanged([CallerMemberName]string? propertyName = null)
+    private void OnPropertyChanged([CallerMemberName]string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

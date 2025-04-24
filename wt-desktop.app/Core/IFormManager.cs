@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Windows.Input;
-using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app.Core;
 

@@ -9,7 +9,7 @@ public class CustomerController : ReadOnlyEntityController<User>
 {
     public CustomerController() {}
 
-    public override UserControl GetBoard(EBoardMode mode, string search)
+    protected override UserControl GetBoard(EBoardMode mode, string search)
     {
         return new CustomerBoard(mode, search);
     }

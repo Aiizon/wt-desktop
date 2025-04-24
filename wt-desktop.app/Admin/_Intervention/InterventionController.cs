@@ -6,12 +6,12 @@ namespace wt_desktop.app.Admin;
 
 public class InterventionController: EntityController<Intervention>
 {
-    public override UserControl GetBoard(EBoardMode mode, string search)
+    protected override UserControl GetBoard(EBoardMode mode, string search)
     {
         return new InterventionBoard(mode, search);
     }
     
-    public override UserControl GetForm(EFormMode mode, Intervention? entity = null)
+    protected override UserControl GetForm(EFormMode mode, Intervention? entity = null)
     {
         return new InterventionForm(mode, entity ?? new Intervention());
     }

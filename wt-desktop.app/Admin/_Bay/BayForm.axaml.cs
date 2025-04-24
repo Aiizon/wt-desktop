@@ -1,5 +1,4 @@
 using System.Text.RegularExpressions;
-using Avalonia.Controls;
 using wt_desktop.app.Controls;
 using wt_desktop.app.Core;
 using wt_desktop.ef.Entity;
@@ -25,26 +24,26 @@ public partial class BayForm : BaseForm
 public class BayFormManager : FormManager<Bay>
 {
     #region Properties
-    private string? _Name;
+    private string? _name;
     
     public string? Name
     {
-        get => _Name;
+        get => _name;
         set
         {
-            _Name = value;
+            _name = value;
             OnPropertyChanged();
         }
     }
     
-    private string? _Location;
+    private string? _location;
     
     public string? Location
     {
-        get => _Location;
+        get => _location;
         set
         {
-            _Location = value;
+            _location = value;
             OnPropertyChanged();
         }
     }
@@ -59,26 +58,26 @@ public class BayFormManager : FormManager<Bay>
         Reset();
     }
 
-    public override bool Save()
+    protected override bool Save()
     {
         if (!Validate())
         {
             return false;
         }
         
-        CurrentEntity.Name     = Name     ?? "";
+        CurrentEntity!.Name    = Name     ?? "";
         CurrentEntity.Location = Location ?? "";
 
         return true;
     }
 
-    public sealed override void Reset()
+    protected sealed override void Reset()
     {
-        Name     = CurrentEntity.Name;
+        Name     = CurrentEntity!.Name;
         Location = CurrentEntity.Location;
     }
 
-    public override bool Cancel()
+    protected override bool Cancel()
     {
         return true;
     }
@@ -135,7 +134,7 @@ public class BayFormManager : FormManager<Bay>
         }
     }
 
-    public override void ValidateForm()
+    protected override void ValidateForm()
     {
         ValidateProperty(nameof(Name));
         ValidateProperty(nameof(Location));

@@ -1,9 +1,6 @@
 using System;
 using Avalonia.Controls;
-using Avalonia.Layout;
 using SukiUI.Controls;
-using wt_desktop.app.Core;
-using wt_desktop.ef;
 using wt_desktop.ef;
 
 namespace wt_desktop.app.Core;
@@ -20,7 +17,7 @@ public abstract class EntityController<E> : ReadOnlyEntityController<E> where E 
     /// <param name="mode">Mode</param>
     /// <param name="entity">Entité</param>
     /// <returns>formulaire</returns>
-    public abstract UserControl GetForm(EFormMode mode, E? entity = null);
+    protected abstract UserControl GetForm(EFormMode mode, E? entity = null);
 
     #region View
     public virtual E AddEntity(E entity, Action? onCompleted = null)
@@ -118,7 +115,7 @@ public abstract class EntityController<E> : ReadOnlyEntityController<E> where E 
         }
     }
 
-    public virtual bool DeleteEntity(E entity)
+    protected virtual bool DeleteEntity(E entity)
     {
         try
         {

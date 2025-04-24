@@ -23,37 +23,37 @@ public partial class LoginWindow : SukiWindow
 public class LoginWindowManager: INotifyPropertyChanged
 {
     #region Properties
-    private readonly LoginWindow _Window;
+    private readonly LoginWindow _window;
     
-    private string _Email;
+    private string _email;
     public string  Email
     {
-        get => _Email;
+        get => _email;
         set
         {
-            _Email = value;
+            _email = value;
             OnPropertyChanged();
         }
     }
 
-    private string _Password;
+    private string _password;
     public string  Password
     {
-        get => _Password;
+        get => _password;
         set
         {
-            _Password = value;
+            _password = value;
             OnPropertyChanged();
         }
     }
     
-    private string _ErrorMessage;
+    private string _errorMessage;
     public string  ErrorMessage
     {
-        get => _ErrorMessage;
+        get => _errorMessage;
         set
         {
-            _ErrorMessage = value;
+            _errorMessage = value;
             OnPropertyChanged();
         }
     }
@@ -63,7 +63,7 @@ public class LoginWindowManager: INotifyPropertyChanged
 
     public LoginWindowManager(LoginWindow window)
     {
-        _Window = window;
+        _window = window;
         
         LoginCommand = new RelayCommand(Login, () => true);
     }
@@ -86,7 +86,7 @@ public class LoginWindowManager: INotifyPropertyChanged
         {
             desktop.MainWindow = mainWindow;
             mainWindow.Show();
-            _Window.Close();
+            _window.Close();
         }
         else
         {
@@ -97,7 +97,7 @@ public class LoginWindowManager: INotifyPropertyChanged
     #region INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected void OnPropertyChanged([CallerMemberName]string? propertyName = null)
+    private void OnPropertyChanged([CallerMemberName]string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

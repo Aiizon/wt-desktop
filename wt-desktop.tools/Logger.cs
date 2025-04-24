@@ -11,10 +11,8 @@ public static class Logger
     {
         try
         {
-            using (StreamWriter writer = new StreamWriter(LogFilePath, true))
-            {
-                writer.WriteLine(Format(message));
-            }
+            using StreamWriter writer = new StreamWriter(LogFilePath, true);
+            writer.WriteLine(Format(message));
         }
         catch (Exception ex)
         {

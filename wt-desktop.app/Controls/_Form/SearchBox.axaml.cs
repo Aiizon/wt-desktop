@@ -1,19 +1,16 @@
-using System;
-using System.ComponentModel.DataAnnotations;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 
 namespace wt_desktop.app.Controls;
 
 public partial class SearchBox : UserControl
 {
     public static readonly StyledProperty<string>   SearchTextProperty    =
-        AvaloniaProperty.Register<SearchButton, string>  (nameof(SearchText));
+        AvaloniaProperty.Register<SearchBox, string>  (nameof(SearchText));
 
     public static readonly StyledProperty<ICommand> SearchCommandProperty =
-        AvaloniaProperty.Register<SearchButton, ICommand>(nameof(SearchCommand));
+        AvaloniaProperty.Register<SearchBox, ICommand>(nameof(SearchCommand));
     
     public string SearchText
     {
@@ -21,7 +18,6 @@ public partial class SearchBox : UserControl
         set => SetValue(SearchTextProperty, value);
     }
     
-    [Required]
     public ICommand SearchCommand
     {
         get => GetValue(SearchCommandProperty);

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -92,7 +91,7 @@ public static class InterventionUnitHandler
             }
         }
 
-        // Renvoie les liste d'unités & baies filtrées
+        // Renvoie les listes d'unités et baies filtrées
         return (new(selectedBays), new(interventionUnits));
     }
 }

@@ -12,6 +12,6 @@ public abstract class WtEntity
 
     public virtual bool MatchSearch(string? search)
     {
-        return string.IsNullOrWhiteSpace(search) || SearchText.Contains(search) ? true : false;
+        return string.IsNullOrWhiteSpace(search) || SearchText.Contains(search);
     }
 }

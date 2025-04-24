@@ -52,7 +52,7 @@ public class User : WtIdentityEntity
 
     [Required]
     [Column("is_verified")]
-    public bool isVerified { get; set; }
+    public bool IsVerified { get; set; }
 
     [Column("picture_path")]
     public string? PicturePath { get; set; }

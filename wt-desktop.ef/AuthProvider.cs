@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using wt_desktop.ef;
 using wt_desktop.ef.Entity;
 
 namespace wt_desktop.ef;
@@ -25,9 +22,9 @@ public class AuthProvider
     #endregion
 
     #region Properties
-    private User? _CurrentUser;
-    public  User? CurrentUser     => _CurrentUser;
-    public  bool  IsAuthenticated => _CurrentUser != null;
+    private User? _currentUser;
+    public  User? CurrentUser     => _currentUser;
+    public  bool  IsAuthenticated => _currentUser != null;
     #endregion
 
     #region Auth
@@ -43,7 +40,7 @@ public class AuthProvider
     /// </summary>
     /// <param name="email">Email</param>
     /// <param name="password">Mot de passe en clair</param>
-    /// <returns>true si la connection s'est effectuée avec succès, false sinon</returns>
+    /// <returns>True si la connection s'est effectuée avec succès, false sinon</returns>
     /// <exception cref="Exception">Erreur lors de la connection</exception>
     public bool Login(string email, string password)
     {
@@ -65,7 +62,7 @@ public class AuthProvider
             throw new Exception("Vous n'avez pas les droits d'accès à cette application.");
         }
         
-        _CurrentUser = user;
+        _currentUser = user;
         OnAuthenticationStateChanged();
         return IsAuthenticated;
     }
@@ -75,7 +72,7 @@ public class AuthProvider
     /// </summary>
     public void Logout()
     {
-        _CurrentUser = null;
+        _currentUser = null;
         OnAuthenticationStateChanged();
     }
     #endregion
@@ -96,8 +93,8 @@ public class AuthProvider
     /// </summary>
     /// <param name="password">Mot de passe en clair</param>
     /// <param name="hash">Hash</param>
-    /// <returns>true si le mot de passe correspond, false sinon</returns>
-    public bool VerifyPassword(string password, string hash)
+    /// <returns>True si le mot de passe correspond, false sinon</returns>
+    private bool VerifyPassword(string password, string hash)
     {
         return BCrypt.Net.BCrypt.Verify(password, hash);
     }

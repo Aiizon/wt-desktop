@@ -14,7 +14,7 @@ public abstract partial class BaseForm : UserControl
         set => SetValue(FormContentProperty, value);
     }
     
-    public BaseForm()
+    protected BaseForm()
     {
         InitializeComponent();
     }

@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using wt_desktop.ef;
-using wt_desktop.ef.Entity;
 
 namespace wt_desktop.app.Core;
 
@@ -18,40 +16,40 @@ namespace wt_desktop.app.Core;
 /// <typeparam name="E">Type de l'entité</typeparam>
 public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged, IReadOnlyBoardManager where E: WtEntity, new()
 {
-    public virtual ReadOnlyEntityController<E> Controller { get; }
+    protected virtual ReadOnlyEntityController<E> Controller { get; }
 
     #region Properties
-    private IEnumerable<E>? _EntitiesSource = null;
+    private IEnumerable<E>? _entitiesSource;
     public IEnumerable<E>? EntitiesSource
     {
-        get => _EntitiesSource;
+        get => _entitiesSource;
         set
         {
-            _EntitiesSource         = value;
-            _EntitiesSourceFiltered = new ObservableCollection<E>(value ?? new List<E>());
+            _entitiesSource         = value;
+            _entitiesSourceFiltered = new ObservableCollection<E>(value ?? new List<E>());
             OnPropertyChanged();
             OnPropertyChanged(nameof(EntitiesSourceFiltered));
         }
     }
     
-    private ObservableCollection<E> _EntitiesSourceFiltered = new();
+    private ObservableCollection<E> _entitiesSourceFiltered = new();
     
-    public ObservableCollection<E>  EntitiesSourceFiltered => _EntitiesSourceFiltered;
+    public ObservableCollection<E>  EntitiesSourceFiltered => _entitiesSourceFiltered;
 
-    private string? _SearchText = null;
+    private string? _searchText;
     public string? SearchText
     {
-        get => _SearchText;
+        get => _searchText;
         set
         {
-            _SearchText = value;
+            _searchText = value;
             OnPropertyChanged();
         }
     }
 
-    protected Dictionary<string, (bool IsEnabled, Func<E, bool> Predicate)> _Filters = new();
+    protected readonly Dictionary<string, (bool IsEnabled, Func<E, bool> Predicate)> Filters = new();
     
-    public bool HasFilters => _Filters.Any();
+    public bool HasFilters => Filters.Any();
     #endregion
 
     #region Commands
@@ -77,7 +75,7 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged, IReadOnly
     /// <summary>
     /// Recharge les entités
     /// </summary>
-    public void ReloadSource()
+    protected void ReloadSource()
     {
         var query = WtContext.Instance.Set<E>().AsQueryable();
 
@@ -103,13 +101,13 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged, IReadOnly
     /// Active ou désactive un filtre
     /// </summary>
     /// <param name="key">Nom de la propriété</param>
-    /// <param name="isEnabled">Le filtre est-il actif?</param>
+    /// <param name="isEnabled">Le filtre est-il actif ?</param>
     protected void ToggleFilter(string key, bool isEnabled)
     {
-        if (_Filters.ContainsKey(key))
+        if (Filters.ContainsKey(key))
         {
-            var (_, predicate) = _Filters[key];
-            _Filters[key] = (isEnabled, predicate);
+            var (_, predicate) = Filters[key];
+            Filters[key] = (isEnabled, predicate);
             ApplyFilters();
         }
 
@@ -121,21 +119,21 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged, IReadOnly
     /// </summary>
     /// <param name="key">Nom de la propriété</param>
     /// <param name="predicate">Prédicat de validité</param>
-    /// <param name="isEnabled">Le filtre est-il actif par défaut?</param>
+    /// <param name="isEnabled">Le filtre est-il actif par défaut ?</param>
     protected void RegisterFilter(string key, Func<E, bool> predicate, bool isEnabled = false)
     {
-        _Filters[key] = (isEnabled, predicate);
+        Filters[key] = (isEnabled, predicate);
     }
 
     /// <summary>
     /// Réinitialise les filtres
     /// </summary>
-    public void ResetFilters()
+    private void ResetFilters()
     {
-        foreach (var key in _Filters.Keys.ToList())
+        foreach (var key in Filters.Keys.ToList())
         {
-            var (_, predicate) = _Filters[key];
-            _Filters[key] = (false, predicate);
+            var (_, predicate) = Filters[key];
+            Filters[key] = (false, predicate);
             OnPropertyChanged(key);
         }
         
@@ -148,7 +146,7 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged, IReadOnly
     /// </summary>
     protected void ApplyFilters()
     {
-        _EntitiesSourceFiltered.Clear();
+        _entitiesSourceFiltered.Clear();
 
         if (EntitiesSource == null)
         {
@@ -156,10 +154,10 @@ public abstract class ReadOnlyBoardManager<E>: INotifyPropertyChanged, IReadOnly
         }
         
         var filtered = EntitiesSource.Where(entity =>
-            _Filters.Values.All(filter => !filter.IsEnabled || filter.Predicate(entity))
+            Filters.Values.All(filter => !filter.IsEnabled || filter.Predicate(entity))
         );
         
-        _EntitiesSourceFiltered = new(filtered);
+        _entitiesSourceFiltered = new(filtered);
         OnPropertyChanged(nameof(EntitiesSourceFiltered));
     }
 

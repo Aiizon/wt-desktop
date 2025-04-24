@@ -7,31 +7,31 @@ namespace wt_desktop.test;
 public class DatabaseTest: IDisposable
 {
     #region Context
-    private readonly WtContext       _Context = WtContext.TestInstance;
-    private readonly DatabaseFixture _Fixture;
+    private readonly WtContext       _context = WtContext.TestInstance;
+    private readonly DatabaseFixture _fixture;
     
     public void Dispose()
     {
-        _Context.Database.EnsureDeleted();
+        _context.Database.EnsureDeleted();
     }
 
     
     public DatabaseTest(DatabaseFixture fixture)
     {
-        _Fixture = fixture;
+        _fixture = fixture;
     }
     #endregion
     
     [Fact]
     public void TestConnectionSuccessful()
     {
-        Assert.True(_Fixture.ConnectionSuccessful);
+        Assert.True(_fixture.ConnectionSuccessful);
     }
     
     [Fact]
     public void TestDatabaseCreated()
     {
-        Assert.True(_Fixture.DatabaseCreated);
+        Assert.True(_fixture.DatabaseCreated);
     }
 
     #region User
@@ -44,27 +44,27 @@ public class DatabaseTest: IDisposable
             Email      = "test.user@worktogether.com",
             FirstName  = "Test",
             LastName   = "User",
-            isVerified = true,
+            IsVerified = true,
             Password   = AuthProvider.Instance.HashPassword("password"),
             Roles      = "ROLE_USER",
             Type       = "user",
         };
         
-        _Context.Add(user);
-        _Context.SaveChanges();
+        _context.Add(user);
+        _context.SaveChanges();
         
         Assert.NotEqual(0, user.Id);
 
         user.FirstName = "Updated";
-        _Context.Update(user);
-        _Context.SaveChanges();
+        _context.Update(user);
+        _context.SaveChanges();
         
-        Assert.Equal("Updated", _Context.User.Find(user.Id)!.FirstName);
+        Assert.Equal("Updated", _context.User.Find(user.Id)!.FirstName);
         
-        _Context.Remove(user);
-        _Context.SaveChanges();
+        _context.Remove(user);
+        _context.SaveChanges();
         
-        Assert.Null(_Context.User.Find(user.Id));
+        Assert.Null(_context.User.Find(user.Id));
     }
     #endregion
     
@@ -79,21 +79,21 @@ public class DatabaseTest: IDisposable
             IsStarted = true,
         };
         
-        _Context.Unit.Add(unit);
-        _Context.SaveChanges();
+        _context.Unit.Add(unit);
+        _context.SaveChanges();
         
         Assert.NotEqual(0, unit.Id);
 
         unit.Name = "Updated Unit";
-        _Context.Unit.Update(unit);
-        _Context.SaveChanges();
+        _context.Unit.Update(unit);
+        _context.SaveChanges();
         
-        Assert.Equal("Updated Unit", _Context.Unit.Find(unit.Id)!.Name);
+        Assert.Equal("Updated Unit", _context.Unit.Find(unit.Id)!.Name);
         
-        _Context.Unit.Remove(unit);
-        _Context.SaveChanges();
+        _context.Unit.Remove(unit);
+        _context.SaveChanges();
         
-        Assert.Null(_Context.Unit.Find(unit.Id));
+        Assert.Null(_context.Unit.Find(unit.Id));
     }
     
     [Fact]
@@ -113,9 +113,9 @@ public class DatabaseTest: IDisposable
             Bay       = bay,
         };
         
-        _Context.Bay.Add(bay);
-        _Context.Unit.Add(unit);
-        _Context.SaveChanges();
+        _context.Bay.Add(bay);
+        _context.Unit.Add(unit);
+        _context.SaveChanges();
         
         Assert.NotEqual(0, bay.Id);
         Assert.NotEqual(0, unit.Id);
@@ -140,9 +140,9 @@ public class DatabaseTest: IDisposable
             UnitUsage = usage,
         };
         
-        _Context.UnitUsage.Add(usage);
-        _Context.Unit.Add(unit);
-        _Context.SaveChanges();
+        _context.UnitUsage.Add(usage);
+        _context.Unit.Add(unit);
+        _context.SaveChanges();
         
         Assert.NotEqual(0, usage.Id);
         Assert.NotEqual(0, unit.Id);
@@ -161,21 +161,21 @@ public class DatabaseTest: IDisposable
             Location = "Test Location",
         };
         
-        _Context.Bay.Add(bay);
-        _Context.SaveChanges();
+        _context.Bay.Add(bay);
+        _context.SaveChanges();
         
         Assert.NotEqual(0, bay.Id);
 
         bay.Name = "Updated Bay";
-        _Context.Bay.Update(bay);
-        _Context.SaveChanges();
+        _context.Bay.Update(bay);
+        _context.SaveChanges();
         
-        Assert.Equal("Updated Bay", _Context.Bay.Find(bay.Id)!.Name);
+        Assert.Equal("Updated Bay", _context.Bay.Find(bay.Id)!.Name);
         
-        _Context.Bay.Remove(bay);
-        _Context.SaveChanges();
+        _context.Bay.Remove(bay);
+        _context.SaveChanges();
         
-        Assert.Null(_Context.Bay.Find(bay.Id));
+        Assert.Null(_context.Bay.Find(bay.Id));
     }
     
     [Fact]
@@ -195,9 +195,9 @@ public class DatabaseTest: IDisposable
             Bay       = bay,
         };
         
-        _Context.Bay.Add(bay);
-        _Context.Unit.Add(unit);
-        _Context.SaveChanges();
+        _context.Bay.Add(bay);
+        _context.Unit.Add(unit);
+        _context.SaveChanges();
         
         Assert.NotEqual(0, bay.Id);
         Assert.NotEqual(0, unit.Id);
@@ -220,21 +220,21 @@ public class DatabaseTest: IDisposable
             Bandwidth        = "100 Mbps",
         };
         
-        _Context.Offer.Add(offer);
-        _Context.SaveChanges();
+        _context.Offer.Add(offer);
+        _context.SaveChanges();
         
         Assert.NotEqual(0, offer.Id);
 
         offer.Name = "Updated Offer";
-        _Context.Offer.Update(offer);
-        _Context.SaveChanges();
+        _context.Offer.Update(offer);
+        _context.SaveChanges();
         
-        Assert.Equal("Updated Offer", _Context.Offer.Find(offer.Id)!.Name);
+        Assert.Equal("Updated Offer", _context.Offer.Find(offer.Id)!.Name);
         
-        _Context.Offer.Remove(offer);
-        _Context.SaveChanges();
+        _context.Offer.Remove(offer);
+        _context.SaveChanges();
         
-        Assert.Null(_Context.Offer.Find(offer.Id));
+        Assert.Null(_context.Offer.Find(offer.Id));
     }
     #endregion
     
@@ -250,21 +250,21 @@ public class DatabaseTest: IDisposable
             DoRenew          = false,
         };
         
-        _Context.Rental.Add(rental);
-        _Context.SaveChanges();
+        _context.Rental.Add(rental);
+        _context.SaveChanges();
         
         Assert.NotEqual(0, rental.Id);
 
         rental.MonthlyRentPrice = 150.0;
-        _Context.Rental.Update(rental);
-        _Context.SaveChanges();
+        _context.Rental.Update(rental);
+        _context.SaveChanges();
         
-        Assert.Equal(150.0, _Context.Rental.Find(rental.Id)!.MonthlyRentPrice);
+        Assert.Equal(150.0, _context.Rental.Find(rental.Id)!.MonthlyRentPrice);
         
-        _Context.Rental.Remove(rental);
-        _Context.SaveChanges();
+        _context.Rental.Remove(rental);
+        _context.SaveChanges();
         
-        Assert.Null(_Context.Rental.Find(rental.Id));
+        Assert.Null(_context.Rental.Find(rental.Id));
     }
     
     [Fact]
@@ -285,9 +285,9 @@ public class DatabaseTest: IDisposable
             IsStarted = true,
         };
         
-        _Context.Rental.Add(rental);
-        _Context.Unit.Add(unit);
-        _Context.SaveChanges();
+        _context.Rental.Add(rental);
+        _context.Unit.Add(unit);
+        _context.SaveChanges();
         
         Assert.NotEqual(0, rental.Id);
         Assert.NotEqual(0, unit.Id);
@@ -298,10 +298,10 @@ public class DatabaseTest: IDisposable
             UnitId   = unit.Id,
         };
         
-        _Context.RentalUnit.Add(rentalUnit);
-        _Context.SaveChanges();
+        _context.RentalUnit.Add(rentalUnit);
+        _context.SaveChanges();
         
-        Assert.NotNull(_Context.RentalUnit.First(ru => ru.RentalId == rental.Id && ru.UnitId == unit.Id));
+        Assert.NotNull(_context.RentalUnit.First(ru => ru.RentalId == rental.Id && ru.UnitId == unit.Id));
     }
     
     [Fact]
@@ -326,9 +326,9 @@ public class DatabaseTest: IDisposable
             Offer            = offer,
         };
         
-        _Context.Offer.Add(offer);
-        _Context.Rental.Add(rental);
-        _Context.SaveChanges();
+        _context.Offer.Add(offer);
+        _context.Rental.Add(rental);
+        _context.SaveChanges();
         
         Assert.NotEqual(0, offer.Id);
         Assert.NotEqual(0, rental.Id);
@@ -348,21 +348,21 @@ public class DatabaseTest: IDisposable
             EndDate     = DateTime.Now.AddHours(1),
         };
         
-        _Context.Intervention.Add(intervention);
-        _Context.SaveChanges();
+        _context.Intervention.Add(intervention);
+        _context.SaveChanges();
         
         Assert.NotEqual(0, intervention.Id);
 
         intervention.Comment = "Updated Intervention";
-        _Context.Intervention.Update(intervention);
-        _Context.SaveChanges();
+        _context.Intervention.Update(intervention);
+        _context.SaveChanges();
         
-        Assert.Equal("Updated Intervention", _Context.Intervention.Find(intervention.Id)!.Comment);
+        Assert.Equal("Updated Intervention", _context.Intervention.Find(intervention.Id)!.Comment);
         
-        _Context.Intervention.Remove(intervention);
-        _Context.SaveChanges();
+        _context.Intervention.Remove(intervention);
+        _context.SaveChanges();
         
-        Assert.Null(_Context.Intervention.Find(intervention.Id));
+        Assert.Null(_context.Intervention.Find(intervention.Id));
     }
     
     [Fact]
@@ -382,9 +382,9 @@ public class DatabaseTest: IDisposable
             EndDate     = DateTime.Now.AddHours(1),
         };
         
-        _Context.Unit.Add(unit);
-        _Context.Intervention.Add(intervention);
-        _Context.SaveChanges();
+        _context.Unit.Add(unit);
+        _context.Intervention.Add(intervention);
+        _context.SaveChanges();
         
         Assert.NotEqual(0, unit.Id);
         Assert.NotEqual(0, intervention.Id);
@@ -395,10 +395,10 @@ public class DatabaseTest: IDisposable
             InterventionId = intervention.Id,
         };
         
-        _Context.UnitIntervention.Add(unitIntervention);
-        _Context.SaveChanges();
+        _context.UnitIntervention.Add(unitIntervention);
+        _context.SaveChanges();
         
-        Assert.NotNull(_Context.UnitIntervention.First(ui => ui.UnitId == unit.Id && ui.InterventionId == intervention.Id));
+        Assert.NotNull(_context.UnitIntervention.First(ui => ui.UnitId == unit.Id && ui.InterventionId == intervention.Id));
     }
     #endregion
 }

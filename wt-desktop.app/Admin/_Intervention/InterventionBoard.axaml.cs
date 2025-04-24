@@ -1,8 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Avalonia.Controls;
-using Microsoft.EntityFrameworkCore.Query;
 using wt_desktop.app.Controls;
 using wt_desktop.app.Core;
 using wt_desktop.ef.Entity;
@@ -28,19 +26,19 @@ public partial class InterventionBoard : BaseBoard
 public class InterventionBoardManager: BoardManager<Intervention>
 {
     #region Properties
-    private ObservableCollection<Intervention> _CurrentInterventions  = new();
-    private ObservableCollection<Intervention> _UpcomingInterventions = new();
-    public  ObservableCollection<Intervention> CurrentInterventions   => _CurrentInterventions;
-    public  ObservableCollection<Intervention> UpcomingInterventions  => _UpcomingInterventions;
+    private readonly ObservableCollection<Intervention> _currentInterventions  = new();
+    private readonly ObservableCollection<Intervention> _upcomingInterventions = new();
+    public  ObservableCollection<Intervention> CurrentInterventions   => _currentInterventions;
+    public  ObservableCollection<Intervention> UpcomingInterventions  => _upcomingInterventions;
     
-    private int _SelectedIndex = 0;
+    private int _selectedIndex;
     
     public int SelectedIndex
     {
-        get => _SelectedIndex;
+        get => _selectedIndex;
         set
         {
-            _SelectedIndex = value;
+            _selectedIndex = value;
             OnPropertyChanged();
         }
     }
@@ -63,19 +61,19 @@ public class InterventionBoardManager: BoardManager<Intervention>
     
     private void FilterInterventions()
     {
-        _CurrentInterventions.Clear();
-        _UpcomingInterventions.Clear();
+        _currentInterventions.Clear();
+        _upcomingInterventions.Clear();
         
         foreach (var intervention in EntitiesSource ?? [])
         {
             if (intervention.StartDate <= DateTime.Now && 
                 intervention.EndDate   >= DateTime.Now)
             {
-                _CurrentInterventions.Add(intervention);
+                _currentInterventions.Add(intervention);
             }
             else if (intervention.StartDate >= DateTime.Now)
             {
-                _UpcomingInterventions.Add(intervention);
+                _upcomingInterventions.Add(intervention);
             }
         }
     }

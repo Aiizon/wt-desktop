@@ -2,7 +2,6 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Avalonia;
 using CommunityToolkit.Mvvm.Input;
 using SukiUI.Controls;
 using wt_desktop.app.Core;
@@ -22,19 +21,20 @@ public partial class ErrorWindow : SukiWindow
 public class ErrorWindowManager: INotifyPropertyChanged
 {
     #region Properties
-    private ErrorWindow _Window;
+    private readonly ErrorWindow _window;
     
-    private Error       _Error;
-    public  string      Title            => _Error.Title;
-    public  string      Message          => _Error.Message;
+    private readonly Error       _error;
     
-    public  string      Code             => _Error.Code ?? string.Empty;
-    public  bool        HasCode          => !string.IsNullOrEmpty(Code);
-    public  string      FormattedCode    => HasCode ? string.Empty : $"Code d'erreur : {Code}";
+    public  string     Title            => _error.Title;
+    public  string     Message          => _error.Message;
     
-    public  Exception?  Exception        => _Error.Exception;
-    public  bool        HasException     => Exception != null;
-    public  string      ExceptionDetails => HasException ? Exception!.Message : string.Empty;
+    private string     Code             => _error.Code ?? string.Empty;
+    public  bool       HasCode          => !string.IsNullOrEmpty(Code);
+    public  string     FormattedCode    => HasCode ? string.Empty : $"Code d'erreur : {Code}";
+    
+    private Exception? Exception        => _error.Exception;
+    public  bool       HasException     => Exception != null;
+    public  string     ExceptionDetails => HasException ? Exception!.Message : string.Empty;
     #endregion
     
     public ICommand CloseCommand           { get; }
@@ -42,8 +42,8 @@ public class ErrorWindowManager: INotifyPropertyChanged
     
     public ErrorWindowManager(Error error, ErrorWindow window)
     {
-        _Error  = error;
-        _Window = window;
+        _error  = error;
+        _window = window;
         
         CloseCommand           = new RelayCommand(Close          , () => true);
         CopyToClipboardCommand = new RelayCommand(CopyToClipboard, () => true);
@@ -51,12 +51,12 @@ public class ErrorWindowManager: INotifyPropertyChanged
     
     private void Close()
     {
-        _Window.Close();
+        _window.Close();
     }
 
-    private async void CopyToClipboard()
+    private void CopyToClipboard()
     {
-        await _Window.Clipboard!.SetTextAsync(_Error.Exception.Message);
+        _window.Clipboard!.SetTextAsync(_error.Exception.Message);
     }
     
     #region INotifyPropertyChanged

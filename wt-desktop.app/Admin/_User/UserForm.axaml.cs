@@ -1,7 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Avalonia.Controls;
 using wt_desktop.app.Controls;
 using wt_desktop.app.Core;
 using wt_desktop.ef;
@@ -28,56 +27,55 @@ public partial class UserForm : BaseForm
 public class UserFormManager : FormManager<User>
 {
     #region Properties
-    private User _User;
-    
-    private string _Email;
+
+    private string _email;
     
     public string  Email
     {
-        get => _Email;
+        get => _email;
         set
         {
-            if (value == _Email) return;
-            _Email = value;
+            if (value == _email) return;
+            _email = value;
             OnPropertyChanged();
         }
     }
     
-    private string _FirstName;
+    private string _firstName;
     
     public string  FirstName
     {
-        get => _FirstName;
+        get => _firstName;
         set
         {
-            if (value == _FirstName) return;
-            _FirstName = value;
+            if (value == _firstName) return;
+            _firstName = value;
             OnPropertyChanged();
         }
     }
     
-    private string _LastName;
+    private string _lastName;
     
     public string  LastName
     {
-        get => _LastName;
+        get => _lastName;
         set
         {
-            if (value == _LastName) return;
-            _LastName = value;
+            if (value == _lastName) return;
+            _lastName = value;
             OnPropertyChanged();
         }
     }
     
-    private string _Password;
+    private string _password;
     
     public string  Password
     {
-        get => _Password;
+        get => _password;
         set
         {
-            if (value == _Password) return;
-            _Password = value;
+            if (value == _password) return;
+            _password = value;
             OnPropertyChanged();
         }
     }
@@ -85,57 +83,41 @@ public class UserFormManager : FormManager<User>
     public bool   IsPasswordEnabled => Mode == EFormMode.Create;
     public string PasswordWatermark => IsPasswordEnabled ? "Mot de passe" : "••••••••";
     
-    private string _Roles;
+    private string _roles;
     
     public string  Roles
     {
-        get => _Roles;
+        get => _roles;
         set
         {
-            if (value == _Roles) return;
-            _Roles = value;
-            OnPropertyChanged();
-        }
-    }
-    
-    private string _Type;
-    
-    public string  Type
-    {
-        get => _Type;
-        set
-        {
-            if (value == _Type)
-            {
-                return;
-            }
-            _Type = value;
+            if (value == _roles) return;
+            _roles = value;
             OnPropertyChanged();
         }
     }
     
     public RolesEditorManager RolesEditorManager { get; }
 
-    private string _SelectedType;
+    private string _selectedType;
     
     public string SelectedType
     {
-        get => _SelectedType;
+        get => _selectedType;
         set
         {
-            _SelectedType = value;
+            _selectedType = value;
             OnPropertyChanged();
         }
     }
     
-    private ObservableCollection<string> _AvailableTypes = new();
+    private ObservableCollection<string> _availableTypes = new();
     
     public ObservableCollection<string>  AvailableTypes
     {
-        get => _AvailableTypes;
+        get => _availableTypes;
         set
         {
-            _AvailableTypes = value;
+            _availableTypes = value;
             OnPropertyChanged();
         }
     }
@@ -147,47 +129,45 @@ public class UserFormManager : FormManager<User>
         EFormMode      mode, 
         User           entity
     ): base(controller, mode, entity) {
-        _User = entity;
+        AvailableTypes     = new(User.UserTypes);
         
-        AvailableTypes = new(User.UserTypes);
-        
-        RolesEditorManager = new RolesEditorManager(_User);
+        RolesEditorManager = new RolesEditorManager(entity);
         
         Reset();
     }
 
-    public override bool Save()
+    protected override bool Save()
     {
         if (!Validate())
         {
             return false;
         }
         
-        CurrentEntity.Email     = _Email        ?? "";
-        CurrentEntity.FirstName = _FirstName    ?? "";
-        CurrentEntity.LastName  = _LastName     ?? "";
-        CurrentEntity.Type      = _SelectedType ?? "";
+        CurrentEntity!.Email    = _email;
+        CurrentEntity.FirstName = _firstName;
+        CurrentEntity.LastName  = _lastName;
+        CurrentEntity.Type      = _selectedType;
         CurrentEntity.RolesList = RolesEditorManager.Roles.ToList();
 
         if (Mode == EFormMode.Create)
         {
-            CurrentEntity.Password = AuthProvider.Instance.HashPassword(_Password);
+            CurrentEntity.Password = AuthProvider.Instance.HashPassword(_password);
         }
         
         return true;
     }
 
-    public sealed override void Reset()
+    protected sealed override void Reset()
     {
-        Email                    = CurrentEntity.Email;
-        FirstName                = CurrentEntity.FirstName;
-        LastName                 = CurrentEntity.LastName;
+        Email                    = CurrentEntity!.Email;
+        FirstName                = CurrentEntity.FirstName ?? "";
+        LastName                 = CurrentEntity.LastName  ?? "";
         Password                 = "";
         SelectedType             = CurrentEntity.Type;
         RolesEditorManager.Roles = new(CurrentEntity.RolesList);
     }
 
-    public override bool Cancel()
+    protected override bool Cancel()
     {
         return true;
     }
@@ -298,7 +278,7 @@ public class UserFormManager : FormManager<User>
         }
     }
 
-    public override void ValidateForm()
+    protected override void ValidateForm()
     {
         ValidateProperty(nameof(Email));
         ValidateProperty(nameof(FirstName));

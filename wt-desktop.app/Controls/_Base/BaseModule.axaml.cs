@@ -3,7 +3,6 @@ using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
-using wt_desktop.app.Core;
 using wt_desktop.ef;
 
 namespace wt_desktop.app.Controls;
@@ -33,11 +32,11 @@ public partial class BaseModule : UserControl
         set => SetValue(PageContentProperty, value);
     }
     
-    public BaseModule()
+    protected BaseModule()
     {
         InitializeComponent();
         
-        MainWindow = Avalonia.Application.Current!.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop
+        MainWindow = Application.Current!.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop
             ? desktop.MainWindow
             : throw new Exception("MainWindow is null");
         

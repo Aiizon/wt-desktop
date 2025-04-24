@@ -1,6 +1,5 @@
 ﻿using System;
 using Avalonia;
-using wt_desktop.app.Core;
 
 namespace wt_desktop.app;
 

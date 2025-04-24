@@ -1,7 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Avalonia.Controls;
 using wt_desktop.app.Controls;
 using wt_desktop.app.Core;
 using wt_desktop.ef;
@@ -28,89 +27,78 @@ public partial class InterventionForm : BaseForm
 public class InterventionFormManager: FormManager<Intervention>
 {
     #region Properties
-    private string? _Comment;
+    private string? _comment;
     
     public string? Comment
     {
-        get => _Comment;
+        get => _comment;
         set
         {
-            _Comment = value;
+            _comment = value;
             OnPropertyChanged();
         }
     }
     
-    private DateTimeOffset? _StartDate;
+    private DateTimeOffset? _startDate;
     
     public DateTimeOffset?  StartDate
     {
-        get => _StartDate;
+        get => _startDate;
         set
         {
-            _StartDate = value;
+            _startDate = value;
             OnPropertyChanged();
         }
     }
     
-    private DateTimeOffset? _EndDate;
+    private DateTimeOffset? _endDate;
     
     public DateTimeOffset?  EndDate
     {
-        get => _EndDate;
+        get => _endDate;
         set
         {
-            _EndDate = value;
+            _endDate = value;
             OnPropertyChanged();
         }
     }
-    
-    private ObservableCollection<Bay?>  _AvailableBays  = new();
-    private ObservableCollection<Unit?> _AvailableUnits = new();
-    
-    public ObservableCollection<Bay?>   AvailableBays
-    {
-        get => _AvailableBays;
-        set => _AvailableBays = value;
-    }
 
-    public ObservableCollection<Unit?>  AvailableUnits
-    {
-        get => _AvailableUnits;
-        set => _AvailableUnits = value;
-    }
-    
-    private ObservableCollection<Bay?>  _SelectedBays  = new();
+    public ObservableCollection<Bay?>   AvailableBays  { get; set; }
+
+    public ObservableCollection<Unit?>  AvailableUnits { get; set; }
+
+    private ObservableCollection<Bay?>  _selectedBays  = new();
     
     public ObservableCollection<Bay?>   SelectedBays
     {
-        get => _SelectedBays;
+        get => _selectedBays;
         set
         {
-            _SelectedBays = value;
+            _selectedBays = value;
             OnPropertyChanged();
         }
     }
     
-    private ObservableCollection<Unit?> _SelectedUnits = new();
+    private ObservableCollection<Unit?> _selectedUnits = new();
     
     public ObservableCollection<Unit?>  SelectedUnits
     {
-        get => _SelectedUnits;
+        get => _selectedUnits;
         set
         {
-            _SelectedUnits = value;
+            _selectedUnits = value;
             OnPropertyChanged();
         }
     }
 
-    private string _UnitSearchText;
+    private string _unitSearchText;
     
     public string UnitSearchText
     {
-        get => _UnitSearchText;
+        get => _unitSearchText;
         set
         {
-            _UnitSearchText = value;
+            _unitSearchText = value;
             SearchUnits();
         }
     }
@@ -124,25 +112,25 @@ public class InterventionFormManager: FormManager<Intervention>
     ) : base(controller, mode, entity) {
         Reset();
         
-        _AvailableBays  = new(WtContext.Instance.Bay.ToList()!);
-        _AvailableUnits = _SelectedUnits;
+        AvailableBays  = new(WtContext.Instance.Bay.ToList()!);
+        AvailableUnits = _selectedUnits;
     }
     
-    public override bool Save()
+    protected override bool Save()
     {
         if (!Validate())
         {
             return false;
         }
         
-        CurrentEntity.Comment   = Comment ?? "";
+        CurrentEntity!.Comment  = Comment ?? "";
         CurrentEntity.StartDate = StartDate!.Value.DateTime;
         CurrentEntity.EndDate   = EndDate?.DateTime;
         
         return true;
     }
 
-    public override void HandleSave()
+    protected override void HandleSave()
     {
         if (!Save())
         {
@@ -151,34 +139,34 @@ public class InterventionFormManager: FormManager<Intervention>
         
         if (Mode == EFormMode.Create)
         {
-            if (Controller.InsertEntity(CurrentEntity))
+            if (Controller.InsertEntity(CurrentEntity!))
             {
-                InterventionUnitHandler.HandleSave(CurrentEntity, SelectedBays, SelectedUnits);
-                OnSave?.Invoke();
+                InterventionUnitHandler.HandleSave(CurrentEntity!, SelectedBays, SelectedUnits);
+                OnSave.Invoke();
             }
         }
         else
         if (Mode == EFormMode.Update)
         {
             // @fixme: update crashes on second save (entity is already tracked)
-            if (Controller.UpdateEntity(CurrentEntity))
+            if (Controller.UpdateEntity(CurrentEntity!))
             {
-                InterventionUnitHandler.HandleSave(CurrentEntity, SelectedBays, SelectedUnits);
-                OnSave?.Invoke();
+                InterventionUnitHandler.HandleSave(CurrentEntity!, SelectedBays, SelectedUnits);
+                OnSave.Invoke();
             }
         }
     }
 
-    public override void Reset()
+    protected sealed override void Reset()
     {
-        Comment   = CurrentEntity.Comment;
+        Comment   = CurrentEntity!.Comment;
         StartDate = new DateTimeOffset(CurrentEntity.StartDate ?? DateTime.Now);
         EndDate   = new DateTimeOffset(CurrentEntity.EndDate   ?? DateTime.Now);
         
-        (_SelectedBays, _SelectedUnits) = InterventionUnitHandler.HandleReset(CurrentEntity);
+        (_selectedBays, _selectedUnits) = InterventionUnitHandler.HandleReset(CurrentEntity);
     }
     
-    public override bool Cancel()
+    protected override bool Cancel()
     {
         return true;
     }
@@ -234,7 +222,7 @@ public class InterventionFormManager: FormManager<Intervention>
         }
     }
     
-    public override void ValidateForm()
+    protected override void ValidateForm()
     {
         ValidateProperty(nameof(Comment));
         ValidateProperty(nameof(StartDate));
@@ -245,7 +233,7 @@ public class InterventionFormManager: FormManager<Intervention>
     {
         if (UnitSearchText.Length < 3)
         {
-            _AvailableUnits = new(_SelectedUnits);
+            AvailableUnits = new(_selectedUnits);
             return;
         }
         
@@ -259,13 +247,13 @@ public class InterventionFormManager: FormManager<Intervention>
             .Select(u => u.Id)
             .ToHashSet();
         
-        _AvailableUnits.Clear();
+        AvailableUnits.Clear();
         
         foreach (var unit in queryResult)
         {
             if (!unitsInSelectedBays.Contains(unit.Id))
             {
-                _AvailableUnits.Add(unit);
+                AvailableUnits.Add(unit);
             }
         }
         

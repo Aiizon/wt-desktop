@@ -1,7 +1,3 @@
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Linq;
-using Avalonia.Controls;
 using wt_desktop.app.Controls;
 using wt_desktop.app.Core;
 using wt_desktop.ef.Entity;
@@ -28,74 +24,74 @@ public class OfferFormManager : FormManager<Offer>
 {
     #region Properties
 
-    private string _Name;
+    private string _name;
     
     public string  Name
     {
-        get => _Name;
+        get => _name;
         set
         {
-            _Name = value;
+            _name = value;
             OnPropertyChanged();
         }
     }
 
-    private int? _MaxUnits;
+    private int? _maxUnits;
     
     public int?  MaxUnits
     {
-        get => _MaxUnits;
+        get => _maxUnits;
         set
         {
-            _MaxUnits = value;
+            _maxUnits = value;
             OnPropertyChanged();
         }
     }
     
-    private string _Availability;
+    private string _availability;
     
     public string  Availability
     {
-        get => _Availability;
+        get => _availability;
         set
         {
-            _Availability = value;
+            _availability = value;
             OnPropertyChanged();
         }
     }
     
-    private double? _MonthlyRentPrice;
+    private double? _monthlyRentPrice;
     
     public double?  MonthlyRentPrice
     {
-        get => _MonthlyRentPrice;
+        get => _monthlyRentPrice;
         set
         {
-            _MonthlyRentPrice = value;
+            _monthlyRentPrice = value;
             OnPropertyChanged();
         }
     }
     
-    private string _Bandwidth;
+    private string _bandwidth;
     
     public string  Bandwidth
     {
-        get => _Bandwidth;
+        get => _bandwidth;
         set
         {
-            _Bandwidth = value;
+            _bandwidth = value;
             OnPropertyChanged();
         }
     }
     
-    private bool _IsActive;
+    private bool _isActive;
     
     public bool  IsActive
     {
-        get => _IsActive;
+        get => _isActive;
         set
         {
-            _IsActive = value;
+            _isActive = value;
             OnPropertyChanged();
         }
     }
@@ -110,14 +106,14 @@ public class OfferFormManager : FormManager<Offer>
         Reset();
     }
 
-    public override bool Save()
+    protected override bool Save()
     {
         if (!Validate())
         {
             return false;
         }
         
-        CurrentEntity.Name             = Name;
+        CurrentEntity!.Name            = Name;
         CurrentEntity.MaxUnits         = MaxUnits ?? 1;
         CurrentEntity.MonthlyRentPrice = MonthlyRentPrice ?? 0.01;
         CurrentEntity.IsActive         = IsActive;
@@ -143,9 +139,9 @@ public class OfferFormManager : FormManager<Offer>
         return true;
     }
 
-    public sealed override void Reset()
+    protected sealed override void Reset()
     {
-        Name             = CurrentEntity.Name;
+        Name             = CurrentEntity!.Name;
         MaxUnits         = CurrentEntity.MaxUnits ?? 1;
         MonthlyRentPrice = CurrentEntity.MonthlyRentPrice ?? 0.01;
         IsActive         = CurrentEntity.IsActive;
@@ -153,7 +149,7 @@ public class OfferFormManager : FormManager<Offer>
         Bandwidth        = CurrentEntity.Bandwidth;
     }
 
-    public override bool Cancel()
+    protected override bool Cancel()
     {
         return true;
     }
@@ -202,8 +198,7 @@ public class OfferFormManager : FormManager<Offer>
                     break;
                 }
 
-                double availabilityResult;
-                if (double.TryParse(Availability.Trim()                 , out availabilityResult) || 
+                if (double.TryParse(Availability.Trim()                 , out var availabilityResult) || 
                     double.TryParse(Availability.Replace("%", "").Trim(), out availabilityResult))
                 {
                     if (availabilityResult < 0)
@@ -229,8 +224,7 @@ public class OfferFormManager : FormManager<Offer>
                     break;
                 }
 
-                int bandwidthResult;
-                if (int.TryParse(Bandwidth                           , out bandwidthResult) ||
+                if (int.TryParse(Bandwidth                           , out var bandwidthResult) ||
                     int.TryParse(Bandwidth.Replace("Mbps", "").Trim(), out bandwidthResult))
                 {
                     if (bandwidthResult < 0)
@@ -246,7 +240,7 @@ public class OfferFormManager : FormManager<Offer>
         }
     }
 
-    public override void ValidateForm()
+    protected override void ValidateForm()
     {
         ValidateProperty(nameof(Name));
         ValidateProperty(nameof(MaxUnits));

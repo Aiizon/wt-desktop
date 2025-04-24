@@ -23,7 +23,7 @@ public abstract partial class BaseBoard : UserControl
         set => SetValue(FilterContentProperty, value);
     }
     
-    public BaseBoard()
+    protected BaseBoard()
     {
         InitializeComponent();
     }

@@ -8,12 +8,12 @@ public class OfferController : EntityController<Offer>
 {
     public OfferController() {}
 
-    public override UserControl GetBoard(EBoardMode mode, string search)
+    protected override UserControl GetBoard(EBoardMode mode, string search)
     {
         return new OfferBoard(mode, search);
     }
 
-    public override UserControl GetForm(EFormMode mode, Offer? entity = null)
+    protected override UserControl GetForm(EFormMode mode, Offer? entity = null)
     {
         return new OfferForm(mode, entity ?? new Offer());
     }

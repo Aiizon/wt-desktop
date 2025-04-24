@@ -4,10 +4,10 @@ using Avalonia.Controls;
 
 namespace wt_desktop.app.Controls;
 
-public partial class SaveButton : UserControl
+public partial class AddButton : UserControl
 {
     public static readonly StyledProperty<ICommand> CommandProperty =
-        AvaloniaProperty.Register<SearchButton, ICommand>(nameof(Command));
+        AvaloniaProperty.Register<AddButton, ICommand>(nameof(Command));
 
     public ICommand Command
     {
@@ -15,7 +15,7 @@ public partial class SaveButton : UserControl
         set => SetValue(CommandProperty, value);
     }
 
-    public SaveButton()
+    public AddButton()
     {
         InitializeComponent();
     }

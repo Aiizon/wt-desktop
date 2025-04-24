@@ -17,21 +17,21 @@ namespace wt_desktop.app.Core;
 public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorInfo, IFormManager where E: WtEntity, new()
 {
     #region Properties
-    public EntityController<E> Controller { get; }
-    public EFormMode           Mode       { get; }
+    protected EntityController<E> Controller { get; }
+    protected EFormMode           Mode       { get; }
 
-    private E? _CurrentEntity = null;
+    private E? _currentEntity;
     public E? CurrentEntity
     {
-        get { return _CurrentEntity; }
+        get => _currentEntity;
         set
         {
-            _CurrentEntity = value;
+            _currentEntity = value;
             OnPropertyChanged();
         }
     }
     
-    private readonly Dictionary<string, List<string>> _Errors = new();
+    private readonly Dictionary<string, List<string>> _errors = new();
 
     public Action OnSave   { get; set; }
     public Action OnCancel { get; set; }
@@ -66,7 +66,7 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
     /// <summary>
     /// Gère l'enregistrement de l'entité
     /// </summary>
-    public virtual void HandleSave()
+    protected virtual void HandleSave()
     {
         if (!Save())
         {
@@ -75,17 +75,17 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
         
         if (Mode == EFormMode.Create)
         {
-            if (Controller.InsertEntity(CurrentEntity))
+            if (Controller.InsertEntity(CurrentEntity!))
             {
-                OnSave?.Invoke();
+                OnSave.Invoke();
             }
         }
         else
         if (Mode == EFormMode.Update)
         {
-            if (Controller.UpdateEntity(CurrentEntity))
+            if (Controller.UpdateEntity(CurrentEntity!))
             {
-                OnSave?.Invoke();
+                OnSave.Invoke();
             }
         }
     }
@@ -93,19 +93,19 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
     /// <summary>
     /// Enregistre l'entité
     /// </summary>
-    /// <returns>true si l'enregistrement s'est effectué</returns>
-    public abstract bool Save();
+    /// <returns>True si l'enregistrement s'est effectué</returns>
+    protected abstract bool Save();
     
     /// <summary>
     /// Réinitialise le formulaire
     /// </summary>
-    public abstract void Reset();
+    protected abstract void Reset();
     
     /// <summary>
     /// Annule l'opération
     /// </summary>
     /// <returns>true</returns>
-    public virtual bool  Cancel() => true;
+    protected virtual bool  Cancel() => true;
 
     #region INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -118,7 +118,7 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
     
     #region INotifyDataErrorInfo
 
-    public bool HasErrors => _Errors.Any();
+    public bool HasErrors => _errors.Any();
     
     public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
     
@@ -129,7 +129,7 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
     /// <returns></returns>
     public IEnumerable GetErrors(string? propertyName)
     {
-        if (string.IsNullOrWhiteSpace(propertyName) || !_Errors.TryGetValue(propertyName, out var errors))
+        if (string.IsNullOrWhiteSpace(propertyName) || !_errors.TryGetValue(propertyName, out var errors))
         {
             return Array.Empty<string>();
         }
@@ -146,12 +146,12 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
     /// <param name="error">Texte de l'erreur</param>
     protected void SetError(string propertyName, string error)
     {
-        if (!_Errors.ContainsKey(propertyName))
-            _Errors[propertyName] = new List<string>();
+        if (!_errors.ContainsKey(propertyName))
+            _errors[propertyName] = new List<string>();
             
-        if (!_Errors[propertyName].Contains(error))
+        if (!_errors[propertyName].Contains(error))
         {
-            _Errors[propertyName].Add(error);
+            _errors[propertyName].Add(error);
             OnErrorsChanged(propertyName);
         }
     }
@@ -162,9 +162,9 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
     /// <param name="propertyName">Propriété</param>
     protected void ClearErrors(string propertyName)
     {
-        if (_Errors.ContainsKey(propertyName))
+        if (_errors.ContainsKey(propertyName))
         {
-            _Errors.Remove(propertyName);
+            _errors.Remove(propertyName);
             OnErrorsChanged(propertyName);
         }
     }
@@ -172,10 +172,10 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
     /// <summary>
     /// Supprime toutes les erreurs
     /// </summary>
-    protected void ClearAllErrors()
+    private void ClearAllErrors()
     {
-        var propertyNames = _Errors.Keys.ToList();
-        _Errors.Clear();
+        var propertyNames = _errors.Keys.ToList();
+        _errors.Clear();
         
         foreach (var propertyName in propertyNames)
         {
@@ -194,13 +194,13 @@ public abstract class FormManager<E>: INotifyPropertyChanged, INotifyDataErrorIn
     /// <summary>
     /// Valide le formulaire
     /// </summary>
-    public abstract void ValidateForm();
+    protected abstract void ValidateForm();
 
     /// <summary>
     /// Actualise les erreurs
     /// </summary>
-    /// <returns>True si il y a au moins une erreur, False sinon</returns>
-    public bool Validate()
+    /// <returns>True s'il y a au moins une erreur, False sinon</returns>
+    protected bool Validate()
     {
         ClearAllErrors();
         ValidateForm();

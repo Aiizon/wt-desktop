@@ -14,8 +14,8 @@ class Program
     private static readonly string ErrorArgument      = "--error-file=";
     private static readonly string AuthorizedArgument = "--authorized";
     
-    private static int     _ErrorCount     = 0;
-    private static string? _LastErrorFile  = null;
+    private static int     _errorCount;
+    private static string? _lastErrorFile;
     
     /// <summary>
     /// Point d'entrée pour l'application. Le launcher sert de gestionnaire de l'application afin de gérer les erreurs.
@@ -29,7 +29,7 @@ class Program
             using var tokenSource = new CancellationTokenSource();
             using var pipeServer  = new NamedPipeServerStream(PipeName, PipeDirection.InOut);
 
-            if (_ErrorCount == 3)
+            if (_errorCount == 3)
             {
                 ConsoleHandler.WriteError("Erreur : L'application wt-desktop a échoué 3 fois consécutivement. Fermeture du launcher.");
                 Environment.Exit(1);
@@ -52,10 +52,10 @@ class Program
 
             // Démarre l'application wt-desktop
             Process appProcess;
-            if (_LastErrorFile != null)
+            if (_lastErrorFile != null)
             {
-                ConsoleHandler.WriteWarning($"Lancement de l'application wt-desktop en mode erreur. Le fichier d'erreur utilisé est localisé au chemin : {_LastErrorFile}");
-                appProcess = Process.Start(appPath, $"{ErrorArgument}{_LastErrorFile} {AuthorizedArgument}");
+                ConsoleHandler.WriteWarning($"Lancement de l'application wt-desktop en mode erreur. Le fichier d'erreur utilisé est localisé au chemin : {_lastErrorFile}");
+                appProcess = Process.Start(appPath, $"{ErrorArgument}{_lastErrorFile} {AuthorizedArgument}");
             }
             else
             {
@@ -83,10 +83,10 @@ class Program
                 {
                     ConsoleHandler.WriteDebug($"Erreur reçue de l'application wt-desktop : {errorJsonString}");
 
-                    _LastErrorFile = Path.Combine(Path.GetTempPath(), $"wt-desktop-error-{Guid.NewGuid()}.json");
-                    File.WriteAllText(_LastErrorFile, errorJsonString);
+                    _lastErrorFile = Path.Combine(Path.GetTempPath(), $"wt-desktop-error-{Guid.NewGuid()}.json");
+                    File.WriteAllText(_lastErrorFile, errorJsonString);
                     
-                    ConsoleHandler.WriteDebug($"Erreur traitée. Le fichier d'erreur est enregistré au chemin : {_LastErrorFile}");
+                    ConsoleHandler.WriteDebug($"Erreur traitée. Le fichier d'erreur est enregistré au chemin : {_lastErrorFile}");
                     
                     errorReceived = true;
                     return null;
@@ -141,7 +141,7 @@ class Program
                     appProcess.Kill();
                 }
 
-                _ErrorCount++;
+                _errorCount++;
                 continue;
             }
             

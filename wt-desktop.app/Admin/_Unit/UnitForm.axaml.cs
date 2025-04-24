@@ -1,7 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Avalonia.Controls;
 using wt_desktop.app.Controls;
 using wt_desktop.app.Core;
 using wt_desktop.ef;
@@ -28,38 +27,38 @@ public partial class UnitForm : BaseForm
 public class UnitFormManager : FormManager<Unit>
 {
     #region Properties
-    private string? _Name;
+    private string? _name;
     
     public string?  Name
     {
-        get => _Name;
+        get => _name;
         set
         {
-            _Name = value;
+            _name = value;
             OnPropertyChanged();
         }
     }
     
-    private Bay? _SelectedBay;
+    private Bay? _selectedBay;
     
     public Bay?  SelectedBay
     {
-        get => _SelectedBay;
+        get => _selectedBay;
         set
         {
-            _SelectedBay = value;
+            _selectedBay = value;
             OnPropertyChanged();
         }
     }
     
-    private ObservableCollection<Bay> _AvailableBays = new();
+    private ObservableCollection<Bay> _availableBays = new();
     
     public ObservableCollection<Bay>  AvailableBays
     {
-        get => _AvailableBays;
+        get => _availableBays;
         set
         {
-            _AvailableBays = value;
+            _availableBays = value;
             OnPropertyChanged();
         }
     }
@@ -77,26 +76,26 @@ public class UnitFormManager : FormManager<Unit>
         Reset();
     }
 
-    public override bool Save()
+    protected override bool Save()
     {
         if (!Validate())
         {
             return false;
         }
         
-        CurrentEntity.Name = Name ?? "";
-        CurrentEntity.Bay  = AvailableBays.FirstOrDefault(b => b.Id == SelectedBay?.Id);
+        CurrentEntity!.Name = Name ?? "";
+        CurrentEntity.Bay   = AvailableBays.FirstOrDefault(b => b.Id == SelectedBay?.Id);
         
         return true;
     }
 
-    public sealed override void Reset()
+    protected sealed override void Reset()
     {
-        Name        = CurrentEntity.Name;
+        Name        = CurrentEntity!.Name;
         SelectedBay = AvailableBays.FirstOrDefault(b => b.Id == CurrentEntity.Bay?.Id);
     }
 
-    public override bool Cancel()
+    protected override bool Cancel()
     {
         return true;
     }
@@ -144,7 +143,7 @@ public class UnitFormManager : FormManager<Unit>
         }
     }
 
-    public override void ValidateForm()
+    protected override void ValidateForm()
     {
         ValidateProperty(nameof(Name));
         ValidateProperty(nameof(SelectedBay));

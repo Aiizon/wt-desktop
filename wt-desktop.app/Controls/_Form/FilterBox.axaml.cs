@@ -1,9 +1,7 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 
 namespace wt_desktop.app.Controls;
 
