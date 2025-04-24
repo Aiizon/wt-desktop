@@ -9,9 +9,10 @@ namespace wt_desktop.launcher;
 [SuppressMessage("ReSharper", "AccessToDisposedClosure")]
 class Program
 {
-    private static readonly string AppPath        = "wt-desktop.app";
-    private static readonly string PipeName       = "wt-desktop-error-pipe";
-    private static readonly string ErrorArgument  = "--error-file=";
+    private static readonly string AppPath            = "wt-desktop.app";
+    private static readonly string PipeName           = "wt-desktop-error-pipe";
+    private static readonly string ErrorArgument      = "--error-file=";
+    private static readonly string AuthorizedArgument = "--authorized";
     
     private static int     _ErrorCount     = 0;
     private static string? _LastErrorFile  = null;
@@ -54,11 +55,11 @@ class Program
             if (_LastErrorFile != null)
             {
                 ConsoleHandler.WriteWarning($"Lancement de l'application wt-desktop en mode erreur. Le fichier d'erreur utilisé est localisé au chemin : {_LastErrorFile}");
-                appProcess = Process.Start(appPath, $"{ErrorArgument}{_LastErrorFile}");
+                appProcess = Process.Start(appPath, $"{ErrorArgument}{_LastErrorFile} {AuthorizedArgument}");
             }
             else
             {
-                appProcess = Process.Start(appPath);
+                appProcess = Process.Start(appPath, AuthorizedArgument);
             }
             
             appProcess.EnableRaisingEvents = true;

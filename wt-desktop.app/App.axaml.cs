@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -15,6 +16,8 @@ namespace wt_desktop.app;
 
 public partial class App : Application
 {
+    private static readonly string AuthorizedArgument = "--authorized";
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -29,6 +32,16 @@ public partial class App : Application
         {
             var args          = desktop.Args;
             var errorFilePath = GetErrorFilePath(args);
+
+            if (!args!.Contains(AuthorizedArgument))
+            {
+                desktop.MainWindow = new ErrorWindow
+                (
+                    ErrorHandler.ProcessException(new NoLauncherException("Veuillez lancer l'application via le launcher."))
+                );
+                
+                return;
+            }
             
             if (!string.IsNullOrEmpty(errorFilePath) && File.Exists(errorFilePath))
             {

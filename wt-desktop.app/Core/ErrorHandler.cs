@@ -47,6 +47,16 @@ public static class ErrorHandler
                 return "Une référence null a été rencontrée.";
             case var _ when exception is OutOfMemoryException:
                 return "La mémoire disponible est insuffisante.";
+            case var _ when exception is IOException:
+                return "Une erreur d'entrée/sortie s'est produite.";
+            case var _ when exception is UnauthorizedAccessException:
+                return "Accès non autorisé à une ressource.";
+            case var _ when exception is FileNotFoundException:
+                return "Le fichier spécifié est introuvable.";
+            case var _ when exception is DirectoryNotFoundException:
+                return "Le répertoire spécifié est introuvable.";
+            case var _ when exception is NoLauncherException:
+                return "Veuillez lancer l'application via le launcher.";
             default:
                 return DefaultMessage;
         }
