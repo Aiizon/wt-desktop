@@ -13,6 +13,10 @@
                  Background="Transparent"
                  ExtendClientAreaToDecorationsHint="True"
                  TransparencyLevelHint="AcrylicBlur"
+                 Width="400"
+                 Height="400"
+                 WindowStartupLocation="CenterScreen"
+                 CanResize="False"
 >
     <Border CornerRadius="8" Margin="20">
         <Grid>
