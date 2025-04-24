@@ -1,5 +1,5 @@
 using System;
-using System.Windows.Input;
+using System.Text.Json.Nodes;
 
 namespace wt_desktop.app.Core;
 
@@ -25,5 +25,27 @@ public struct Error
         Message   = message;
         Code      = code;
         Exception = exception;
+    }
+    
+    public string ToJsonString()
+    {
+        return $"{{" +
+               $"\"title\":\"{Title}\"," +
+               $"\"message\":\"{Message}\"," +
+               $"\"code\":\"{Code}\"," +
+               $"\"exceptionMessage\":\"{Exception!.Message}\"" +
+               $"}}";
+    }
+
+    public static Error FromJson(string jsonString)
+    {
+        var json = JsonNode.Parse(jsonString)!.AsObject();
+        return new Error
+        (
+            json["title"]  !.ToString(),
+            json["message"]!.ToString(),
+            json["code"]   !.ToString(),
+            new Exception(json["exceptionMessage"]!.ToString())
+        );
     }
 }

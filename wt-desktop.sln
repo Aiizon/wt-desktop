@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wt-desktop.app", "wt-deskto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wt-desktop.test", "wt-desktop.test\wt-desktop.test.csproj", "{D3F4A31A-37E1-45FA-A9BA-6CA082E7118D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wt-desktop.launcher", "wt-desktop.launcher\wt-desktop.launcher.csproj", "{4AFA0AB0-59B6-466C-A83A-0BDB9E411321}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D3F4A31A-37E1-45FA-A9BA-6CA082E7118D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3F4A31A-37E1-45FA-A9BA-6CA082E7118D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3F4A31A-37E1-45FA-A9BA-6CA082E7118D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AFA0AB0-59B6-466C-A83A-0BDB9E411321}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AFA0AB0-59B6-466C-A83A-0BDB9E411321}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AFA0AB0-59B6-466C-A83A-0BDB9E411321}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AFA0AB0-59B6-466C-A83A-0BDB9E411321}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

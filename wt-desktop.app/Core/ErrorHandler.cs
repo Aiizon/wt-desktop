@@ -1,51 +1,17 @@
 using System;
-using System.Threading.Tasks;
+using System.IO;
+using System.IO.Pipes;
 
 namespace wt_desktop.app.Core;
 
 public static class ErrorHandler
 {
-    #region Defaults
-    private static readonly string DefaultTitle   = "Erreur";
-    private static readonly string DefaultMessage = "Une erreur s'est produite. Veuillez réessayer.";
+    #region Constants
+    private  static readonly string DefaultTitle   = "Erreur";
+    private  static readonly string DefaultMessage = "Une erreur s'est produite. Veuillez réessayer.";
+    private  static readonly string PipeName       = "wt-desktop-error-pipe";
+    internal static readonly string ErrorArgument  = "--error-file=";
     #endregion
-    
-    private static Action<Error> _DisplayErrorAction;
-    
-    /// <summary>
-    /// Initialise le gestionnaire d'erreurs.
-    /// </summary>
-    /// <param name="displayErrorAction">Action qui va afficher la popup d'erreur</param>
-    public static void Initialize(Action<Error> displayErrorAction)
-    {
-        _DisplayErrorAction = displayErrorAction;
-    }
-    
-    /// <summary>
-    /// Affiche une erreur.
-    /// </summary>
-    /// <param name="title">Titre</param>
-    /// <param name="message">Message</param>
-    /// <param name="code">Code d'erreur</param>
-    /// <param name="exception">Exception</param>
-    public static void ShowError
-    (
-        string     title, 
-        string     message, 
-        string?    code      = null, 
-        Exception? exception = null
-    )
-    {
-        var error = new Error
-        (
-            title,
-            message,
-            code,
-            exception
-        );
-        
-        _DisplayErrorAction?.Invoke(error);
-    }
     
     /// <summary>
     /// Transforme une exception en erreur.
@@ -54,20 +20,6 @@ public static class ErrorHandler
     public static Error ProcessException(Exception exception)
     {
         return new Error(
-            DefaultTitle,
-            GetUserFriendlyErrorMessage(exception),
-            null,
-            exception
-        );
-    }
-    
-    /// <summary>
-    /// Traite une exception et l'affiche.
-    /// </summary>
-    /// <param name="exception">Exception</param>
-    public static void HandleException(Exception exception)
-    {
-        ShowError(
             DefaultTitle,
             GetUserFriendlyErrorMessage(exception),
             null,
@@ -95,7 +47,43 @@ public static class ErrorHandler
             case var _ when exception is OutOfMemoryException:
                 return "La mémoire disponible est insuffisante.";
             default:
-                return "Une erreur inattendue s'est produite.";
+                return DefaultMessage;
         }
     }
+    
+    internal static void ReportErrorToLauncher(Error error)
+    {
+        try
+        {
+            var errorJsonString = error.ToJsonString();
+            
+            using var pipeClient = new NamedPipeClientStream(".", PipeName, PipeDirection.Out);
+            
+            Console.WriteLine($"Connexion au pipe {PipeName}...");
+
+            try
+            {
+                pipeClient.Connect(1000);
+                Console.WriteLine($"Connexion au pipe {PipeName} envoyée.");
+                
+                using var writer = new StreamWriter(pipeClient);
+                writer.AutoFlush = true;
+                
+                Console.WriteLine($"Envoi de l'erreur au pipe {PipeName} : {errorJsonString}");
+                writer.WriteLine(errorJsonString);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Impossible de se connecter au pipe.");
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Erreur lors de l'envoi de l'erreur au pipe : {e.Message}");
+        }
+    }
+
+    internal static void ReportErrorToLauncher(Exception exception)
+        => ReportErrorToLauncher(ProcessException(exception));
 }

@@ -63,6 +63,7 @@ public class LoginWindowManager: INotifyPropertyChanged
 
     public LoginWindowManager(LoginWindow window)
     {
+        throw new Exception("test");
         _Window = window;
         
         LoginCommand = new RelayCommand(Login, () => true);

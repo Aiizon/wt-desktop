@@ -1,5 +1,5 @@
 using System;
-using System.Threading;
+using System.IO;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -26,47 +26,80 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            ErrorHandler.Initialize(
-                error =>
+            var args          = desktop.Args;
+            var errorFilePath = GetErrorFilePath(args);
+            
+            if (!string.IsNullOrEmpty(errorFilePath) && File.Exists(errorFilePath))
+            {
+                try
                 {
-                    // Affiche l'erreur dans une popup et attend qu'elle soit fermée
-                    var waitHandle  = new ManualResetEvent(false);
-
-                    var errorWindow = new ErrorWindow(error);
-            
-                    errorWindow.Closed += (_, _) => waitHandle.Set();
-                    desktop.MainWindow = errorWindow;
-            
-                    // waitHandle.WaitOne();
+                    string errorJsonString = File.ReadAllText(errorFilePath);
+                    var    error           = Error.FromJson(errorJsonString);
+                
+                    // Affiche la fenêtre d'erreur
+                    desktop.MainWindow = new ErrorWindow(error);
+                    
+                    File.Delete(errorFilePath);
+                    
+                    base.OnFrameworkInitializationCompleted();
+                    return;
                 }
-            );
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erreur lors de la lecture du fichier d'erreur : {ex.Message}");
+                }
+            }
             
             AppDomain.CurrentDomain.UnhandledException += (_, e) =>
             {
                 if (e.ExceptionObject is Exception ex)
                 {
-                    ErrorHandler.HandleException(ex);
+                    ErrorHandler.ReportErrorToLauncher(ex);
                 }
             };
-            
+        
             TaskScheduler.UnobservedTaskException += (_, e) =>
             {
                 e.SetObserved();
-                ErrorHandler.HandleException(e.Exception);
+                ErrorHandler.ReportErrorToLauncher(e.Exception);
             };
+
+            try
+            {
+                Task.Run(async () => await InitializeDatabaseAsync()).Wait();
+
+                desktop.MainWindow = new LoginWindow();
+                
+                base.OnFrameworkInitializationCompleted();
+            }
+            catch (Exception e)
+            {
+                ErrorHandler.ReportErrorToLauncher(e);
+            }
             
-            Task.Run(async () => await InitializeDatabaseAsync()).Wait();
-            
-            desktop.MainWindow = new LoginWindow();
         }
         else
         {
-            throw new Exception("Type d'application non supportée.");
+            ErrorHandler.ReportErrorToLauncher(new Exception("Impossible de lancer l'application."));
+        }
+    }
+    
+    private string? GetErrorFilePath(string[]? args)
+    {
+        if (args == null)
+        {
+            return null;
         }
         
-        
-        base.OnFrameworkInitializationCompleted();
-        throw new Exception("test");
+        foreach (var arg in args)
+        {
+            if (arg.StartsWith(ErrorHandler.ErrorArgument))
+            {
+                return arg.Substring(ErrorHandler.ErrorArgument.Length).Trim('"');
+            }
+        }
+    
+        return null;
     }
     
     private async Task InitializeDatabaseAsync()
