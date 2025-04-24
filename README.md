@@ -89,4 +89,3 @@ dotnet run --project wt-desktop.app
 - [ ] BI
 - [ ] quantité unités à la création d'une baie
 - [ ] lien user <-> intervention autocomplété avec l'utilisateur connecté
-- [ ] quantité d'unités d'une location

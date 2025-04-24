@@ -42,6 +42,9 @@ public class Rental : WtIdentityEntity
     
     [NotMapped]
     public bool IsRentalEnded => RentalEndDate != null && RentalEndDate < DateTime.Now;
+    
+    [NotMapped]
+    public int UnitCount => Units().Count();
 
     public virtual IQueryable<Unit?> Units()
         => WtContext.Instance.Set<RentalUnit>()

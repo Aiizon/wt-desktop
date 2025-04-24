@@ -15,6 +15,7 @@
                 <DataGridTextColumn Width="2*" Header="Date de fin"     Binding="{Binding RentalEndDateString}"     />
                 <DataGridTextColumn Width="1*" Header="Offre"           Binding="{Binding Offer.Name}"              />
                 <DataGridTextColumn Width="1*" Header="Montant mensuel" Binding="{Binding MonthlyRentPriceString}"  />
+                <DataGridTextColumn Width="1*" Header="Unités"          Binding="{Binding UnitCount}"               />
                 <DataGridTextColumn Width="1*" Header="Durée"           Binding="{Binding BillingType.DisplayText}" />
                 <DataGridTextColumn Width="1*" Header="Renouvellement"  Binding="{Binding DoRenew}"                 />
                 <DataGridTextColumn Width="1*" Header="Terminée"        Binding="{Binding IsRentalEnded}"           />
