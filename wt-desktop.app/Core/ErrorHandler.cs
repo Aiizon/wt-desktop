@@ -23,7 +23,6 @@ public static class ErrorHandler
         return new Error(
             DefaultTitle,
             GetUserFriendlyErrorMessage(exception),
-            null,
             exception
         );
     }

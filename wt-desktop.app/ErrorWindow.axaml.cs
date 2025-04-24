@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Avalonia;
 using CommunityToolkit.Mvvm.Input;
 using SukiUI.Controls;
 using wt_desktop.app.Core;
@@ -36,19 +37,26 @@ public class ErrorWindowManager: INotifyPropertyChanged
     public  string      ExceptionDetails => HasException ? Exception!.Message : string.Empty;
     #endregion
     
-    public ICommand CloseCommand { get; }
+    public ICommand CloseCommand           { get; }
+    public ICommand CopyToClipboardCommand { get; }
     
     public ErrorWindowManager(Error error, ErrorWindow window)
     {
         _Error  = error;
         _Window = window;
         
-        CloseCommand = new RelayCommand(Close, () => true);
+        CloseCommand           = new RelayCommand(Close          , () => true);
+        CopyToClipboardCommand = new RelayCommand(CopyToClipboard, () => true);
     }
     
     private void Close()
     {
         _Window.Close();
+    }
+
+    private async void CopyToClipboard()
+    {
+        await _Window.Clipboard!.SetTextAsync(_Error.Exception.Message);
     }
     
     #region INotifyPropertyChanged
