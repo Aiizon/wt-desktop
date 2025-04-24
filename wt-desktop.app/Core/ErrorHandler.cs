@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.IO.Pipes;
+using wt_desktop.tools;
 
 namespace wt_desktop.app.Core;
 
@@ -59,28 +60,28 @@ public static class ErrorHandler
             
             using var pipeClient = new NamedPipeClientStream(".", PipeName, PipeDirection.Out);
             
-            Console.WriteLine($"Connexion au pipe {PipeName}...");
+            ConsoleHandler.WriteInfo($"Connexion au pipe {PipeName}...");
 
             try
             {
                 pipeClient.Connect(1000);
-                Console.WriteLine($"Connexion au pipe {PipeName} envoyée.");
+                ConsoleHandler.WriteInfo($"Connexion au pipe {PipeName} envoyée.");
                 
                 using var writer = new StreamWriter(pipeClient);
                 writer.AutoFlush = true;
                 
-                Console.WriteLine($"Envoi de l'erreur au pipe {PipeName} : {errorJsonString}");
+                ConsoleHandler.WriteDebug($"Envoi de l'erreur au pipe {PipeName} : {errorJsonString}");
                 writer.WriteLine(errorJsonString);
 
             }
             catch (Exception e)
             {
-                Console.WriteLine("Impossible de se connecter au pipe.");
+                ConsoleHandler.WriteError("Impossible de se connecter au pipe.");
             }
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Erreur lors de l'envoi de l'erreur au pipe : {e.Message}");
+            ConsoleHandler.WriteError($"Erreur lors de l'envoi de l'erreur au pipe : {e.Message}");
         }
     }
 

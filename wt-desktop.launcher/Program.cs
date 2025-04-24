@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO.Pipes;
 using System.Runtime.InteropServices;
+using wt_desktop.tools;
 
 namespace wt_desktop.launcher;
 
@@ -20,7 +21,7 @@ class Program
     /// </summary>
     public static void Main(string[] args)
     {
-        Console.WriteLine("Démarrage de l'application wt-desktop...");
+        ConsoleHandler.WriteInfo("Démarrage de l'application wt-desktop...");
 
         while (true)
         {
@@ -29,7 +30,7 @@ class Program
 
             if (_ErrorCount == 3)
             {
-                Console.WriteLine("Erreur : L'application wt-desktop a échoué 3 fois consécutivement. Fermeture du launcher.");
+                ConsoleHandler.WriteError("Erreur : L'application wt-desktop a échoué 3 fois consécutivement. Fermeture du launcher.");
                 Environment.Exit(1);
             }
 
@@ -38,13 +39,13 @@ class Program
 
             if (!File.Exists(appPath))
             {
-                Console.WriteLine($"Erreur : Impossible de trouver l'application wt-desktop à l'emplacement {appPath}.");
+                ConsoleHandler.WriteError($"Impossible de trouver l'application wt-desktop à l'emplacement {appPath}.");
                 break;
             }
             
             if (!EnsureExecutionPermissions())
             {
-                Console.WriteLine($"Erreur : Impossible de définir les permissions d'exécution pour {appPath}.");
+                ConsoleHandler.WriteError($"Impossible de définir les permissions d'exécution pour {appPath}.");
                 break;
             }
 
@@ -52,7 +53,7 @@ class Program
             Process appProcess;
             if (_LastErrorFile != null)
             {
-                Console.WriteLine($"Lancement de l'application wt-desktop en mode erreur. Le fichier d'erreur utilisé est localisé au chemin : {_LastErrorFile}");
+                ConsoleHandler.WriteWarning($"Lancement de l'application wt-desktop en mode erreur. Le fichier d'erreur utilisé est localisé au chemin : {_LastErrorFile}");
                 appProcess = Process.Start(appPath, $"{ErrorArgument}{_LastErrorFile}");
             }
             else
@@ -61,7 +62,7 @@ class Program
             }
             
             appProcess.EnableRaisingEvents = true;
-            Console.WriteLine($"L'application wt-desktop a démarré avec le PID {appProcess.Id}.");
+            ConsoleHandler.WriteDebug($"L'application wt-desktop a démarré avec le PID {appProcess.Id}.");
             
             // Deux tâches simultanées sont démarrées.
             // La première sert au gestionnaire d'erreurs, afin qu'il puisse communiquer lors d'une erreur.
@@ -69,22 +70,22 @@ class Program
             bool errorReceived = false;
             var pipeConnectionTask = Task.Run(() =>
             {
-                Console.WriteLine($"Attente de la connexion au pipe {PipeName}...");
+                ConsoleHandler.WriteInfo($"Attente de la connexion au pipe {PipeName}...");
             
                 pipeServer.WaitForConnection();
-                Console.WriteLine($"Connexion au pipe {PipeName} réceptionnée.");
+                ConsoleHandler.WriteSuccess($"Connexion au pipe {PipeName} réceptionnée.");
             
                 using var reader = new StreamReader(pipeServer);
                 var errorJsonString = reader.ReadToEnd();
 
                 if (!string.IsNullOrEmpty(errorJsonString))
                 {
-                    Console.WriteLine($"Erreur reçue de l'application wt-desktop : {errorJsonString}");
+                    ConsoleHandler.WriteDebug($"Erreur reçue de l'application wt-desktop : {errorJsonString}");
 
                     _LastErrorFile = Path.Combine(Path.GetTempPath(), $"wt-desktop-error-{Guid.NewGuid()}.json");
                     File.WriteAllText(_LastErrorFile, errorJsonString);
                     
-                    Console.WriteLine($"Erreur traitée. Le fichier d'erreur est enregistré au chemin : {_LastErrorFile}");
+                    ConsoleHandler.WriteDebug($"Erreur traitée. Le fichier d'erreur est enregistré au chemin : {_LastErrorFile}");
                     
                     errorReceived = true;
                     return null;
@@ -105,7 +106,7 @@ class Program
                     return false;
                 }
                 
-                Console.WriteLine($"L'application wt-desktop s'est terminée avec le code de sortie {appProcess.ExitCode}.");
+                ConsoleHandler.WriteDebug($"L'application wt-desktop s'est terminée avec le code de sortie {appProcess.ExitCode}.");
 
                 try
                 {
@@ -126,13 +127,13 @@ class Program
             if (completedTask == processExitedTask && processExitedTask.Result && !errorReceived)
             {
                 // Sortie normale de l'application
-                Console.WriteLine("L'application wt-desktop s'est terminée normalement.");
+                ConsoleHandler.WriteSuccess("L'application wt-desktop s'est terminée normalement.");
                 Environment.Exit(0);
             }
             else if (completedTask == pipeConnectionTask)
             {
                 // Erreur reçue de l'application, redémarrage de l'application
-                Console.WriteLine("Redémarrage de l'application.");
+                ConsoleHandler.WriteInfo("Redémarrage de l'application.");
 
                 if (!appProcess.HasExited)
                 {
@@ -144,7 +145,7 @@ class Program
             }
             
             // Si aucune des deux tâches ne se termine, cela signifie que l'application a été fermée de manière inattendue. Dans ce cas, le launcher se termine.
-            Console.WriteLine("Arrêt inattendu du launcher.");
+            ConsoleHandler.WriteError("Arrêt inattendu du launcher.");
             Environment.Exit(1);
         }
     }
@@ -194,7 +195,7 @@ class Program
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Avertissement : Impossible de définir les permissions d'exécution. {e.Message}");
+                ConsoleHandler.WriteWarning($"Impossible de définir les permissions d'exécution. {e.Message}");
                 return false;
             }
         }

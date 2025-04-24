@@ -9,6 +9,7 @@ using SukiUI;
 using SukiUI.Enums;
 using wt_desktop.app.Core;
 using wt_desktop.ef;
+using wt_desktop.tools;
 
 namespace wt_desktop.app;
 
@@ -46,7 +47,7 @@ public partial class App : Application
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Erreur lors de la lecture du fichier d'erreur : {ex.Message}");
+                    ConsoleHandler.WriteError($"Erreur lors de la lecture du fichier d'erreur : {ex.Message}");
                 }
             }
             
@@ -114,7 +115,7 @@ public partial class App : Application
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            ConsoleHandler.WriteError(e.Message);
             throw;
         }
     }

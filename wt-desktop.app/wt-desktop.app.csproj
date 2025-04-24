@@ -26,6 +26,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\wt-desktop.ef\wt-desktop.ef.csproj" />
+      <ProjectReference Include="..\wt-desktop.tools\wt-desktop.tools.csproj" />
     </ItemGroup>
     
     <ItemGroup>

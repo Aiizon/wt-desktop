@@ -10,6 +10,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\wt-desktop.app\wt-desktop.app.csproj" />
+      <ProjectReference Include="..\wt-desktop.tools\wt-desktop.tools.csproj" />
     </ItemGroup>
 
 </Project>
