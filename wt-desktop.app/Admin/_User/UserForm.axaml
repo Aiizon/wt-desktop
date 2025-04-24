@@ -19,6 +19,8 @@
                 <RowDefinition Height="2*" />
                 <RowDefinition Height="5"  />
                 <RowDefinition Height="2*" />
+                <RowDefinition Height="5"  />
+                <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -26,20 +28,23 @@
                 <ColumnDefinition Width="10*" SharedSizeGroup="InputColumn" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock            Grid.Row="0" Grid.Column="0" Text="Email"               HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
-            <TextBox              Grid.Row="0" Grid.Column="1" Text="{Binding Email}"     HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Email"  />
+            <TextBlock            Grid.Row="0"  Grid.Column="0" Text="Email"               HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <TextBox              Grid.Row="0"  Grid.Column="1" Text="{Binding Email}"     HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Email"  />
             
-            <TextBlock            Grid.Row="2" Grid.Column="0" Text="Prénom"              HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
-            <TextBox              Grid.Row="2" Grid.Column="1" Text="{Binding FirstName}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Prénom" />
+            <TextBlock            Grid.Row="2"  Grid.Column="0" Text="Prénom"              HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <TextBox              Grid.Row="2"  Grid.Column="1" Text="{Binding FirstName}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Prénom" />
             
-            <TextBlock            Grid.Row="4" Grid.Column="0" Text="Nom"                 HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
-            <TextBox              Grid.Row="4" Grid.Column="1" Text="{Binding LastName}"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Nom"    />
+            <TextBlock            Grid.Row="4"  Grid.Column="0" Text="Nom"                 HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <TextBox              Grid.Row="4"  Grid.Column="1" Text="{Binding LastName}"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="Nom"    />
             
-            <TextBlock            Grid.Row="6" Grid.Column="0" Text="Role(s)"             HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
-            <controls:RolesEditor Grid.Row="6" Grid.Column="1" DataContext="{Binding RolesEditorManager}" />
+            <TextBlock            Grid.Row="6" Grid.Column="0" Text="Mot de passe"         HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <TextBox              Grid.Row="6" Grid.Column="1" Text="{Binding Password}"   HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" Watermark="{Binding PasswordWatermark}" PasswordChar="•" IsEnabled="{Binding IsPasswordEnabled}" />
             
-            <TextBlock            Grid.Row="8" Grid.Column="0" Text="Type"                HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
-            <ComboBox             Grid.Row="8" Grid.Column="1"                            HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" ItemsSource="{Binding AvailableTypes}" SelectedItem="{Binding SelectedType}" />
+            <TextBlock            Grid.Row="8"  Grid.Column="0" Text="Role(s)"             HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <controls:RolesEditor Grid.Row="8"  Grid.Column="1" DataContext="{Binding RolesEditorManager}" />
+            
+            <TextBlock            Grid.Row="10" Grid.Column="0" Text="Type"                HorizontalAlignment="Right"   VerticalAlignment="Center" Margin="5" />
+            <ComboBox             Grid.Row="10" Grid.Column="1"                            HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" ItemsSource="{Binding AvailableTypes}" SelectedItem="{Binding SelectedType}" />
  
         </Grid>
     </controls:BaseForm.FormContent>

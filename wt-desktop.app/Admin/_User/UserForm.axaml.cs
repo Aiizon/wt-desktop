@@ -69,6 +69,22 @@ public class UserFormManager : FormManager<User>
         }
     }
     
+    private string _Password;
+    
+    public string  Password
+    {
+        get => _Password;
+        set
+        {
+            if (value == _Password) return;
+            _Password = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    public bool   IsPasswordEnabled => Mode == EFormMode.Create;
+    public string PasswordWatermark => IsPasswordEnabled ? "Mot de passe" : "••••••••";
+    
     private string _Roles;
     
     public string  Roles
@@ -147,11 +163,16 @@ public class UserFormManager : FormManager<User>
             return false;
         }
         
-        CurrentEntity.Email     = Email        ?? "";
-        CurrentEntity.FirstName = FirstName    ?? "";
-        CurrentEntity.LastName  = LastName     ?? "";
-        CurrentEntity.Type      = SelectedType ?? "";
+        CurrentEntity.Email     = _Email        ?? "";
+        CurrentEntity.FirstName = _FirstName    ?? "";
+        CurrentEntity.LastName  = _LastName     ?? "";
+        CurrentEntity.Type      = _SelectedType ?? "";
         CurrentEntity.RolesList = RolesEditorManager.Roles.ToList();
+
+        if (Mode == EFormMode.Create)
+        {
+            CurrentEntity.Password = AuthProvider.Instance.HashPassword(_Password);
+        }
         
         return true;
     }
@@ -161,6 +182,7 @@ public class UserFormManager : FormManager<User>
         Email                    = CurrentEntity.Email;
         FirstName                = CurrentEntity.FirstName;
         LastName                 = CurrentEntity.LastName;
+        Password                 = "";
         SelectedType             = CurrentEntity.Type;
         RolesEditorManager.Roles = new(CurrentEntity.RolesList);
     }
@@ -238,6 +260,40 @@ public class UserFormManager : FormManager<User>
                 {
                     SetError(nameof(LastName), "Le nom ne peut pas dépasser 50 caractères.");
                 }
+                break;
+            
+            case nameof(Password):
+                if (Mode != EFormMode.Create)
+                {
+                    break;
+                }
+
+                if (string.IsNullOrWhiteSpace(Password))
+                {
+                    SetError(nameof(Password), "Le mot de passe est obligatoire.");
+                    break;
+                }
+
+                if (Password.Length < 8)
+                {
+                    SetError(nameof(Password), "Le mot de passe doit contenir au moins 8 caractères.");
+                }
+
+                if (!Password.Any(char.IsDigit))
+                {
+                    SetError(nameof(Password), "Le mot de passe doit contenir au moins un chiffre.");
+                }
+                
+                if (!Password.Any(char.IsLetter))
+                {
+                    SetError(nameof(Password), "Le mot de passe doit contenir au moins une lettre.");
+                }
+
+                if (!Password.Any(char.IsSymbol) && !Password.Any(char.IsPunctuation))
+                {
+                    SetError(nameof(Password), "Le mot de passe doit contenir au moins un caractère spécial.");
+                }
+                
                 break;
         }
     }

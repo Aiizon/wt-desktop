@@ -86,8 +86,6 @@ dotnet run --project wt-desktop.app
 ## Roadmap
 
 - [ ] filtre sur boards (en cours)
-- [ ] email grisé à l'édition
-- [ ] saisie password à la création d'un user / édition de son propre user
 - [ ] BI
 - [ ] quantité unités à la création d'une baie
 - [ ] lien user <-> intervention autocomplété avec l'utilisateur connecté
