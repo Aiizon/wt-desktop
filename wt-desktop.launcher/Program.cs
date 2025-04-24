@@ -22,6 +22,7 @@ class Program
     /// </summary>
     public static void Main(string[] args)
     {
+        Logger.Initialize();
         ConsoleHandler.WriteInfo("Démarrage de l'application wt-desktop...");
 
         while (true)
