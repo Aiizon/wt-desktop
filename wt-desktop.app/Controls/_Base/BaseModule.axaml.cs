@@ -39,15 +39,16 @@ public partial class BaseModule : UserControl
             LogoutCommand = new RelayCommand(
                 () =>
                 {
-                    AuthProvider.Instance.Logout();
-                    desktop.MainWindow = new LoginWindow();
+                    // L'exit code 2 est utilisé pour indiquer que l'utilisateur a été déconnecté
+                    // L'application redémarre et affiche la page de login
+                    Environment.Exit(2);
                 },
                 () => true);
 
             ExitCommand = new RelayCommand(
                 () =>
                 {
-                    desktop.Shutdown(0);
+                    Environment.Exit(0);
                 },
                 () => true);
         }

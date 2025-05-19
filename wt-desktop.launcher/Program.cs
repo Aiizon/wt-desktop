@@ -105,7 +105,7 @@ class Program
                 
                 if (errorReceived)
                 {
-                    return false;
+                    return 1;
                 }
                 
                 ConsoleHandler.WriteDebug($"L'application wt-desktop s'est terminée avec le code de sortie {appProcess.ExitCode}.");
@@ -120,17 +120,29 @@ class Program
                     // ignoré
                 }
                 
-                return appProcess.ExitCode == 0;
+                return appProcess.ExitCode;
             });
             
             // Attendre que l'une des deux tâches se termine
             var completedTask = Task.WhenAny(pipeConnectionTask, processExitedTask).Result;
 
-            if (completedTask == processExitedTask && processExitedTask.Result && !errorReceived)
+            if (completedTask == processExitedTask && processExitedTask.Result == 0 && !errorReceived)
             {
                 // Sortie normale de l'application
                 ConsoleHandler.WriteSuccess("L'application wt-desktop s'est terminée normalement.");
                 Environment.Exit(0);
+            }
+            else if (completedTask == processExitedTask && processExitedTask.Result == 2 && !errorReceived)
+            {
+                // Déconnexion de l'utilisateur
+                ConsoleHandler.WriteInfo("Redémarrage de l'application suite à une déconnection.");
+
+                if (!appProcess.HasExited)
+                {
+                    appProcess.Kill();
+                }
+
+                continue;
             }
             else if (completedTask == pipeConnectionTask)
             {
