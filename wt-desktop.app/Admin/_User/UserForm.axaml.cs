@@ -190,7 +190,7 @@ public class UserFormManager : FormManager<User>
                     SetError(nameof(Email), "L'email n'est pas valide.");
                 }
                 
-                if (WtContext.Instance.User.Any(u => u.Email == Email))
+                if (WtContext.Instance.User.Any(u => u.Email == Email) && CurrentEntity!.Id != 0)
                 {
                     SetError(nameof(Email), "L'email est déjà utilisé.");
                 }

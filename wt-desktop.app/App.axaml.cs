@@ -47,8 +47,11 @@ public partial class App : Application
             {
                 try
                 {
+                    ConsoleHandler.WriteDebug($"Fichier d'erreur trouvé : {errorFilePath}");
                     string errorJsonString = File.ReadAllText(errorFilePath);
+                    ConsoleHandler.WriteDebug($"Contenu du fichier d'erreur : {errorJsonString}");
                     var    error           = Error.FromJson(errorJsonString);
+                    ConsoleHandler.WriteDebug($"Erreur : {error}");
                 
                     // Affiche la fenêtre d'erreur
                     desktop.MainWindow = new ErrorWindow(error);
